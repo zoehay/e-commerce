@@ -1,0 +1,15 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("TEST_DATABASE_URL")
+}
+
+model Product {
+  id Int @id @default(autoincrement())
+  name String
+  description String
+  price Decimal @db.Money
+}

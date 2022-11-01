@@ -4,7 +4,10 @@
   "description": "\"# e-commerce\"",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev-init": "prisma migrate dev --schema=./prisma/schema.prisma --name=dev",
+    "dev": "node src/index.js",
+    "test-init": "prisma migrate dev --schema=./prisma/test.schema.prisma --name=test",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -18,13 +21,22 @@
   "homepage": "https://github.com/zoehay/e-commerce#readme",
   "dependencies": {
     "@prisma/client": "^4.5.0",
-    "body-parser": "^1.20.1",
     "express": "^4.18.2",
-    "pg": "^8.8.0",
-    "pg-hstore": "^2.3.4"
+    "jest-config": "29.2.2"
   },
   "devDependencies": {
-    "prisma": "^4.5.0"
+    "jest": "29.2.2",
+    "jest-environment-node": "29.2.2",
+    "nanoid": "4.0.0",
+    "prisma": "^4.5.0",
+    "supertest": "^6.3.1",
+    "@types/express": "4.17.14",
+    "@types/jest": "29.2.0",
+    "@types/node": "18.11.6",
+    "@types/supertest": "2.0.12",
+    "ts-jest": "29.0.3",
+    "ts-node": "10.9.1",
+    "typescript": "4.8.4"
   },
   "prisma": {
     "seed": "node prisma/seed.js"

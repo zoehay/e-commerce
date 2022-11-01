@@ -1,0 +1,47 @@
+// @ts-check
+import path from "path";
+import fs from "fs";
+import { nanoid } from "nanoid";
+import { TestEnvironment } from "jest-environment-node";
+import { exec } from "child_process";
+import { fileURLToPath } from "url";
+
+// fix for 'How to fix "__dirname is not defined in ES module scope"'
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const prismaBinary = path.join(
+  __dirname,
+  "..",
+  "node_modules",
+  ".bin",
+  "prisma"
+);
+
+class PrismaTestEnvironment extends TestEnvironment {
+  /** @type {import('@jest/types').Config.ProjectConfig} */
+
+  constructor(config, _context) {
+    super(config, _context);
+    const DB_URL =
+      "postgresql://postgres:postgres@localhost:5432/prisma_e_commerce?schema=test";
+    process.env.DB_URL = DB_URL;
+    this.global.process.env.DB_URL = DB_URL;
+  }
+
+  async setup() {
+    console.log("setup");
+    await exec(`${prismaBinary} db push --schema=./prisma/test.schema.prisma`);
+    return super.setup();
+  }
+
+  async teardown() {
+    try {
+      // await fs.promises.unlink(this.dbPath)
+    } catch (error) {
+      // doesn't matter as the environment is torn down
+    }
+  }
+}
+
+export default PrismaTestEnvironment;

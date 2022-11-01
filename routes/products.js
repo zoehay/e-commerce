@@ -1,15 +1,57 @@
 const express = require("express");
+const { prisma, productRepository } = require("../repository/repository");
+
 const router = express.Router();
-const { prisma } = require("../index");
 
-// router.post("/products", createProduct);
-
-router.get("/", async (req, res) => {
-  const products = await prisma.product.findMany();
-  res.json(products);
+router.post("/", async (req, res) => {
+  const { productName, description, price } = req.body;
+  console.log("post");
+  console.log(productName, description, price);
+  if (!productName || !description || !price) {
+    return res.status(400).json({
+      error: "All fields required",
+    });
+  }
+  try {
+    const product = await productRepository.createProduct(
+      productName,
+      description,
+      price
+    );
+    return res.status(201).send({ product });
+  } catch (error) {
+    return res.status(400).json({
+      error: "Create product failed",
+    });
+  }
 });
 
-// router.get("/products/:id", getProductById);
+router.get("/", async (req, res) => {
+  const products = await productRepository.getAllProducts();
+  return res.json({ products });
+});
+
+router.get("/:id", async (req, res) => {
+  const id = Number(req.params.id);
+  try {
+    const product = await productRepository.getProductById(id);
+    return res.status(200).json({ product });
+  } catch (error) {
+    return res.status(400).json({ error });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  const id = Number(req.params.id);
+  try {
+    const product = await productRepository.deleteProduct(id);
+    return res.status(204);
+  } catch (error) {
+    return res.status(400).json({ error });
+  }
+});
+
+module.exports = router;
 
 // router.get("/products/search", searchProducts);
 
@@ -38,15 +80,6 @@ router.get("/", async (req, res) => {
 //   }
 // };
 
-// getAllProducts = async (req, res) => {
-//   try {
-//     const products = await ProductRepository.getAllProducts;
-//     return res.json({ products });
-//   } catch (error) {
-//     return res.status(400).json({ error });
-//   }
-// };
-
 // searchProducts = async (req, res) => {
 //   const query = req.query.search;
 
@@ -58,22 +91,6 @@ router.get("/", async (req, res) => {
 //   try {
 //     const searchResults = await ProductRepository.search(query);
 //     return res.json({ searchResults });
-//   } catch (error) {
-//     return res.status(400).json({ error });
-//   }
-// };
-
-// getProductById = async (req, res) => {
-//   const { productId } = Number(req.params);
-
-//   if (!productId) {
-//     return res.status(400).json({
-//       error: "Invalid product id",
-//     });
-//   }
-//   try {
-//     const product = await ProductRepository.search(productId);
-//     return res.json({ product });
 //   } catch (error) {
 //     return res.status(400).json({ error });
 //   }

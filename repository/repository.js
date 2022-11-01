@@ -1,77 +1,53 @@
-const pool = require("./database");
+const { Prisma, PrismaClient } = require("@prisma/client");
+const ProductRepository = require("./ProductRepository");
 
-const PRODUCTS = [
-  {
-    productId: 1,
-    name: "Soap",
-    description: "Cleans stuff",
-    price: 3.99,
-  },
-];
+const prisma = new PrismaClient();
 
-export class ProductRepository {
-  create(productId, name, description, price) {
-    return product;
-  }
+const productRepository = new ProductRepository(prisma);
 
-  getAllProducts() {
-    return PRODUCTS;
-  }
+module.exports = { prisma, productRepository };
 
-  search(name) {
-    return products;
-  }
+// export class UserRepository {
+//   registerUser(name, email, password) {
+//     user;
+//   }
+//   getUserById(userId) {
+//     user;
+//   }
+//   updateUser(userId, name, email, password) {
+//     bool;
+//   }
+//   deleteUser(userId) {
+//     bool;
+//   }
+//   getUserByEmail(email) {
+//     user;
+//   }
+// }
 
-  getProduct(productId) {
-    return product;
-  }
+// export class CartRepository {
+//   addProduct(userId, productId, quantity) {
+//     cart;
+//   }
+//   removeProduct(userId, productId) {
+//     cart;
+//   }
+//   getCart(userId) {
+//     cart;
+//   }
+//   clearCart(userId) {
+//     bool;
+//   }
+// }
 
-  update(productId, name, description, price) {}
-
-  delete(productId) {}
-}
-
-export class UserRepository {
-  registerUser(name, email, password) {
-    user;
-  }
-  getUserById(userId) {
-    user;
-  }
-  updateUser(userId, name, email, password) {
-    bool;
-  }
-  deleteUser(userId) {
-    bool;
-  }
-  getUserByEmail(email) {
-    user;
-  }
-}
-
-export class CartRepository {
-  addProduct(userId, productId, quantity) {
-    cart;
-  }
-  removeProduct(userId, productId) {
-    cart;
-  }
-  getCart(userId) {
-    cart;
-  }
-  clearCart(userId) {
-    bool;
-  }
-}
-
-export class OrderRepository {
-  createOrder(userId, products) {
-    order;
-  }
-  getOrdersByUserId(userId) {
-    order;
-  }
-  getOrderByOrderId(orderId) {
-    order;
-  }
-}
+// export class OrderRepository {
+//   createOrder(userId, products) {
+//     order;
+//   }
+//   getOrdersByUserId(userId) {
+//     order;
+//   }
+//   getOrderByOrderId(orderId) {
+//     order;
+//   }
+// }
