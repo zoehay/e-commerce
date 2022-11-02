@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import { TestEnvironment } from "jest-environment-node";
 import { exec } from "child_process";
 import { fileURLToPath } from "url";
+import { setDefaultResultOrder } from "dns";
 
 // fix for 'How to fix "__dirname is not defined in ES module scope"'
 const __filename = fileURLToPath(import.meta.url);

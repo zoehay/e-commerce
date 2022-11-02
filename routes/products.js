@@ -5,8 +5,6 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
   const { productName, description, price } = req.body;
-  console.log("post");
-  console.log(productName, description, price);
   if (!productName || !description || !price) {
     return res.status(400).json({
       error: "All fields required",
@@ -31,6 +29,23 @@ router.get("/", async (req, res) => {
   return res.json({ products });
 });
 
+router.get("/search/", async (req, res) => {
+  const searchName = req.query.searchName;
+  if (!searchName) {
+    return res.status(400).json({
+      error: "Name search term required",
+    });
+  }
+  try {
+    const products = await productRepository.getProductsBySearchName(
+      searchName
+    );
+    return res.status(200).json({ products });
+  } catch (error) {
+    return res.status(400).json({ error });
+  }
+});
+
 router.get("/:id", async (req, res) => {
   const id = Number(req.params.id);
   try {
@@ -41,83 +56,39 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   const id = Number(req.params.id);
+  const productName = req.body.productName || undefined;
+  const description = req.body.description || undefined;
+  const price = req.body.price || undefined;
+  if (!id) {
+    return res.status(400).json({
+      error: "Product id required for update",
+    });
+  }
+  try {
+    const product = await productRepository.updateProduct(
+      id,
+      productName,
+      description,
+      price
+    );
+    return res.status(200).json({ product });
+  } catch (error) {
+    return res.status(400).json({ error });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  console.log("delete");
+  const id = Number(req.params.id);
+  console.log(id);
   try {
     const product = await productRepository.deleteProduct(id);
-    return res.status(204);
+    return res.status(204).json({ product });
   } catch (error) {
     return res.status(400).json({ error });
   }
 });
 
 module.exports = router;
-
-// router.get("/products/search", searchProducts);
-
-// router.put("/products/:id", deleteProduct);
-
-// createProduct = async (req, res) => {
-//   const { productName, description, price } = req.body;
-
-//   if (!productName || !description || !price) {
-//     return res.status(400).json({
-//       error: "All fields required",
-//     });
-//   }
-
-//   try {
-//     const newProduct = await ProductRepository.create(
-//       productName,
-//       description,
-//       price
-//     );
-//     return res.status(201).send({ newProduct });
-//   } catch (error) {
-//     return res.status(400).json({
-//       error,
-//     });
-//   }
-// };
-
-// searchProducts = async (req, res) => {
-//   const query = req.query.search;
-
-//   if (!query) {
-//     return res.status(400).json({
-//       error: "Name to search required",
-//     });
-//   }
-//   try {
-//     const searchResults = await ProductRepository.search(query);
-//     return res.json({ searchResults });
-//   } catch (error) {
-//     return res.status(400).json({ error });
-//   }
-// };
-
-// updateProduct = async (req, res) => {
-//   const { productId } = req.params;
-//   const { name, description, price } = req.body;
-//   try {
-//     const product = await ProductRepository.getProduct(productId);
-//   } catch (error) {
-//     return res.status(400).json({ error });
-//   }
-
-//   try {
-//     const updatedProduct = await ProductRepository.update(
-//       productId,
-//       name,
-//       description,
-//       price
-//     );
-//     return res.json({ updatedProduct });
-//   } catch (error) {
-//     return res.status(400).json({ error });
-//   }
-// };
-
-// deleteProduct = async (req, res) => {
-//   const { productId } = req.params;
-// };

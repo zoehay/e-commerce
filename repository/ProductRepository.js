@@ -23,7 +23,23 @@ class ProductRepository {
     });
   }
 
-  // update(productId, name, description, price) {}
+  getProductsBySearchName(searchName) {
+    return this.prisma.product.findMany({
+      where: {
+        name: {
+          contains: searchName,
+          mode: "insensitive",
+        },
+      },
+    });
+  }
+
+  updateProduct(productId, productName, description, price) {
+    return this.prisma.product.update({
+      where: { id: productId },
+      data: { name: productName, description: description, price: price },
+    });
+  }
 
   deleteProduct(id) {
     return this.prisma.product.delete({
