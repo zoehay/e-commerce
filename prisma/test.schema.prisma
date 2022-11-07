@@ -13,3 +13,17 @@ model Product {
   description String
   price Decimal @db.Money
 }
+
+model User {
+  id Int @id @default(autoincrement())
+  email String @unique
+  password String 
+  name String?
+}
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt   DateTime
+}

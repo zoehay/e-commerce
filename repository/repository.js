@@ -1,29 +1,13 @@
-const { Prisma, PrismaClient } = require("@prisma/client");
+const { PrismaClient } = require("@prisma/client");
 const ProductRepository = require("./ProductRepository");
+const UserRepository = require("./UserRepository");
 
 const prisma = new PrismaClient();
 
 const productRepository = new ProductRepository(prisma);
+const userRepository = new UserRepository(prisma);
 
-module.exports = { prisma, productRepository };
-
-// export class UserRepository {
-//   registerUser(name, email, password) {
-//     user;
-//   }
-//   getUserById(userId) {
-//     user;
-//   }
-//   updateUser(userId, name, email, password) {
-//     bool;
-//   }
-//   deleteUser(userId) {
-//     bool;
-//   }
-//   getUserByEmail(email) {
-//     user;
-//   }
-// }
+module.exports = { prisma, productRepository, userRepository };
 
 // export class CartRepository {
 //   addProduct(userId, productId, quantity) {

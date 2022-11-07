@@ -27,7 +27,7 @@ test("a product is added successfully", async () => {
 test("get all products", async () => {
   const response = await request(app).get("/products");
   expect(response.body.products).toBeDefined();
-  // expect(response.body.products.length).toEqual(1);
+  expect(response.body.products.length).toEqual(1);
 });
 
 test("get a product by id", async () => {

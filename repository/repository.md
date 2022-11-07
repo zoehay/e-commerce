@@ -34,3 +34,17 @@ cart = cartRepository.getCart(userId)
     order = createOrder(userId, cart.products)
 
     clearCart(userId)
+
+####
+
+"/login" - authenticate (userRepository.getUserByEmail) get the Id
+
+        - redirect "users/id"
+        - failure redirect - "login"
+
+"/register" - register user (input checks) (hash from Bcrypt) (userRepository.createUser)
+
+        - redirect "users/id"
+        - failure redirect (!getUserByEmail, )
+
+"/logout" - redirect "/login"
