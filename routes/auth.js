@@ -2,10 +2,11 @@ const express = require("express");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const router = express.Router();
+const { userRepository } = require("../repository/repository");
 
 passport.use(
-  // "password",
-  new LocalStrategy(async function verify(username, password, done) {
+  "password",
+  new LocalStrategy(async function (username, password, done) {
     console.log("password strategy");
     let user;
     try {
@@ -28,23 +29,19 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  process.nextTick(function () {
-    done(null, user.id);
-  });
+  done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {
-  process.nextTick(async function () {
-    try {
-      const user = await userRepository.getUserById(id);
-      if (!user) {
-        return done(new Error("User not found"));
-      }
-      done(null, user);
-    } catch (err) {
-      done(err);
+  try {
+    const user = await userRepository.getUserById(id);
+    if (!user) {
+      return done(new Error("User not found"));
     }
-  });
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
 });
 
 router.get("/login", (req, res, next) => {
@@ -54,21 +51,20 @@ router.get("/login", (req, res, next) => {
 
 router.post(
   "/login/password",
-  // function (req, res, next) {
-  //   console.log("password page");
-  //   console.log(req.body);
-  //   next();
-  // },
-  passport.authenticate("local", {
+  function (req, res, next) {
+    console.log("password page");
+    console.log(req.body);
+    next();
+  },
+  passport.authenticate("password", {
     successRedirect: "/users",
     failureRedirect: "/login",
     failureMessage: true,
-  })
-  // ,
-  // function (req, res) {
-  //   console.log("done");
-  //   res.redirect("/users");
-  // }
+  }),
+  function (req, res) {
+    console.log("done");
+    res.redirect("/users");
+  }
 );
 
 router.post("/logout", function (req, res, next) {
