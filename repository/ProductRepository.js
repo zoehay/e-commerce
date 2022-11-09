@@ -18,7 +18,7 @@ class ProductRepository {
   }
 
   getProductById(id) {
-    return this.prisma.product.findUnique({
+    return this.prisma.product.findUniqueOrThrow({
       where: { id: id },
     });
   }

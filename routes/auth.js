@@ -4,13 +4,18 @@ const LocalStrategy = require("passport-local").Strategy;
 const router = express.Router();
 const { userRepository } = require("../repository/repository");
 
+// Passport Auth
 passport.use(
   "password",
-  new LocalStrategy(async function (username, password, done) {
+  new LocalStrategy({ usernameField: "email" }, async function (
+    email,
+    password,
+    done
+  ) {
     console.log("password strategy");
     let user;
     try {
-      user = await userRepository.getUserByEmail(username);
+      user = await userRepository.getUserByEmail(email);
       if (!user) {
         console.log("user not found");
         return done(null, false, { message: "User email not found" });
@@ -44,44 +49,50 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
+// Auth Routes
 router.get("/login", (req, res, next) => {
   console.log("loginpage");
-  next();
+  res.status(200).json({ message: "login page" });
 });
 
 router.post(
-  "/login/password",
-  function (req, res, next) {
-    console.log("password page");
-    console.log(req.body);
-    next();
-  },
+  "/login",
   passport.authenticate("password", {
-    successRedirect: "/users",
-    failureRedirect: "/login",
+    failureRedirect: "/auth/login",
     failureMessage: true,
   }),
-  function (req, res) {
-    console.log("done");
-    res.redirect("/users");
+  (req, res) => {
+    res.redirect(`/users/${req.user.id}`);
   }
 );
 
-router.post("/logout", function (req, res, next) {
+router.post("/register", async (req, res) => {
+  const { email, userName, password } = req.body || undefined;
+  if (!email || !password) {
+    console.log("Email and password required");
+    return res.redirect("/auth/register");
+  }
+  try {
+    const existingUser = await userRepository.getUserByEmail(email);
+    if (existingUser) {
+      console.log("User with email already exists");
+      return res.redirect("/auth/login");
+    }
+
+    const user = await userRepository.createUser(email, userName, password);
+    res.redirect(`/users/${user.id}`);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.post("/logout", (req, res, next) => {
   req.logout(function (err) {
     if (err) {
       return next(err);
     }
-    res.redirect("/");
+    res.redirect("/auth/login");
   });
 });
-
-// router.post(
-//   "/login",
-//   passport.authenticate("local"),
-//   function (req, res, next) {
-//     res.redirect(`users/${req.user.id}`);
-//   }
-// );
 
 module.exports = router;
