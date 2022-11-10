@@ -1,6 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const bcrypt = require("bcrypt");
 const router = express.Router();
 const { userRepository } = require("../repository/repository");
 
@@ -21,15 +22,16 @@ passport.use(
         return done(null, false, { message: "User email not found" });
       }
       console.log("found user");
+      console.log(user.password);
+      const match = await bcrypt.compare(password, user.password);
+      console.log(match);
+      if (!match) {
+        return done(null, false, { message: "Incorrect email or password" });
+      }
+      return done(null, user);
     } catch (err) {
-      console.log("problem finding user");
       return done(err);
     }
-
-    if (password != user.password) {
-      return done(null, false, { message: "Incorrect email or password" });
-    }
-    return done(null, user);
   })
 );
 
@@ -70,16 +72,23 @@ router.post("/register", async (req, res) => {
   const { email, userName, password } = req.body || undefined;
   if (!email || !password) {
     console.log("Email and password required");
-    return res.redirect("/auth/register");
+    return res.redirect("/auth/login");
   }
   try {
+    // check if already registered
     const existingUser = await userRepository.getUserByEmail(email);
     if (existingUser) {
       console.log("User with email already exists");
       return res.redirect("/auth/login");
     }
-
-    const user = await userRepository.createUser(email, userName, password);
+    // create user
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const user = await userRepository.createUser(
+      email,
+      userName,
+      hashedPassword
+    );
     res.redirect(`/users/${user.id}`);
   } catch (err) {
     res.status(500).json({ message: err.message });
