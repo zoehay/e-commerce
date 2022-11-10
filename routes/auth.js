@@ -22,9 +22,7 @@ passport.use(
         return done(null, false, { message: "User email not found" });
       }
       console.log("found user");
-      console.log(user.password);
       const match = await bcrypt.compare(password, user.password);
-      console.log(match);
       if (!match) {
         return done(null, false, { message: "Incorrect email or password" });
       }
