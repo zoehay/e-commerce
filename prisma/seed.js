@@ -1,4 +1,6 @@
 const { PrismaClient, Prisma } = require("@prisma/client");
+const request = require("supertest");
+const app = require("../src/app");
 
 const prisma = new PrismaClient({ log: ["query"] });
 
@@ -28,13 +30,28 @@ async function main() {
       });
     })
   );
-  // let users = [
-  //   {
-  //     email: 'fletch@email.com',
-  //     name: "Fletch",
-  //     password: 'heyitsatestpassword'
-  //   }
-  // ]
+
+  let users = [
+    {
+      email: "john@goods.com",
+      userName: "John",
+      password: "stuff",
+    },
+    {
+      email: "fletch@email.com",
+      userName: "Fletch",
+      password: "lime",
+    },
+    {
+      email: "ray@email.com",
+      password: "plant",
+    },
+  ];
+  await Promise.all(
+    users.map(async (user) => {
+      const response = await request(app).post("/auth/register").send(user);
+    })
+  );
 }
 
 main()

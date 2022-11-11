@@ -8,6 +8,7 @@ const logger = require("morgan");
 const productRouter = require("../routes/products");
 const userRouter = require("../routes/users");
 const authRouter = require("../routes/auth");
+const cartRouter = require("../routes/cart");
 const { prisma, userRepository } = require("../repository/repository");
 const store = new session.MemoryStore();
 
@@ -39,5 +40,6 @@ app.use(passport.session());
 app.use("/auth", authRouter);
 app.use("/products", productRouter);
 app.use("/users", userRouter);
+app.use("/cart", cartRouter);
 
 module.exports = app;
