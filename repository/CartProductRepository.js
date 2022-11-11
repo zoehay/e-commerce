@@ -45,6 +45,7 @@ class CartProductRepository {
   }
 
   getUserCart(userId) {
+    console.log("getting user cart", userId);
     return this.prisma.cartProduct.findMany({
       where: {
         userId: userId,

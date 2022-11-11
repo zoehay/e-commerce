@@ -16,31 +16,58 @@ beforeAll(async () => {
   // await prisma.$executeRawUnsafe(`ALTER SEQUENCE "User_id_seq" RESTART WITH 1`);
   // await prisma.$executeRawUnsafe(`TRUNCATE TABLE "User" CASCADE;`);
   // await exec("node ./prisma/seed.js");
-  await prisma.$executeRawUnsafe(`TRUNCATE TABLE "CartProduct";`);
-
   // TODO add login process
 });
 
 beforeEach(async () => {
-  // Add some cart products for the user
+  await prisma.$executeRawUnsafe(`TRUNCATE TABLE "CartProduct";`);
+  await prisma.cartProduct.create({
+    data: { userId: 1, productId: 1, quantity: 1 },
+  });
+  await prisma.cartProduct.create({
+    data: { userId: 1, productId: 2, quantity: 2 },
+  });
+});
+
+test("All of the cart products for a user are retrieved", async () => {
+  const response = await request(app).get("/cart/1");
+  expect(response.statusCode).toEqual(200);
+  expect(response.body.cart.length).toEqual(2);
 });
 
 test("A new product is added to the user cart", async () => {
   const newCartProduct = {
     userId: 1,
-    productId: 2,
+    productId: 3,
     quantity: 1,
   };
   const response = await request(app).post("/cart").send(newCartProduct);
   expect(response.statusCode).toEqual(201);
 });
 
-// test("A cart product is removed");
+test("The quantity of an exisiting cart product is increased", async () => {
+  const updateCartProduct = {
+    userId: 1,
+    productId: 1,
+    quantity: 3,
+  };
+  const response = await request(app).post("/cart").send(updateCartProduct);
+  console.log("update", response.body);
+  expect(response.statusCode).toEqual(200);
+});
 
-// test("All of the cart products for a user are retrieved");
+test("The quantity of an existing cart product is set to zero to delete it", async () => {
+  const deleteCartProduct = {
+    userId: 1,
+    productId: 1,
+    quantity: 0,
+  };
+  const response = await request(app).post("/cart").send(deleteCartProduct);
+  console.log("deleted", response.body);
+  expect(response.statusCode).toEqual(204);
+});
 
-// test("All of the cart products for a user are cleared");
-
-// test("The quantity of an exisiting cart product is increased");
-
-// test("The quantity of an existing cart product is set to zero to delete it");
+test("All of the cart products for a user are cleared", async () => {
+  const response = await request(app).delete("/cart/1");
+  expect(response.statusCode).toEqual(204);
+});
