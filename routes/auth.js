@@ -4,9 +4,6 @@ const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
 const authRouter = express.Router();
 const { userRepository } = require("../repository/repository");
-const ensureLogIn = require("connect-ensure-login").ensureLoggedIn;
-
-const ensureLoggedIn = ensureLogIn;
 
 const checkUserId = (req, res, next) => {
   const id = Number(req.params.id);
@@ -66,7 +63,6 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-// Auth Routes
 authRouter.get("/login", (req, res, next) => {
   console.log("loginpage");
   res.status(200).json({ message: "login page" });
@@ -118,4 +114,4 @@ authRouter.post("/logout", (req, res, next) => {
   });
 });
 
-module.exports = { authRouter, checkUserId, ensureLoggedIn };
+module.exports = { authRouter, checkUserId };

@@ -2,10 +2,10 @@ const express = require("express");
 const { prisma, cartProductRepository } = require("../repository/repository");
 const { checkUserId } = require("./auth");
 
-const router = express.Router();
+const cartRouter = express.Router();
 
 // add or decrement quantity of a cartProduct
-router.post("/:id", checkUserId, async (req, res) => {
+cartRouter.post("/:id", checkUserId, async (req, res) => {
   const userId = Number(req.body.userId);
   const productId = Number(req.body.productId);
   const quantity = Number(req.body.quantity);
@@ -42,7 +42,7 @@ router.post("/:id", checkUserId, async (req, res) => {
 });
 
 // get all cartProduct items in a user's cart
-router.get("/:id", checkUserId, async (req, res) => {
+cartRouter.get("/:id", checkUserId, async (req, res) => {
   const userId = Number(req.params.id);
   try {
     const cart = await cartProductRepository.getUserCart(userId);
@@ -53,7 +53,7 @@ router.get("/:id", checkUserId, async (req, res) => {
 });
 
 // clear a user's cart
-router.delete("/:id", checkUserId, async (req, res) => {
+cartRouter.delete("/:id", checkUserId, async (req, res) => {
   console.log("delete");
   const userId = Number(req.params.id);
   console.log(userId);
@@ -67,4 +67,4 @@ router.delete("/:id", checkUserId, async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = cartRouter;

@@ -48,29 +48,17 @@ beforeEach(async () => {
   userId = dbUser.id;
 
   const response = await request(app).post("/auth/login").send(userLogin);
-  // console.log(response.headers["set-cookie"]);
+  console.log(response.headers["set-cookie"]);
   cookie = response.headers["set-cookie"];
 });
 
 afterEach(async () => {
-  const response = await request(app).post("/auth/logout");
+  const response = await request(app)
+    .post("/auth/logout")
+    .set("Cookie", cookie);
 });
 
 test("A user logs in", async () => {
-  // const userLogin = {
-  //   email: "john@goods.com",
-  //   password: "stuff",
-  // };
-  // const dbUser = await prisma.user.findUnique({
-  //   where: { email: userLogin.email },
-  // });
-  // const userId = dbUser.id;
-
-  // const response = await request(app).post("/auth/login").send(userLogin);
-  // console.log(response.headers["set-cookie"]);
-  // let cookie = response.headers["set-cookie"];
-  // expect(response.statusCode).toEqual(302);
-
   const res = await request(app).get(`/users/${userId}`).set("Cookie", cookie);
   console.log(res.body);
   expect(res.statusCode).toEqual(200);

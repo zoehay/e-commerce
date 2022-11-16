@@ -1,10 +1,10 @@
 const express = require("express");
 const { prisma, userRepository } = require("../repository/repository");
 const bcrypt = require("bcrypt");
-const router = express.Router();
+const userRouter = express.Router();
 const { ensureLoggedIn, checkUserId } = require("./auth");
 
-router.post("/", async (req, res) => {
+userRouter.post("/", async (req, res) => {
   const { email, userName, password } = req.body;
   if (!email || !userName || !password) {
     return res.status(400).json({
@@ -21,12 +21,12 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+userRouter.get("/", async (req, res) => {
   const users = await userRepository.getAllUsers();
   return res.json({ users });
 });
 
-router.get("/search/", async (req, res) => {
+userRouter.get("/search/", async (req, res) => {
   const email = req.query.email;
   if (!email) {
     return res.status(400).json({
@@ -41,7 +41,7 @@ router.get("/search/", async (req, res) => {
   }
 });
 
-router.get("/:id", checkUserId, async (req, res) => {
+userRouter.get("/:id", checkUserId, async (req, res) => {
   const id = Number(req.params.id);
   try {
     const user = await userRepository.getUserById(id);
@@ -51,7 +51,7 @@ router.get("/:id", checkUserId, async (req, res) => {
   }
 });
 
-router.put("/:id", checkUserId, async (req, res) => {
+userRouter.put("/:id", checkUserId, async (req, res) => {
   let id = Number(req.params.id);
   let email = req.body.email || undefined;
   let userName = req.body.userName || undefined;
@@ -74,7 +74,7 @@ router.put("/:id", checkUserId, async (req, res) => {
   }
 });
 
-router.delete("/:id", checkUserId, async (req, res) => {
+userRouter.delete("/:id", checkUserId, async (req, res) => {
   console.log("delete");
   const id = Number(req.params.id);
   console.log(id);
@@ -86,4 +86,4 @@ router.delete("/:id", checkUserId, async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = userRouter;
