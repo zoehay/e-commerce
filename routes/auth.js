@@ -2,8 +2,25 @@ const express = require("express");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
-const router = express.Router();
+const authRouter = express.Router();
 const { userRepository } = require("../repository/repository");
+const ensureLogIn = require("connect-ensure-login").ensureLoggedIn;
+
+const ensureLoggedIn = ensureLogIn;
+
+const checkUserId = (req, res, next) => {
+  const id = Number(req.params.id);
+  if (!req.user) {
+    console.log("no user");
+    return res.sendStatus(401);
+  }
+  if (req.user.id === id) {
+    next();
+  } else {
+    console.log("wrong user");
+    return res.sendStatus(401);
+  }
+};
 
 // Passport Auth
 passport.use(
@@ -50,34 +67,33 @@ passport.deserializeUser(async (id, done) => {
 });
 
 // Auth Routes
-router.get("/login", (req, res, next) => {
+authRouter.get("/login", (req, res, next) => {
   console.log("loginpage");
   res.status(200).json({ message: "login page" });
 });
 
-router.post(
+authRouter.post(
   "/login",
   passport.authenticate("password", {
+    successReturnToOrRedirect: `/auth/login`,
     failureRedirect: "/auth/login",
     failureMessage: true,
-  }),
-  (req, res) => {
-    res.redirect(`/users/${req.user.id}`);
-  }
+    keepSessionInfo: true,
+  })
 );
 
-router.post("/register", async (req, res) => {
+authRouter.post("/register", async (req, res) => {
   const { email, userName, password } = req.body || undefined;
   if (!email || !password) {
     console.log("Email and password required");
-    return res.redirect("/auth/login");
+    return res.sendStatus(302);
   }
   try {
     // check if already registered
     const existingUser = await userRepository.getUserByEmail(email);
     if (existingUser) {
       console.log("User with email already exists");
-      return res.redirect("/auth/login");
+      return res.sendStatus(302);
     }
     // create user
     const salt = await bcrypt.genSalt(10);
@@ -93,13 +109,13 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post("/logout", (req, res, next) => {
+authRouter.post("/logout", (req, res, next) => {
   req.logout(function (err) {
     if (err) {
       return next(err);
     }
-    res.redirect("/auth/login");
+    res.sendStatus(200);
   });
 });
 
-module.exports = router;
+module.exports = { authRouter, checkUserId, ensureLoggedIn };

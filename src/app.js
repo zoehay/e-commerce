@@ -7,10 +7,9 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const productRouter = require("../routes/products");
 const userRouter = require("../routes/users");
-const authRouter = require("../routes/auth");
+const { authRouter } = require("../routes/auth");
 const cartRouter = require("../routes/cart");
 const { prisma, userRepository } = require("../repository/repository");
-const store = new session.MemoryStore();
 
 const app = express();
 app.use(logger("dev"));
