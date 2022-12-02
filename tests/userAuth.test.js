@@ -1,50 +1,47 @@
 const request = require("supertest");
 const app = require("../src/app");
 const { prisma } = require("../repository/repository");
-const { exec } = require("child_process");
+const { isExportDeclaration } = require("typescript");
 
 let cookie;
 let userId;
-let userEmail = "john@goods.com";
-let userPassword = "stuff";
-let nonAuthId;
-let nonAuthEmail = "fletch@email.com";
+let userEmail = "user@email.com";
+let userName = "newUser";
+let userPassword = "aPassword";
 
 afterAll(async () => {
   await prisma.$disconnect();
 });
 
-beforeAll(async () => {
-  // clear and seed the Product and User tables
-  // await prisma.$executeRawUnsafe(
-  //   `ALTER SEQUENCE "Product_id_seq" RESTART WITH 1`
-  // );
-  // await prisma.$executeRawUnsafe(`TRUNCATE TABLE "Product" CASCADE;`);
-  // await prisma.$executeRawUnsafe(`ALTER SEQUENCE "User_id_seq" RESTART WITH 1`);
-  // await prisma.$executeRawUnsafe(`TRUNCATE TABLE "User" CASCADE;`);
-  // await prisma.$executeRawUnsafe(`TRUNCATE TABLE "Session" CASCADE;`);
-  // await exec("node ../prisma/seed.js");
-});
+beforeAll(async () => {});
 
 beforeEach(async () => {
-  // user Id of user to authorize
-  const user = await prisma.user.findUnique({
+  // clear database user table
+  await prisma.$executeRawUnsafe(`ALTER SEQUENCE "User_id_seq" RESTART WITH 1`);
+  await prisma.$executeRawUnsafe(`TRUNCATE TABLE "User" CASCADE;`);
+  await prisma.$executeRawUnsafe(`TRUNCATE TABLE "Session" CASCADE;`);
+
+  // register the test user
+  let user = {
+    email: userEmail,
+    userName: userName,
+    password: userPassword,
+  };
+  console.log(user);
+  await request(app).post("/auth/register").send(user);
+  // confirm registered test user id
+  const confirmUser = await prisma.user.findUnique({
     where: { email: userEmail },
   });
-  userId = user.id;
-  // user Id of a different user
-  const nonAuthUser = await prisma.user.findUnique({
-    where: { email: nonAuthEmail },
-  });
-  nonAuthId = nonAuthUser.id;
-  // log user in before each test
+  userId = confirmUser.id;
+
+  // log user in and set cookie
   const userLogin = {
     email: userEmail,
     password: userPassword,
   };
-
   const response = await request(app).post("/auth/login").send(userLogin);
-  console.log(response.headers["set-cookie"]);
+  console.log("good login", response);
   cookie = response.headers["set-cookie"];
 });
 
@@ -56,11 +53,72 @@ afterEach(async () => {
 });
 
 test("Logged in user gets all of their account information", async () => {
-  const response = await request(app).get(`/user`).set("Cookie", cookie);
+  const response = await request(app).get("/user").set("Cookie", cookie);
   console.log(response.body);
   expect(response.body.user.email).toEqual(userEmail);
 });
 
-// test("Logged in user updates their name");
+test("Logged in user updates their name", async () => {
+  const updateInfo = { userName: "updatedUserName" };
+  const response = await request(app)
+    .put("/user")
+    .set("Cookie", cookie)
+    .send(updateInfo);
+  console.log(response.body);
+  expect(response.statusCode).toEqual(200);
+  const confirmUser = await prisma.user.findUnique({
+    where: { id: userId },
+  });
+  console.log(confirmUser);
+  expect(confirmUser.name).toEqual(updateInfo.userName);
+});
 
-// test("Logged in user updates their password");
+test("Logged in user updates their email", async () => {
+  const updateInfo = { email: "aNewEmail@email.com" };
+  const response = await request(app)
+    .put("/user")
+    .set("Cookie", cookie)
+    .send(updateInfo);
+  console.log(response.body);
+  expect(response.statusCode).toEqual(200);
+  const confirmUser = await prisma.user.findUnique({
+    where: { id: userId },
+  });
+  console.log(confirmUser);
+  expect(confirmUser.email).toEqual(updateInfo.email);
+});
+
+test("Logged in user updates their password", async () => {
+  const updateInfo = { password: "aNewPassword" };
+  const response = await request(app)
+    .put("/user")
+    .set("Cookie", cookie)
+    .send(updateInfo);
+  console.log(response.body);
+  expect(response.statusCode).toEqual(200);
+  // confirm login still works
+
+  console.log("not logged out");
+
+  const getResponse = await request(app).get("/user").set("Cookie", cookie);
+  console.log(getResponse.body);
+
+  console.log("logout");
+
+  await request(app).post("/auth/logout").set("Cookie", cookie);
+
+  const userLogin = {
+    email: userEmail,
+    password: updateInfo.password,
+  };
+  const loginResponse = await request(app).post("/auth/login").send({
+    email: userEmail,
+    password: "wrong",
+  });
+  cookie = loginResponse.headers["set-cookie"];
+  console.log(loginResponse);
+
+  console.log("failure login");
+  const failgetresponse = await request(app).get("/user").set("Cookie", cookie);
+  console.log(failgetresponse.body);
+});

@@ -65,10 +65,9 @@ authRouter.get("/login", (req, res, next) => {
 authRouter.post(
   "/login",
   passport.authenticate("password", {
-    successReturnToOrRedirect: `/auth/login`,
+    successRedirect: `/`,
     failureRedirect: "/auth/login",
     failureMessage: true,
-    keepSessionInfo: true,
   })
 );
 
@@ -93,7 +92,7 @@ authRouter.post("/register", async (req, res) => {
       userName,
       hashedPassword
     );
-    // TODO
+    // TODO: fix redirect
     res.redirect(`/users/${user.id}`);
   } catch (err) {
     res.status(500).json({ message: err.message });
