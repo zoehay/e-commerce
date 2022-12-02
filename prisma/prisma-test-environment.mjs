@@ -36,6 +36,7 @@ class PrismaTestEnvironment extends TestEnvironment {
       `${prismaBinary} migrate reset --schema=../prisma/test.schema.prisma`
     );
     await exec(`${prismaBinary} db push --schema=./prisma/test.schema.prisma`);
+    await exec(`${prismaBinary} db seed`);
     return super.setup();
   }
 

@@ -5,18 +5,12 @@ const bcrypt = require("bcrypt");
 const authRouter = express.Router();
 const { userRepository } = require("../repository/repository");
 
-const checkUserId = (req, res, next) => {
-  const id = Number(req.params.id);
-  if (!req.user) {
+const checkAuthorization = (req, res, next) => {
+  if (!req.user.id) {
     console.log("no user");
     return res.sendStatus(401);
   }
-  if (req.user.id === id) {
-    next();
-  } else {
-    console.log("wrong user");
-    return res.sendStatus(401);
-  }
+  next();
 };
 
 // Passport Auth
@@ -99,6 +93,7 @@ authRouter.post("/register", async (req, res) => {
       userName,
       hashedPassword
     );
+    // TODO
     res.redirect(`/users/${user.id}`);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -114,4 +109,4 @@ authRouter.post("/logout", (req, res, next) => {
   });
 });
 
-module.exports = { authRouter, checkUserId };
+module.exports = { authRouter, checkAuthorization };

@@ -5,6 +5,7 @@ const app = require("../src/app");
 const prisma = new PrismaClient({ log: ["query"] });
 
 async function main() {
+  console.log("Seed");
   let products = [
     {
       name: "Shovel",

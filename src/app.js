@@ -6,7 +6,7 @@ const passport = require("passport");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const productRouter = require("../routes/products");
-const userRouter = require("../routes/users");
+const userRouter = require("../routes/user");
 const { authRouter } = require("../routes/auth");
 const cartRouter = require("../routes/cart");
 const { prisma, userRepository } = require("../repository/repository");
@@ -38,7 +38,7 @@ app.use(passport.session());
 
 app.use("/auth", authRouter);
 app.use("/products", productRouter);
-app.use("/users", userRouter);
+app.use("/user", userRouter);
 app.use("/cart", cartRouter);
 
 module.exports = app;
