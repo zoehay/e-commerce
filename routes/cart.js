@@ -5,8 +5,8 @@ const { checkAuthorization } = require("./auth");
 const cartRouter = express.Router();
 
 // add or decrement quantity of a cartProduct
-cartRouter.post("/:id", checkAuthorization, async (req, res) => {
-  const userId = Number(req.body.userId);
+cartRouter.post("/", checkAuthorization, async (req, res) => {
+  const userId = req.user.id;
   const productId = Number(req.body.productId);
   const quantity = Number(req.body.quantity);
   // check if the user has a cartProduct entry for this product
@@ -42,8 +42,8 @@ cartRouter.post("/:id", checkAuthorization, async (req, res) => {
 });
 
 // get all cartProduct items in a user's cart
-cartRouter.get("/:id", checkAuthorization, async (req, res) => {
-  const userId = Number(req.params.id);
+cartRouter.get("/", checkAuthorization, async (req, res) => {
+  const userId = req.user.id;
   try {
     const cart = await cartProductRepository.getUserCart(userId);
     return res.status(200).json({ cart });
@@ -53,10 +53,8 @@ cartRouter.get("/:id", checkAuthorization, async (req, res) => {
 });
 
 // clear a user's cart
-cartRouter.delete("/:id", checkAuthorization, async (req, res) => {
-  console.log("delete");
-  const userId = Number(req.params.id);
-  console.log(userId);
+cartRouter.delete("/", checkAuthorization, async (req, res) => {
+  const userId = req.user.id;
   try {
     const deletedCartProducts = await cartProductRepository.clearUserCart(
       userId
