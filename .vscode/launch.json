@@ -2,10 +2,10 @@
   "configurations": [
     {
       "type": "node-terminal",
-      "name": "Run Script: dev",
+      "name": "backend dev server",
       "request": "launch",
       "command": "npm run dev",
-      "cwd": "${workspaceFolder}"
+      "cwd": "${workspaceFolder}/backend"
     }
   ]
 }
