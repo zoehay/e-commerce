@@ -41,7 +41,6 @@ beforeEach(async () => {
     password: userPassword,
   };
   const response = await request(app).post("/auth/login").send(userLogin);
-  console.log("good login", response);
   cookie = response.headers["set-cookie"];
 });
 
@@ -89,6 +88,7 @@ test("Logged in user updates their email", async () => {
 });
 
 test("Logged in user updates their password", async () => {
+  // send update put request
   const updateInfo = { password: "aNewPassword" };
   const response = await request(app)
     .put("/user")
@@ -96,29 +96,33 @@ test("Logged in user updates their password", async () => {
     .send(updateInfo);
   console.log(response.body);
   expect(response.statusCode).toEqual(200);
+
   // confirm login still works
-
-  console.log("not logged out");
-
-  const getResponse = await request(app).get("/user").set("Cookie", cookie);
-  console.log(getResponse.body);
-
-  console.log("logout");
-
+  // logout
   await request(app).post("/auth/logout").set("Cookie", cookie);
 
-  const userLogin = {
+  // try log in with the old password
+  const failLoginResponse = await request(app).post("/auth/login").send({
+    email: userEmail,
+    password: userPassword,
+  });
+  cookie = failLoginResponse.headers["set-cookie"];
+
+  // confirm failed get
+  const failGetResponse = await request(app).get("/user").set("Cookie", cookie);
+  expect(failGetResponse.statusCode).toEqual(500);
+
+  // try login with updated password
+  const SuccessLoginResponse = await request(app).post("/auth/login").send({
     email: userEmail,
     password: updateInfo.password,
-  };
-  const loginResponse = await request(app).post("/auth/login").send({
-    email: userEmail,
-    password: "wrong",
   });
-  cookie = loginResponse.headers["set-cookie"];
-  console.log(loginResponse);
+  cookie = SuccessLoginResponse.headers["set-cookie"];
 
-  console.log("failure login");
-  const failgetresponse = await request(app).get("/user").set("Cookie", cookie);
-  console.log(failgetresponse.body);
+  // confirm successful get
+  const successGetResponse = await request(app)
+    .get("/user")
+    .set("Cookie", cookie);
+  expect(successGetResponse.statusCode).toEqual(200);
+  expect(successGetResponse.body.user.email).toEqual(userEmail);
 });

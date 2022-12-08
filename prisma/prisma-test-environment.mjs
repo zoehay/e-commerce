@@ -32,6 +32,7 @@ class PrismaTestEnvironment extends TestEnvironment {
 
   async setup() {
     console.log("setup");
+    //TODO: figure out how to run database seed before each test, Jest does not support asynchronous setup files
     await exec(
       `${prismaBinary} migrate reset --schema=../prisma/test.schema.prisma`
     );
