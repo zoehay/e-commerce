@@ -9,6 +9,18 @@ class UserRepository {
         email: email,
         name: userName,
         password: password,
+        isAdmin: false,
+      },
+    });
+  }
+
+  createAdminUser(email, userName, password) {
+    return this.prisma.user.create({
+      data: {
+        email: email,
+        name: userName,
+        password: password,
+        isAdmin: true,
       },
     });
   }
@@ -46,21 +58,3 @@ class UserRepository {
 }
 
 module.exports = UserRepository;
-
-// export class UserRepository {
-//   registerUser(name, email, password) {
-//     user;
-//   }
-//   getUserById(userId) {
-//     user;
-//   }
-//   updateUser(userId, name, email, password) {
-//     bool;
-//   }
-//   deleteUser(userId) {
-//     bool;
-//   }
-//   getUserByEmail(email) {
-//     user;
-//   }
-// }

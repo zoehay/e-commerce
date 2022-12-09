@@ -93,7 +93,7 @@ authRouter.post("/register", async (req, res) => {
       hashedPassword
     );
     // TODO: fix redirect
-    res.redirect(`/users/${user.id}`);
+    res.redirect("/user");
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
