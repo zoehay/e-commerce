@@ -5,11 +5,11 @@ const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const passport = require("passport");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const productRouter = require("../routes/products");
-const userRouter = require("../routes/user");
-const { authRouter } = require("../routes/auth");
-const cartRouter = require("../routes/cart");
-const { prisma, userRepository } = require("../repository/repository");
+const productRouter = require("./routes/products");
+const userRouter = require("./routes/user");
+const { authRouter } = require("./routes/auth");
+const cartRouter = require("./routes/cart");
+const { prisma, userRepository } = require("./repository/repository");
 
 const app = express();
 app.use(logger("dev"));

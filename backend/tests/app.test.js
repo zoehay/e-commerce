@@ -1,8 +1,6 @@
 const request = require("supertest");
 const app = require("../src/app");
-const { prisma } = require("../repository/repository");
-const { exec } = require("child_process");
-const { isConditionalExpression } = require("typescript");
+const { prisma } = require("../src/repository/repository");
 
 let cookie;
 let userId;

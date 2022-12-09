@@ -1,6 +1,6 @@
 const request = require("supertest");
 const app = require("../src/app");
-const { prisma } = require("../repository/repository");
+const { prisma } = require("../src/repository/repository");
 
 afterAll(async () => {
   await prisma.$executeRawUnsafe(`ALTER SEQUENCE "User_id_seq" RESTART WITH 1`);

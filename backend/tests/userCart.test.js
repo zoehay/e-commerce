@@ -1,6 +1,6 @@
 const request = require("supertest");
 const app = require("../src/app");
-const { prisma } = require("../repository/repository");
+const { prisma } = require("../src/repository/repository");
 const { exec } = require("child_process");
 const { products } = require("../prisma/seedData");
 
