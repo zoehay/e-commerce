@@ -9,8 +9,20 @@ const checkAuthorization = (req, res, next) => {
   if (!req.user.id) {
     console.log("no user");
     return res.sendStatus(401);
+  } else {
+    next();
   }
-  next();
+};
+
+const checkAdmin = (req, res, next) => {
+  console.log("check admin");
+  if (req.user.isAdmin == false) {
+    console.log("unauthorized");
+    return res.sendStatus(401);
+  } else {
+    console.log("authorized");
+    next();
+  }
 };
 
 // Passport Auth
@@ -108,4 +120,4 @@ authRouter.post("/logout", (req, res, next) => {
   });
 });
 
-module.exports = { authRouter, checkAuthorization };
+module.exports = { authRouter, checkAuthorization, checkAdmin };

@@ -9,6 +9,7 @@ const productRouter = require("./routes/products");
 const userRouter = require("./routes/user");
 const { authRouter } = require("./routes/auth");
 const cartRouter = require("./routes/cart");
+const adminRouter = require("./routes/admin");
 const { prisma, userRepository } = require("./repository/repository");
 
 const app = express();
@@ -40,5 +41,6 @@ app.use("/auth", authRouter);
 app.use("/products", productRouter);
 app.use("/user", userRouter);
 app.use("/cart", cartRouter);
+app.use("/admin", adminRouter);
 
 module.exports = app;

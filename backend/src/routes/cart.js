@@ -6,6 +6,7 @@ const cartRouter = express.Router();
 
 // add or decrement quantity of a cartProduct
 cartRouter.post("/", checkAuthorization, async (req, res) => {
+  console.log(req.user);
   const userId = req.user.id;
   const productId = Number(req.body.productId);
   const quantity = Number(req.body.quantity);

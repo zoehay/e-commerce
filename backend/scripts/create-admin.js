@@ -31,3 +31,5 @@ main()
     await prisma.$disconnect();
     process.exit(1);
   });
+
+module.exports = { email, userName, password };

@@ -6,43 +6,6 @@ const { checkAuthorization } = require("./auth");
 
 userRouter.use(checkAuthorization);
 
-userRouter.post("/admin", async (req, res) => {
-  const { email, userName, password } = req.body;
-  if (!email || !userName || !password) {
-    return res.status(400).json({
-      error: "All fields required",
-    });
-  }
-  try {
-    const user = await userRepository.createUser(email, userName, password);
-    return res.status(201).send({ user });
-  } catch (error) {
-    return res.status(400).json({
-      error: "Create user failed",
-    });
-  }
-});
-
-userRouter.get("/admin", async (req, res) => {
-  const users = await userRepository.getAllUsers();
-  return res.json({ users });
-});
-
-userRouter.get("/admin/search/", async (req, res) => {
-  const { email } = req.body;
-  if (!email) {
-    return res.status(400).json({
-      error: "Email term required",
-    });
-  }
-  try {
-    const user = await userRepository.getUserByEmail(email);
-    return res.status(200).json({ user });
-  } catch (error) {
-    return res.status(400).json({ error });
-  }
-});
-
 userRouter.get("/", async (req, res) => {
   const id = req.user.id;
   try {

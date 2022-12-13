@@ -113,6 +113,7 @@ test("Logged in user updates their password", async () => {
   expect(failGetResponse.statusCode).toEqual(500);
 
   // try login with updated password
+  console.log("proper login");
   const SuccessLoginResponse = await request(app).post("/auth/login").send({
     email: userEmail,
     password: updateInfo.password,
@@ -120,9 +121,11 @@ test("Logged in user updates their password", async () => {
   cookie = SuccessLoginResponse.headers["set-cookie"];
 
   // confirm successful get
+  console.log("confirm get");
   const successGetResponse = await request(app)
     .get("/user")
     .set("Cookie", cookie);
+  console.log(successGetResponse.body);
   expect(successGetResponse.statusCode).toEqual(200);
   expect(successGetResponse.body.user.email).toEqual(userEmail);
 });

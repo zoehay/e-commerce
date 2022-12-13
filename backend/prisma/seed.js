@@ -34,7 +34,7 @@ async function main() {
 
   let users = [
     {
-      email: "john@goods.com",
+      email: "john@email.com",
       userName: "John",
       password: "stuff",
     },
