@@ -8,7 +8,7 @@ productRouter.get("/", async (req, res) => {
   return res.json({ products });
 });
 
-productRouter.get("/search/", async (req, res) => {
+productRouter.get("/search", async (req, res) => {
   const searchName = req.query.searchName;
   if (!searchName) {
     return res.status(400).json({
