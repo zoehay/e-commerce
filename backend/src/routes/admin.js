@@ -10,6 +10,8 @@ const { checkAuthorization, checkAdmin } = require("./auth");
 
 adminRouter.use(checkAuthorization, checkAdmin);
 
+// User Routes //
+
 adminRouter.post("/users", async (req, res) => {
   console.log("admin user create", req.body);
   const { email, userName, password } = req.body || undefined;
@@ -68,6 +70,7 @@ adminRouter.get("/users/:id", async (req, res) => {
   return res.status(200).json({ user });
 });
 
+// #TODO: admin user search by email functionality?
 adminRouter.get("/search", async (req, res) => {
   const { email } = req.body;
   if (!email) {
@@ -88,6 +91,8 @@ adminRouter.delete("/users/:id", async (req, res) => {
   const user = await userRepository.deleteUser(id);
   return res.status(204).json({ user });
 });
+
+// Product Routes //
 
 adminRouter.post("/products", async (req, res) => {
   const { productName, description, price } = req.body;

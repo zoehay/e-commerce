@@ -1,14 +1,14 @@
 const express = require("express");
 const { prisma, productRepository } = require("../repository/repository");
 
-const router = express.Router();
+const productRouter = express.Router();
 
-router.get("/", async (req, res) => {
+productRouter.get("/", async (req, res) => {
   const products = await productRepository.getAllProducts();
   return res.json({ products });
 });
 
-router.get("/search/", async (req, res) => {
+productRouter.get("/search/", async (req, res) => {
   const searchName = req.query.searchName;
   if (!searchName) {
     return res.status(400).json({
@@ -25,7 +25,7 @@ router.get("/search/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+productRouter.get("/:id", async (req, res) => {
   const id = Number(req.params.id);
   try {
     const product = await productRepository.getProductById(id);
@@ -35,4 +35,4 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = productRouter;

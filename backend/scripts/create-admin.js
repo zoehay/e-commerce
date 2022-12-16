@@ -2,8 +2,8 @@ const express = require("express");
 const { prisma, userRepository } = require("../src/repository/repository");
 const bcrypt = require("bcrypt");
 
-const email = "admin";
-const userName = "admin";
+const email = "admin.email";
+const userName = "Admin";
 const password = "secret";
 
 async function main() {
@@ -31,5 +31,3 @@ main()
     await prisma.$disconnect();
     process.exit(1);
   });
-
-module.exports = { email, userName, password };

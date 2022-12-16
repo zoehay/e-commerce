@@ -1,8 +1,6 @@
 const request = require("supertest");
 const app = require("../src/app");
 const { prisma, userRepository } = require("../src/repository/repository");
-const cp = require("child_process");
-const path = require("path");
 const bcrypt = require("bcrypt");
 
 let cookie;
@@ -41,12 +39,17 @@ beforeEach(async () => {
   }
 
   // register another test user
-  let user = {
-    email: userEmail,
-    userName: userName,
-    password: userPassword,
-  };
-  await request(app).post("/auth/register").send(user);
+  try {
+    const salt = await bcrypt.genSalt(10);
+    const hashedUserPassword = await bcrypt.hash(userPassword, salt);
+    const user = await userRepository.createUser(
+      userEmail,
+      userName,
+      hashedUserPassword
+    );
+  } catch (e) {
+    console.log(e);
+  }
 
   // log admin user in and set cookie
   const adminLogin = {
@@ -93,15 +96,6 @@ test("get a user by id", async () => {
   expect(response.body.user.id).toEqual(userId);
 });
 
-test("get user by email", async () => {
-  const response = await request(app)
-    .get("/admin/search")
-    .send({ email: userEmail })
-    .set("Cookie", cookie);
-  expect(response.statusCode).toEqual(200);
-  expect(response.body.user).toBeDefined();
-});
-
 test("update a user email and name", async () => {
   const userId = 2;
   const updatedUser = {
@@ -141,4 +135,17 @@ test("delete a user", async () => {
   expect(response.statusCode).toEqual(204);
   const users = await userRepository.getAllUsers();
   expect(users.length).toEqual(1);
+});
+
+// #TODO: admin user search by email functionality?
+test("get user by email", async () => {
+  const emailReq = {
+    email: userEmail,
+  };
+  const response = await request(app)
+    .get("/admin/search")
+    .send(emailReq)
+    .set("Cookie", cookie);
+  expect(response.statusCode).toEqual(200);
+  expect(response.body.user.name).toEqual(userName);
 });
