@@ -7,7 +7,7 @@
     "dev-init": "prisma migrate dev --schema=./prisma/schema.prisma --name=dev",
     "dev": "node src/index.js",
     "test-init": "prisma migrate dev --schema=./prisma/test.schema.prisma --name=test",
-    "test": "jest",
+    "test": "jest --runInBand",
     "test-reset": "prisma migrate reset --schema=./prisma/test.schema.prisma",
     "create-admin": "node scripts/create-admin.js"
   },
