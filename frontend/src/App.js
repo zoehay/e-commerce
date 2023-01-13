@@ -1,18 +1,12 @@
 import logo from "./logo.svg";
 import "./App.css";
-import LoginForm from "./login";
+import LoginForm from "./components/LoginForm";
 
 function App() {
-  async function getLogin() {
-    const login = await fetch("http://localhost:8000/auth/login");
-  }
-
-  getLogin();
-
   return (
     <div className="App">
       <header className="App-header">
-        <LoginForm>Login</LoginForm>
+        <LoginForm></LoginForm>
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
