@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const session = require("express-session");
+const cors = require("cors");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const passport = require("passport");
 const cookieParser = require("cookie-parser");
@@ -17,6 +18,19 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-ALlow-Origin", "https://localhost:3000");
+//   res.header(
+//     "Acces-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+//   );
+//   next();
+// });
 
 app.use(
   session({
