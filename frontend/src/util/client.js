@@ -3,10 +3,10 @@ const Client = {
     const endpoint = "http://localhost:8000/products";
     try {
       const response = await fetch(endpoint);
-      console.log(response);
       if (response.ok) {
         const responseJSON = await response.json();
-        console.log(responseJSON.products);
+        const products = responseJSON.products;
+        return products;
       }
     } catch (error) {
       console.log(error);

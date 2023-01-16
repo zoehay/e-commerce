@@ -8,6 +8,7 @@ import Root from "./routes/root";
 import ErrorPage from "./error-page";
 import ProductFeed from "./components/ProductFeed";
 import Client from "./util/Client";
+import ProductTile from "./components/ProductTile";
 
 const router = createBrowserRouter([
   {
@@ -22,15 +23,19 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  const [products, setProducts] = useState({});
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       let products = await Client.getProducts();
-      console.log(products);
+      setProducts(products);
     }
     fetchData();
   }, []);
+
+  const productTiles = products.map((product, index) => (
+    <ProductTile product={product} key={index} />
+  ));
 
   return (
     <div>
@@ -39,7 +44,7 @@ function App() {
       </React.StrictMode>
       <div className="App">
         <div className="feed-container">
-          <ProductFeed></ProductFeed>
+          <ProductFeed>{productTiles}</ProductFeed>
         </div>
 
         <header className="App-header">
