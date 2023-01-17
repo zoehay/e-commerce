@@ -1,4 +1,9 @@
 import React, { useState } from "react";
+import styled from "styled-components";
+
+const Form = styled.form`
+  width: 100%;
+`;
 
 const LoginForm = () => {
   const [formState, setFormState] = useState({
@@ -20,36 +25,32 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="login">
-      <div className="login-form">
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input
-              type="text"
-              name="email"
-              id="email"
-              value={formState.email}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="password">Password</label>
-            <input
-              type="text"
-              name="password"
-              id="password"
-              value={formState.password}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <input type="submit" value="Submit" />
-          </div>
-        </form>
+    <Form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="email">Email</label>
+        <input
+          type="text"
+          name="email"
+          id="email"
+          value={formState.email}
+          onChange={handleChange}
+        />
       </div>
-    </div>
+
+      <div>
+        <label htmlFor="password">Password</label>
+        <input
+          type="text"
+          name="password"
+          id="password"
+          value={formState.password}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <input type="submit" value="Submit" />
+      </div>
+    </Form>
   );
 };
 

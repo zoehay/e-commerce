@@ -8,6 +8,7 @@ import ErrorPage from "./error-page";
 import ProductFeed from "./components/ProductFeed";
 import Client from "./util/Client";
 import ProductTile from "./components/ProductTile";
+import RegisterForm from "./components/RegisterForm";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "auth/login",
     element: <LoginForm />,
+  },
+  {
+    path: "auth/register",
+    element: <RegisterForm />,
   },
 ]);
 

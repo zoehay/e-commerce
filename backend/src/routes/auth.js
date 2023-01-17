@@ -85,6 +85,8 @@ authRouter.post(
 
 authRouter.post("/register", async (req, res) => {
   const { email, userName, password } = req.body || undefined;
+  console.log(req.body);
+  console.log(email, userName, password);
   if (!email || !password) {
     console.log("Email and password required");
     return res.sendStatus(302);
@@ -105,7 +107,7 @@ authRouter.post("/register", async (req, res) => {
       hashedPassword
     );
     // TODO: fix redirect
-    res.redirect("/user");
+    res.send(user);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
