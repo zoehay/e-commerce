@@ -9,7 +9,8 @@
     "test-init": "prisma migrate dev --schema=./prisma/test.schema.prisma --name=test",
     "test": "jest --runInBand",
     "test-reset": "prisma migrate reset --schema=./prisma/test.schema.prisma",
-    "create-admin": "node scripts/create-admin.js"
+    "create-admin": "node scripts/create-admin.js",
+    "seed": "node prisma/seed.js"
   },
   "repository": {
     "type": "git",

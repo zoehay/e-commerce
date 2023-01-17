@@ -1,15 +1,37 @@
 import React from "react";
+import styled from "styled-components";
+
+const Tile = styled.div`
+  background: papayawhip;
+  border: solid;
+  padding: 2em;
+`;
+
+const ProductInfo = styled.div`
+  text-alight: center;
+`;
+
+const ProductName = styled.p`
+  font-size: 2em;
+`;
+
+const ProductPrice = styled.p`
+  font-size: 1em;
+`;
+
+const ProductDescription = styled.p`
+  font-size: 1em;
+`;
 
 const ProductTile = ({ product }) => {
   return (
-    <div className="product-tile">
-      <div className="product-image"></div>
-      <div className="product-info">
-        <div className="product-name">{product.name}</div>
-        <div className="product-price">{product.price}</div>
-        <div className="product-description">{product.description}</div>
-      </div>
-    </div>
+    <Tile>
+      <ProductInfo>
+        <ProductName>{product.name}</ProductName>
+        <ProductPrice>{product.price}</ProductPrice>
+        <ProductDescription>{product.description}</ProductDescription>
+      </ProductInfo>
+    </Tile>
   );
 };
 
