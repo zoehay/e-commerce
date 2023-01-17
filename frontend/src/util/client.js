@@ -32,6 +32,25 @@ const Client = {
       console.log(error);
     }
   },
+
+  async loginUser(userEmail, userPassword) {
+    const endpoint = "http://localhost:8000/auth/login";
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: userEmail,
+          password: userPassword,
+        }),
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export default Client;

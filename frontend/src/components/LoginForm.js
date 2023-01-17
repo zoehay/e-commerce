@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import Client from "../util/Client";
 
 const Form = styled.form`
   width: 100%;
@@ -13,7 +14,9 @@ const LoginForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formState.email, formState.password);
+    const { email, password } = formState;
+    console.log(email, password);
+    Client.loginUser(email, password);
   };
 
   const handleChange = ({ target }) => {
