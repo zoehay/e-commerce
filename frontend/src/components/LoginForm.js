@@ -28,32 +28,34 @@ const LoginForm = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="email">Email</label>
-        <input
-          type="text"
-          name="email"
-          id="email"
-          value={formState.email}
-          onChange={handleChange}
-        />
-      </div>
+    <div>
+      <Form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="email">Email</label>
+          <input
+            type="text"
+            name="email"
+            id="email"
+            value={formState.email}
+            onChange={handleChange}
+          />
+        </div>
 
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          type="text"
-          name="password"
-          id="password"
-          value={formState.password}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <input type="submit" value="Submit" />
-      </div>
-    </Form>
+        <div>
+          <label htmlFor="password">Password</label>
+          <input
+            type="text"
+            name="password"
+            id="password"
+            value={formState.password}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <input type="submit" value="Submit" />
+        </div>
+      </Form>
+    </div>
   );
 };
 

@@ -1,14 +1,21 @@
 import logo from "./logo.svg";
-import LoginForm from "./components/LoginForm";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Link,
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 import Root from "./routes/root";
 import ErrorPage from "./error-page";
 import ProductFeed from "./components/ProductFeed";
+import LoginForm from "./components/LoginForm";
 import Client from "./util/Client";
 import ProductTile from "./components/ProductTile";
 import RegisterForm from "./components/RegisterForm";
+import Navbar from "./components/Navbar";
 
 const router = createBrowserRouter([
   {
@@ -27,27 +34,9 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    async function fetchData() {
-      let products = await Client.getProducts();
-      setProducts(products);
-    }
-    fetchData();
-  }, []);
-
-  const productTiles = products.map((product, index) => (
-    <ProductTile product={product} key={index} />
-  ));
-
   return (
     <div>
-      <React.StrictMode>
-        <RouterProvider router={router} />
-      </React.StrictMode>
-
-      <ProductFeed>{productTiles}</ProductFeed>
+      <RouterProvider router={router} />
     </div>
   );
 }

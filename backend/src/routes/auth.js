@@ -78,8 +78,15 @@ authRouter.post(
   "/login",
   passport.authenticate("password", {
     failureRedirect: "/auth/login",
-    failureMessage: true,
-  })
+  }),
+  async (req, res) => {
+    if (req.user) {
+      console.log(req.user);
+    } else {
+      console.log("no user");
+    }
+    res.sendStatus(200);
+  }
 );
 
 authRouter.post("/register", async (req, res) => {
