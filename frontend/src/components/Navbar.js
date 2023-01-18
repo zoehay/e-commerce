@@ -1,24 +1,37 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { NavLink, BrowserRouter } from "react-router-dom";
 
 const Nav = styled.nav`
-height: 85px,
-display: flex`;
+  background: lightblue;
+  height: 85px;
+  display: flex;
+  margin-bottom: 2rem;
+`;
+
+const NavMenu = styled.div`
+  background-color: lightcoral;
+  display: flex;
+`;
 
 const NavSelect = styled(NavLink)`
-padding: 20px,
-&:hover {
-    color: red,
-    background:blue
-}
+  color: aquamarine;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  &:hover {
+    color: black;
+  }
 `;
 
 const Navbar = () => {
   return (
     <Nav>
-      <NavLink to="/auth/login">Login</NavLink>
-      <NavLink to="/auth/register">Register</NavLink>
+      <NavMenu>
+        <NavSelect to="/products">Products</NavSelect>
+        <NavSelect to="/auth/login">Login</NavSelect>
+        <NavSelect to="/auth/register">Register</NavSelect>
+      </NavMenu>
     </Nav>
   );
 };

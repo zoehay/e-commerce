@@ -1,35 +1,30 @@
-import logo from "./logo.svg";
-import React, { useEffect, useState } from "react";
-import ReactDOM from "react-dom/client";
-import {
-  Routes,
-  Route,
-  Link,
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import Root from "./routes/root";
-import ErrorPage from "./error-page";
-import ProductFeed from "./components/ProductFeed";
+import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginForm from "./components/LoginForm";
-import Client from "./util/Client";
-import ProductTile from "./components/ProductTile";
 import RegisterForm from "./components/RegisterForm";
-import Navbar from "./components/Navbar";
+import ErrorPage from "./error-page";
+import Root from "./routes/root";
+import Products from "./routes/products";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
     errorElement: <ErrorPage />,
-  },
-  {
-    path: "auth/login",
-    element: <LoginForm />,
-  },
-  {
-    path: "auth/register",
-    element: <RegisterForm />,
+    children: [
+      {
+        path: "products",
+        element: <Products />,
+      },
+      {
+        path: "auth/login",
+        element: <LoginForm />,
+      },
+      {
+        path: "auth/register",
+        element: <RegisterForm />,
+      },
+    ],
   },
 ]);
 
