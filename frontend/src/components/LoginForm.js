@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import Client from "../util/Client";
+import { UserContext } from "../util/userContext";
 
 const Form = styled.form`
   width: 100%;
@@ -11,12 +12,14 @@ const LoginForm = () => {
     email: "",
     password: "",
   });
+  const context = useContext(UserContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const { email, password } = formState;
     console.log(email, password);
-    Client.loginUser(email, password);
+    // Client.loginUser(email, password);
+    context.login(email, password);
   };
 
   const handleChange = ({ target }) => {

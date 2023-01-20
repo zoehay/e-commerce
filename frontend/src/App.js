@@ -5,6 +5,7 @@ import RegisterForm from "./components/RegisterForm";
 import ErrorPage from "./error-page";
 import Root from "./routes/root";
 import Products from "./routes/products";
+import { UserProvider, currentUser } from "./util/userContext";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +32,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <div>
-      <RouterProvider router={router} />
+      <UserProvider>
+        <RouterProvider router={router} />
+      </UserProvider>
     </div>
   );
 }

@@ -82,10 +82,11 @@ authRouter.post(
   async (req, res) => {
     if (req.user) {
       console.log(req.user);
+      const user = await userRepository.getUserById(req.user.id);
+      res.status(200).json({ user });
     } else {
       console.log("no user");
     }
-    res.sendStatus(200);
   }
 );
 

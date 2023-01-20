@@ -47,6 +47,30 @@ const Client = {
         }),
       });
       console.log(response);
+      if (response.status === 200) {
+        const responseJSON = await response.json();
+        const user = responseJSON.user;
+        console.log(responseJSON);
+        console.log(user);
+        return user;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  async logoutUser() {
+    const endpoint = "http://localhost:8000/auth/logout";
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response);
+      // const responseJSON = await response.json();
+      // console.log(responseJSON);
     } catch (error) {
       console.log(error);
     }
