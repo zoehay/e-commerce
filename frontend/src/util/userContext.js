@@ -1,10 +1,22 @@
-import React, { useState, createContext, useContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import Client from "./Client";
 
 export const UserContext = createContext(null);
 
 export const UserProvider = ({ children }) => {
   let [user, setUser] = useState(null);
+
+  async function fetchUser() {
+    let currentUser = await Client.getUser();
+    console.log("provider useeffect get user", currentUser);
+    setUser(currentUser);
+  }
+
+  if (user == undefined) {
+    fetchUser();
+  }
+
+  useEffect(() => {});
 
   let login = async (userEmail, userLogin) => {
     let newUser = await Client.loginUser(userEmail, userLogin);
@@ -18,7 +30,7 @@ export const UserProvider = ({ children }) => {
 
   let logout = async () => {
     await Client.logoutUser();
-    setUser(null);
+    setUser(0);
     console.log("logout");
   };
 
@@ -26,8 +38,3 @@ export const UserProvider = ({ children }) => {
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
-
-// export const currentUser = () => {
-//   let user = useContext(UserContext);
-//   return user;
-// };

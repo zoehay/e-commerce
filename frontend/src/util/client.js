@@ -1,6 +1,33 @@
 const Client = {
+  baseEndpoint: "http://localhost:8000",
+
+  async getUser() {
+    const endpoint = this.baseEndpoint + "/user";
+    let setCookie = document.cookie;
+    console.log(setCookie);
+
+    try {
+      const response = await fetch(endpoint, {
+        credentials: "include",
+        headers: {
+          // Authorization: `Bearer `,
+          // cookie: setCookie,
+        },
+      });
+      console.log(response);
+      if (response.ok) {
+        const responseJSON = await response.json();
+        console.log(responseJSON);
+        const user = responseJSON.user;
+        return user;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   async getProducts() {
-    const endpoint = "http://localhost:8000/products";
+    const endpoint = this.baseEndpoint + "/products";
     try {
       const response = await fetch(endpoint);
       if (response.ok) {
@@ -14,7 +41,7 @@ const Client = {
   },
 
   async registerUser(userEmail, userName, userPassword) {
-    const endpoint = "http://localhost:8000/auth/register";
+    const endpoint = this.baseEndpoint + "/auth/register";
     try {
       const response = await fetch(endpoint, {
         method: "POST",
@@ -34,7 +61,7 @@ const Client = {
   },
 
   async loginUser(userEmail, userPassword) {
-    const endpoint = "http://localhost:8000/auth/login";
+    const endpoint = this.baseEndpoint + "/auth/login";
     try {
       const response = await fetch(endpoint, {
         method: "POST",
@@ -45,6 +72,7 @@ const Client = {
           email: userEmail,
           password: userPassword,
         }),
+        credentials: "include",
       });
       console.log(response);
       if (response.status === 200) {
@@ -60,9 +88,10 @@ const Client = {
   },
 
   async logoutUser() {
-    const endpoint = "http://localhost:8000/auth/logout";
+    const endpoint = this.baseEndpoint + "/auth/logout";
     try {
       const response = await fetch(endpoint, {
+        credentials: "include",
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -42,7 +42,7 @@ const RequireAuth = () => {
   if (!user) {
     return <NavSelect to="/auth/login">Login</NavSelect>;
   } else {
-    return <NavButton onClick={context.logout}>Logout{user.name}</NavButton>;
+    return <NavButton onClick={context.logout}>Logout {user.name}</NavButton>;
   }
 };
 
@@ -54,6 +54,7 @@ const Navbar = (user) => {
         <NavSelect to="/auth/login">Login</NavSelect>
         <RequireAuth>{user}</RequireAuth>
         <NavSelect to="/auth/register">Register</NavSelect>
+        <NavSelect to="/user">User</NavSelect>
       </NavMenu>
     </Nav>
   );

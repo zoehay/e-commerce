@@ -23,6 +23,7 @@ app.use(
     origin: "http://localhost:3000",
     methods: "GET,PUT,POST,DELETE",
     credentials: true,
+    allowedHeaders: ["content-type", "cookie", "credentials"],
   })
 );
 // app.use((req, res, next) => {
@@ -38,6 +39,10 @@ app.use(
   session({
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000,
+      httpOnly: false,
+      secure: false,
+      path: "/",
+      sameSite: "lax",
     },
     secret: process.env.KEY,
     resave: false,
@@ -52,6 +57,10 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+// app.use((req, res, next) => {
+//   console.log(req);
+//   next();
+// });
 
 app.use("/auth", authRouter);
 app.use("/products", productRouter);

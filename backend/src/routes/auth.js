@@ -6,7 +6,7 @@ const authRouter = express.Router();
 const { userRepository } = require("../repository/repository");
 
 const checkAuthorization = (req, res, next) => {
-  if (!req.user.id) {
+  if (!req.user?.id) {
     console.log("no user");
     return res.sendStatus(401);
   } else {

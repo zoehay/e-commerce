@@ -1,10 +1,20 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { UserContext } from "../util/userContext";
 
 const Root = () => {
   // let [products, setProducts] = useState([]);
-  let [user, setUser] = useState(null);
+
+  let context = useContext(UserContext);
+
+  // useEffect(() => {
+  //     async function fetchData() {
+  //       let products = await Client.getProducts();
+  //       setProducts(products);
+  //     }
+  //     fetchData();
+  //   }, []);
 
   // useEffect(() => {
   //   async function fetchData() {
