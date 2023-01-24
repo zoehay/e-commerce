@@ -12,11 +12,11 @@ export const UserProvider = ({ children }) => {
     setUser(currentUser);
   }
 
-  if (user == undefined) {
-    fetchUser();
-  }
-
-  useEffect(() => {});
+  useEffect(() => {
+    if (user == null) {
+      fetchUser();
+    }
+  }, [user]);
 
   let login = async (userEmail, userLogin) => {
     let newUser = await Client.loginUser(userEmail, userLogin);
@@ -30,7 +30,7 @@ export const UserProvider = ({ children }) => {
 
   let logout = async () => {
     await Client.logoutUser();
-    setUser(0);
+    setUser(null);
     console.log("logout");
   };
 

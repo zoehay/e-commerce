@@ -77,7 +77,9 @@ authRouter.get("/login", (req, res, next) => {
 authRouter.post(
   "/login",
   passport.authenticate("password", {
+    successRedirect: "/user",
     failureRedirect: "/auth/login",
+    failureFlash: true,
   }),
   async (req, res) => {
     if (req.user) {

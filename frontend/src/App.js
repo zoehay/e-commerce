@@ -5,6 +5,7 @@ import RegisterForm from "./components/RegisterForm";
 import ErrorPage from "./routes/error-page";
 import Products from "./routes/products";
 import Profile from "./routes/profile";
+import WelcomePage from "./components/WelcomePage";
 import Root from "./routes/root";
 import { UserContext, UserProvider } from "./util/userContext";
 
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: "",
+        element: <WelcomePage />,
+      },
       {
         path: "products",
         element: <Products />,

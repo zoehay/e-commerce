@@ -5,7 +5,6 @@ import Client from "../util/Client";
 
 const Products = () => {
   let [products, setProducts] = useState([]);
-  let [user, setUser] = useState(null);
 
   useEffect(() => {
     async function fetchData() {

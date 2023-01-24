@@ -8,7 +8,7 @@ const Tile = styled.div`
 `;
 
 const ProductInfo = styled.div`
-  text-alight: center;
+  text-align: center;
 `;
 
 const ProductName = styled.p`

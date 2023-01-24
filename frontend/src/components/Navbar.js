@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Client from "../util/Client";
 import { UserContext } from "../util/userContext";
 
 const Nav = styled.nav`
@@ -14,6 +13,13 @@ const Nav = styled.nav`
 const NavMenu = styled.div`
   background-color: lightcoral;
   display: flex;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+const NavDiv = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const NavSelect = styled(NavLink)`
@@ -27,34 +33,56 @@ const NavSelect = styled(NavLink)`
 `;
 
 const NavButton = styled.button`
-  width: 50px;
-  background-color: lightgoldenrodyellow;
+  width: 100px;
+  background-color: thistle;
+  border-radius: 5px;
+  color: aquamarine;
+  height: 60%;
 
   &:hover {
     color: black;
+    background-color: lavenderblush;
   }
 `;
 
-const RequireAuth = () => {
+const UserOptions = () => {
   const context = useContext(UserContext);
   const user = context.user;
-  console.log(context);
+  const navigate = useNavigate();
+
   if (!user) {
-    return <NavSelect to="/auth/login">Login</NavSelect>;
+    return (
+      <NavDiv>
+        <NavSelect to="/auth/login">Login</NavSelect>
+        <NavSelect to="/auth/register">Register</NavSelect>
+      </NavDiv>
+    );
   } else {
-    return <NavButton onClick={context.logout}>Logout {user.name}</NavButton>;
+    return (
+      <NavDiv>
+        <NavSelect to="/user">User Profile</NavSelect>
+        <NavButton
+          onClick={() => {
+            context.logout();
+            navigate("/");
+          }}
+        >
+          Log Out
+        </NavButton>
+      </NavDiv>
+    );
   }
 };
 
-const Navbar = (user) => {
+const Navbar = () => {
   return (
     <Nav>
       <NavMenu>
-        <NavSelect to="/products">Products</NavSelect>
-        <NavSelect to="/auth/login">Login</NavSelect>
-        <RequireAuth>{user}</RequireAuth>
-        <NavSelect to="/auth/register">Register</NavSelect>
-        <NavSelect to="/user">User</NavSelect>
+        <NavDiv>
+          <NavSelect to="/">Home</NavSelect>
+          <NavSelect to="/products">Products</NavSelect>
+        </NavDiv>
+        <UserOptions></UserOptions>
       </NavMenu>
     </Nav>
   );

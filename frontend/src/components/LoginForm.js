@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Client from "../util/Client";
 import { UserContext } from "../util/userContext";
 
 const Form = styled.form`
@@ -8,18 +8,20 @@ const Form = styled.form`
 `;
 
 const LoginForm = () => {
+  const context = useContext(UserContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [formState, setFormState] = useState({
     email: "",
     password: "",
   });
-  const context = useContext(UserContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const { email, password } = formState;
-    console.log(email, password);
-    // Client.loginUser(email, password);
     context.login(email, password);
+    navigate("/");
   };
 
   const handleChange = ({ target }) => {

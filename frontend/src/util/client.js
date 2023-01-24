@@ -9,10 +9,6 @@ const Client = {
     try {
       const response = await fetch(endpoint, {
         credentials: "include",
-        headers: {
-          // Authorization: `Bearer `,
-          // cookie: setCookie,
-        },
       });
       console.log(response);
       if (response.ok) {
@@ -78,7 +74,6 @@ const Client = {
       if (response.status === 200) {
         const responseJSON = await response.json();
         const user = responseJSON.user;
-        console.log(responseJSON);
         console.log(user);
         return user;
       }

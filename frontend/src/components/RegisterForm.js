@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Client from "../util/Client";
 
@@ -12,12 +13,14 @@ const RegisterForm = () => {
     name: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const { email, name, password } = formState;
     console.log(email, name, password);
     const response = await Client.registerUser(email, name, password);
+    navigate("/");
   };
 
   const handleChange = ({ target }) => {
