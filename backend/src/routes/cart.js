@@ -4,8 +4,10 @@ const { checkAuthorization } = require("./auth");
 
 const cartRouter = express.Router();
 
+cartRouter.use(checkAuthorization);
+
 // add or decrement quantity of a cartProduct
-cartRouter.post("/", checkAuthorization, async (req, res) => {
+cartRouter.post("/", async (req, res) => {
   console.log(req.user);
   const userId = req.user.id;
   const productId = Number(req.body.productId);
@@ -43,7 +45,7 @@ cartRouter.post("/", checkAuthorization, async (req, res) => {
 });
 
 // get all cartProduct items in a user's cart
-cartRouter.get("/", checkAuthorization, async (req, res) => {
+cartRouter.get("/", async (req, res) => {
   const userId = req.user.id;
   try {
     const cart = await cartProductRepository.getUserCart(userId);
@@ -53,8 +55,11 @@ cartRouter.get("/", checkAuthorization, async (req, res) => {
   }
 });
 
+// get details for all cartProducts in a user's cart
+// cartRouter.get('/details', )
+
 // clear a user's cart
-cartRouter.delete("/", checkAuthorization, async (req, res) => {
+cartRouter.delete("/", async (req, res) => {
   const userId = req.user.id;
   try {
     const deletedCartProducts = await cartProductRepository.clearUserCart(

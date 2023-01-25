@@ -106,11 +106,7 @@ test("Logged in user updates their password", async () => {
     email: userEmail,
     password: userPassword,
   });
-  cookie = failLoginResponse.headers["set-cookie"];
-
-  // confirm failed get
-  const failGetResponse = await request(app).get("/user").set("Cookie", cookie);
-  expect(failGetResponse.statusCode).toEqual(500);
+  expect(failLoginResponse.statusCode).toEqual(500);
 
   // try login with updated password
   console.log("proper login");

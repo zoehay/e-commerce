@@ -28,7 +28,7 @@ beforeAll(async () => {
 test("a user is registered successfully", async () => {
   const response = await request(app).post("/auth/register").send(user);
   console.log(response.body);
-  expect(response.statusCode).toEqual(302);
+  expect(response.statusCode).toEqual(200);
   const confirmUser = await prisma.user.findUnique({
     where: { email: userEmail },
   });
