@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import Client from "../util/Client";
 import { UserContext } from "../util/userContext";
@@ -34,27 +34,30 @@ const AddToCart = styled.button`
   }
 `;
 
-const ProductTile = ({ product }) => {
+const CartProductTile = ({ product }) => {
   const context = useContext(UserContext);
   const user = context.user;
+
+  let [productDetails, setProductDetails] = useState([]);
+
+  useEffect(() => {
+    async function fetchDetails() {
+      const productDetails = await Client.getProductById(product.productId);
+      console.log("getting tile", productDetails);
+      setProductDetails(productDetails);
+    }
+    fetchDetails();
+  }, []);
 
   return (
     <Tile>
       <ProductInfo>
-        <ProductName>{product.name}</ProductName>
-        <ProductPrice>{product.price}</ProductPrice>
-        <ProductDescription>{product.description}</ProductDescription>
-        <AddToCart
-          onClick={() => {
-            console.log(user.id, product.id, 1);
-            Client.addCartProduct(user.id, product.id, 1);
-          }}
-        >
-          Add to Cart
-        </AddToCart>
+        <ProductName>{product.productId}</ProductName>
+        <ProductPrice>{productDetails.name}</ProductPrice>
+        <ProductDescription></ProductDescription>
       </ProductInfo>
     </Tile>
   );
 };
 
-export default ProductTile;
+export default CartProductTile;

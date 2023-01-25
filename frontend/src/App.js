@@ -8,6 +8,7 @@ import Profile from "./routes/profile";
 import WelcomePage from "./components/WelcomePage";
 import Root from "./routes/root";
 import { UserContext, UserProvider } from "./util/userContext";
+import Cart from "./routes/cart";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "auth/register",
         element: <RegisterForm />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
       {
         path: "/user",

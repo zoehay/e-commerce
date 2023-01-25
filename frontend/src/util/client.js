@@ -36,6 +36,59 @@ const Client = {
     }
   },
 
+  async getProductById(id) {
+    const endpoint = this.baseEndpoint + `/products/${id}`;
+    try {
+      const response = await fetch(endpoint);
+      if (response.ok) {
+        const responseJSON = await response.json();
+        const product = responseJSON.product;
+        console.log("client get", product);
+        return product;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  async addCartProduct(userId, productId, quantity) {
+    const endpoint = this.baseEndpoint + "/cart";
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: userId,
+          productId: productId,
+          quantity: quantity,
+        }),
+        credentials: "include",
+      });
+      const responseJSON = await response.json();
+      console.log(responseJSON);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  async getCartProducts() {
+    const endpoint = this.baseEndpoint + "/cart";
+    try {
+      const response = await fetch(endpoint, {
+        credentials: "include",
+      });
+      if (response.ok) {
+        const responseJSON = await response.json();
+        const cart = responseJSON.cart;
+        return cart;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   async registerUser(userEmail, userName, userPassword) {
     const endpoint = this.baseEndpoint + "/auth/register";
     try {
@@ -93,8 +146,6 @@ const Client = {
         },
       });
       console.log(response);
-      // const responseJSON = await response.json();
-      // console.log(responseJSON);
     } catch (error) {
       console.log(error);
     }

@@ -60,6 +60,7 @@ const UserOptions = () => {
   } else {
     return (
       <NavDiv>
+        <NavSelect to="/cart">Cart</NavSelect>
         <NavSelect to="/user">User Profile</NavSelect>
         <NavButton
           onClick={() => {
