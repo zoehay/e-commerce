@@ -53,6 +53,20 @@ async function main() {
       const response = await request(app).post("/auth/register").send(user);
     })
   );
+
+  let cartProducts = [
+    {
+      userId: 1,
+      productId: 1,
+      quantity: 1,
+    },
+  ];
+
+  await Promise.all(
+    cartProducts.map(async (cartProduct) => {
+      await prisma.cartProduct.create({ data: cartProduct });
+    })
+  );
 }
 
 main()

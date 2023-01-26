@@ -56,7 +56,15 @@ cartRouter.get("/", async (req, res) => {
 });
 
 // get details for all cartProducts in a user's cart
-// cartRouter.get('/details', )
+cartRouter.get("/details", async (req, res) => {
+  const userId = req.user.id;
+  try {
+    const cart = await cartProductRepository.getUserCartDetails(userId);
+    return res.status(200).json({ cart });
+  } catch (error) {
+    return res.status(400).json({ error });
+  }
+});
 
 // clear a user's cart
 cartRouter.delete("/", async (req, res) => {

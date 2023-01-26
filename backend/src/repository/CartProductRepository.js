@@ -53,6 +53,18 @@ class CartProductRepository {
     });
   }
 
+  getUserCartDetails(userId) {
+    console.log("usercart details", userId);
+    return this.prisma.cartProduct.findMany({
+      where: {
+        userId: userId,
+      },
+      include: {
+        product: true,
+      },
+    });
+  }
+
   clearUserCart(userId) {
     return this.prisma.cartProduct.deleteMany({
       where: {

@@ -40,4 +40,17 @@ let users = [
   },
 ];
 
-module.exports = { products, users };
+let cartProducts = [
+  {
+    userId: 1,
+    productId: 1,
+    quantity: 1,
+  },
+  {
+    userId: 1,
+    productId: 2,
+    quantity: 2,
+  },
+];
+
+module.exports = { products, users, cartProducts };
