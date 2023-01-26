@@ -39,7 +39,8 @@ passport.use(
       user = await userRepository.getUserByEmail(email);
       if (!user) {
         console.log("user not found");
-        return done(null, false, { message: "User email not found" });
+        // return done(null, false, { message: "User email not found" });
+        return done(null, false);
       }
       console.log("found user");
       const match = await bcrypt.compare(password, user.password);

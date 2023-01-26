@@ -1,28 +1,35 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import Client from "../util/Client";
-import { UserContext } from "../util/userContext";
 
 const Tile = styled.div`
   background: papayawhip;
   border: solid;
-  padding: 2em;
+  padding: 1em;
+  margin: 1em;
 `;
 
 const ProductInfo = styled.div`
-  text-align: center;
+  justify-content: left;
+  align-items: center;
 `;
 
 const ProductName = styled.p`
-  font-size: 2em;
+  font-size: 1em;
 `;
 
 const ProductPrice = styled.p`
-  font-size: 1em;
+  font-size: 0.75em;
+  margin: 0.25em;
 `;
 
 const ProductDescription = styled.p`
   font-size: 1em;
+  margin: 0.25em;
+`;
+
+const ProductQuantity = styled.p`
+  font-size: 1em;
+  margin: 0.25em;
 `;
 
 const AddToCart = styled.button`
@@ -35,26 +42,13 @@ const AddToCart = styled.button`
 `;
 
 const CartProductTile = ({ product }) => {
-  const context = useContext(UserContext);
-  const user = context.user;
-
-  let [productDetails, setProductDetails] = useState([]);
-
-  useEffect(() => {
-    async function fetchDetails() {
-      const productDetails = await Client.getProductById(product.productId);
-      console.log("getting tile", productDetails);
-      setProductDetails(productDetails);
-    }
-    fetchDetails();
-  }, []);
-
   return (
     <Tile>
+      <ProductName>{product.product.name}</ProductName>
       <ProductInfo>
-        <ProductName>{product.productId}</ProductName>
-        <ProductPrice>{productDetails.name}</ProductPrice>
-        <ProductDescription></ProductDescription>
+        <ProductPrice>{product.product.price}g</ProductPrice>
+        <ProductDescription>{product.product.description}</ProductDescription>
+        <ProductQuantity>Quantity: {product.quantity}</ProductQuantity>
       </ProductInfo>
     </Tile>
   );

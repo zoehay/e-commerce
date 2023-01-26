@@ -1,23 +1,40 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import styled from "styled-components";
 import CartProductFeed from "../components/CartProductFeed";
 import CartProductTile from "../components/CartProductTile";
 import Client from "../util/Client";
-import { UserContext } from "../util/userContext";
+
+const CartTotal = styled.p`
+  background-color: lightblue;
+  border: solid;
+  font-size: 1em;
+  padding: 1em;
+  margin: 1em;
+`;
 
 const Cart = () => {
   let [cartProducts, setCartProducts] = useState([]);
-
-  const context = useContext(UserContext);
-  const user = context.user;
+  let [cartTotal, setCartTotal] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
-      let cart = await Client.getCartProducts();
+      let cart = await Client.getCartDetails();
       setCartProducts(cart);
-      console.log("set cart", cartProducts);
+      console.log("set cart", cart);
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    let cartTotal = 0;
+    for (const item of cartProducts) {
+      const quantity = item.quantity;
+      const price = item.product.price;
+      const itemTotal = quantity * price;
+      cartTotal += itemTotal;
+    }
+    setCartTotal(cartTotal);
+  }, [cartProducts]);
 
   let cartProductTiles = cartProducts.map((product, index) => (
     <CartProductTile product={product} key={index} />
@@ -25,13 +42,8 @@ const Cart = () => {
 
   return (
     <div>
-      {cartProducts ? (
-        <>
-          <CartProductFeed>{cartProductTiles}</CartProductFeed>
-        </>
-      ) : (
-        <h2>Loading</h2>
-      )}
+      <CartProductFeed>{cartProductTiles}</CartProductFeed>
+      <CartTotal>Cart Total: {cartTotal}</CartTotal>
     </div>
   );
 };

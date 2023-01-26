@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-const Feed = styled.div`
+const CartFeed = styled.div`
   display: block;
 `;
 
 const CartProductFeed = ({ children }) => {
-  return <Feed>{children}</Feed>;
+  return <CartFeed>{children}</CartFeed>;
 };
 
 export default CartProductFeed;
