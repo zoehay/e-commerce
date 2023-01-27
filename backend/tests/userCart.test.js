@@ -136,6 +136,7 @@ test("User removes a cart product", async () => {
     productId: 1,
     quantity: 0,
   };
+  console.log("REMOVEEEE");
   const response = await request(app)
     .post("/cart/")
     .set("Cookie", cookie)

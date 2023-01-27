@@ -1,4 +1,5 @@
 const express = require("express");
+const { nextTick } = require("process");
 const { prisma, cartProductRepository } = require("../repository/repository");
 const { checkAuthorization } = require("./auth");
 
@@ -6,12 +7,56 @@ const cartRouter = express.Router();
 
 cartRouter.use(checkAuthorization);
 
-// add or decrement quantity of a cartProduct
+// set cartProduct Quantity to req number
+cartRouter.post("/", async (req, res, next) => {
+  const userId = req.user.id;
+  const productId = Number(req.body.productId);
+  console.log("quantity", req.body);
+  // if the req has a quantity, set the cartProduct quantity
+  if (req.body.quantity != null) {
+    const quantity = Number(req.body.quantity);
+    // check if the user has a cartProduct entry for this product
+    const foundCartProduct = await cartProductRepository.getCartProductById(
+      userId,
+      productId
+    );
+    // if cartProduct is found update the quantity
+    if (foundCartProduct != null) {
+      if (quantity == 0) {
+        // if new quantity is zero, delete the cartProduct
+        const deletedCartProduct =
+          await cartProductRepository.deleteCartProduct(userId, productId);
+        return res.status(204).json({ deletedCartProduct });
+      }
+      // else just update the quantity
+      else {
+        const updatedCartProduct =
+          await cartProductRepository.updateCartProduct(
+            userId,
+            productId,
+            quantity
+          );
+        return res.status(200).json({ updatedCartProduct });
+      }
+    }
+    // create a new cartProduct entry for the item if new for user
+    const cartProduct = await cartProductRepository.addCartProduct(
+      userId,
+      productId,
+      quantity
+    );
+    return res.status(201).json({ cartProduct });
+  } else {
+    // if req has no quantity, use the increment route
+    next();
+  }
+});
+
+// increment cartProduct by one
 cartRouter.post("/", async (req, res) => {
   console.log(req.user);
   const userId = req.user.id;
   const productId = Number(req.body.productId);
-  const quantity = Number(req.body.quantity);
   // check if the user has a cartProduct entry for this product
   const foundCartProduct = await cartProductRepository.getCartProductById(
     userId,
@@ -19,19 +64,12 @@ cartRouter.post("/", async (req, res) => {
   );
   // if cartProduct is found update the quantity
   if (foundCartProduct != null) {
-    if (quantity == 0) {
-      // if new quantity is zero, delete the cartProduct
-      const deletedCartProduct = await cartProductRepository.deleteCartProduct(
-        userId,
-        productId
-      );
-      return res.status(204).json({ deletedCartProduct });
-    }
-    // else just update the quantity
+    const prevQuantity = foundCartProduct.quantity;
+    const newQuantity = prevQuantity + 1;
     const updatedCartProduct = await cartProductRepository.updateCartProduct(
       userId,
       productId,
-      quantity
+      newQuantity
     );
     return res.status(200).json({ updatedCartProduct });
   }
@@ -39,12 +77,12 @@ cartRouter.post("/", async (req, res) => {
   const cartProduct = await cartProductRepository.addCartProduct(
     userId,
     productId,
-    quantity
+    1
   );
   return res.status(201).json({ cartProduct });
 });
 
-// get all cartProduct items in a user's cart
+// get cartProducts by user id
 cartRouter.get("/", async (req, res) => {
   const userId = req.user.id;
   try {
