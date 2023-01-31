@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
+import Client from "../util/Client";
+import { UserContext } from "../util/userContext";
 
 const Tile = styled.div`
   background: papayawhip;
@@ -41,7 +43,28 @@ const AddToCart = styled.button`
   }
 `;
 
-const CartProductTile = ({ product }) => {
+// const QuantitySelector = () => {
+//     return (
+//         <div>
+//             <a><input class=""/></a>
+//         </div>
+//     )
+// }
+
+const CartProductTile = ({ product, onChange }) => {
+  const context = useContext(UserContext);
+  const user = context.user;
+
+  const handleChange = async (event) => {
+    event.preventDefault();
+    await Client.updateCartProductQuantity(
+      Number(user.id),
+      product.productId,
+      event.target.value
+    );
+    await onChange();
+  };
+
   return (
     <Tile>
       <ProductName>{product.product.name}</ProductName>
@@ -49,6 +72,16 @@ const CartProductTile = ({ product }) => {
         <ProductPrice>{product.product.price}g</ProductPrice>
         <ProductDescription>{product.product.description}</ProductDescription>
         <ProductQuantity>Quantity: {product.quantity}</ProductQuantity>
+        <>
+          <label htmlFor="quantityInput">Quantity</label>
+          <input
+            id="quantityInput"
+            name="quantity"
+            type="number"
+            value={product.quantity}
+            onChange={handleChange}
+          />
+        </>
       </ProductInfo>
     </Tile>
   );
