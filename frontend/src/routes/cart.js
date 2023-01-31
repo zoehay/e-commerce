@@ -16,33 +16,45 @@ const Cart = () => {
   let [cartProducts, setCartProducts] = useState([]);
   let [cartTotal, setCartTotal] = useState(0);
 
+  async function fetchData() {
+    let cart = await Client.getCartDetails();
+    setCartProducts(cart);
+    console.log("set cart", cart);
+  }
   useEffect(() => {
-    async function fetchData() {
-      let cart = await Client.getCartDetails();
-      setCartProducts(cart);
-      console.log("set cart", cart);
-    }
     fetchData();
   }, []);
 
   useEffect(() => {
     let cartTotal = 0;
+    console.log("calculate total");
     for (const item of cartProducts) {
       const quantity = item.quantity;
       const price = item.product.price;
+      console.log(price, quantity);
       const itemTotal = quantity * price;
       cartTotal += itemTotal;
     }
     setCartTotal(cartTotal);
   }, [cartProducts]);
 
+  const handleChange = async () => {
+    console.log("handlechange");
+    await fetchData();
+  };
+
   let cartProductTiles = cartProducts.map((product, index) => (
-    <CartProductTile product={product} key={index} />
+    <CartProductTile product={product} key={index} onChange={handleChange} />
   ));
 
   return (
     <div>
-      <CartProductFeed>{cartProductTiles}</CartProductFeed>
+      {cartProductTiles ? (
+        <CartProductFeed>{cartProductTiles}</CartProductFeed>
+      ) : (
+        <h2> Loading </h2>
+      )}
+
       <CartTotal>Cart Total: {cartTotal}</CartTotal>
     </div>
   );

@@ -62,6 +62,9 @@ class CartProductRepository {
       include: {
         product: true,
       },
+      orderBy: {
+        productId: "desc",
+      },
     });
   }
 

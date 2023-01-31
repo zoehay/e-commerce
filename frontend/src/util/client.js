@@ -116,7 +116,8 @@ const Client = {
   },
 
   //// CART
-  async addCartProduct(userId, productId, quantity) {
+  async updateCartProductQuantity(userId, productId, quantity) {
+    console.log(userId, productId, quantity);
     const endpoint = this.baseEndpoint + "/cart";
     try {
       const response = await fetch(endpoint, {
@@ -128,6 +129,27 @@ const Client = {
           userId: userId,
           productId: productId,
           quantity: quantity,
+        }),
+        credentials: "include",
+      });
+      const responseJSON = await response.json();
+      console.log(responseJSON);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  async addCartProduct(userId, productId) {
+    const endpoint = this.baseEndpoint + "/cart";
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: userId,
+          productId: productId,
         }),
         credentials: "include",
       });

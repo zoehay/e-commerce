@@ -38,28 +38,17 @@ const ProductTile = ({ product }) => {
   const context = useContext(UserContext);
   const user = context.user;
 
-  const [quantity, setQuantity] = useState(1);
-
   return (
     <Tile>
       <ProductInfo>
         <ProductName>{product.name}</ProductName>
         <ProductPrice>{product.price}</ProductPrice>
         <ProductDescription>{product.description}</ProductDescription>
-        <>
-          <label htmlFor="quantityInput">Quantity</label>
-          <input
-            id="quantityInput"
-            name="quantity"
-            type="number"
-            defaultValue={1}
-            onChange={(event) => setQuantity(event.target.value)}
-          />
-        </>
+
         <AddToCart
           onClick={() => {
-            console.log(user.id, product.id, quantity);
-            Client.addCartProduct(user.id, product.id, quantity);
+            console.log(user.id, product.id);
+            Client.addCartProduct(user.id, product.id);
           }}
         >
           Add to Cart
