@@ -17,34 +17,35 @@ const Tile = styled.div`
   }
 `;
 
-const ProductInfo = styled.div`
-  display: grid;
-`;
-
 const ProductName = styled.p`
   font-size: 1rem;
 `;
 
-const ProductPrice = styled.p`
+const ProductInfo = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+`;
+
+const ProductPrice = styled.div`
   font-size: 0.75rem;
   margin: 0.25rem;
   display: flex;
   align-items: center;
 `;
 
-const ProductDescription = styled.p`
+const ProductDescription = styled.div`
   display: none;
   @media (min-width: 46rem) {
     font-size: 1rem;
     margin: 0.25rem;
-    display: contents;
+    display: block;
   }
 `;
 
-const ProductQuantity = styled.p`
+const ProductQuantity = styled.div`
   display: none;
   @media (min-width: 46rem) {
-    display: contents;
+    display: block;
     font-size: 1rem;
     margin: 0.25rem;
   }
@@ -64,12 +65,15 @@ const CartProductTile = ({ product, onChange }) => {
 
   const handleChange = async (event) => {
     event.preventDefault();
-    await Client.updateCartProductQuantity(
-      Number(user.id),
-      product.productId,
-      event.target.value
-    );
-    await onChange();
+    const newQuantity = Number(event.target.value);
+    setTimeout(async () => {
+      await Client.updateCartProductQuantity(
+        Number(user.id),
+        product.productId,
+        newQuantity
+      );
+      await onChange(product.productId, newQuantity);
+    }, 250);
   };
 
   return (
@@ -88,6 +92,7 @@ const CartProductTile = ({ product, onChange }) => {
           type="number"
           value={product.quantity}
           onChange={handleChange}
+          min="0"
         />
       </SetQuantity>
     </Tile>

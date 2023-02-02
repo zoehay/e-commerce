@@ -41,13 +41,31 @@ const Cart = () => {
     setCartTotal(cartTotal);
   }, [cartProducts]);
 
-  const handleChange = async () => {
+  const handleUpdateQuantity = async (productId, newQuantity) => {
     console.log("handlechange");
-    await fetchData();
+    console.log(productId);
+    // await fetchData();\
+    const newCartProducts = cartProducts.map((product) => {
+      if (product.productId == productId) {
+        return {
+          ...product,
+          quantity: newQuantity,
+        };
+      } else {
+        return product;
+      }
+    });
+    setCartProducts(newCartProducts);
   };
 
+  console.log(cartProducts);
+
   let cartProductTiles = cartProducts.map((product, index) => (
-    <CartProductTile product={product} key={index} onChange={handleChange} />
+    <CartProductTile
+      product={product}
+      key={index}
+      onChange={handleUpdateQuantity}
+    />
   ));
 
   return (
