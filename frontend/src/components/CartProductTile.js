@@ -4,10 +4,17 @@ import Client from "../util/Client";
 import { UserContext } from "../util/userContext";
 
 const Tile = styled.div`
+  box-sizing: border-box;
   background: papayawhip;
   border: solid;
-  padding: 1em;
-  margin: 1em;
+  padding: 1rem;
+  display: grid;
+  margin-bottom: 1rem;
+  width: 100%;
+  grid-template-columns: 1fr 1fr 1fr;
+  @media (min-width: 46rem) {
+    grid-template-columns: 0.75fr 1.25fr 1fr;
+  }
 `;
 
 const ProductInfo = styled.div`
@@ -16,40 +23,31 @@ const ProductInfo = styled.div`
 `;
 
 const ProductName = styled.p`
-  font-size: 1em;
+  font-size: 1rem;
 `;
 
 const ProductPrice = styled.p`
-  font-size: 0.75em;
-  margin: 0.25em;
+  font-size: 0.75rem;
+  margin: 0.25rem;
 `;
 
 const ProductDescription = styled.p`
-  font-size: 1em;
-  margin: 0.25em;
-`;
-
-const ProductQuantity = styled.p`
-  font-size: 1em;
-  margin: 0.25em;
-`;
-
-const AddToCart = styled.button`
-  font-size: 1em;
-  border-radius: 8px;
-  background-color: lightcoral;
-  &:hover {
-    background-color: lightcyan;
+  font-size: 1rem;
+  margin: 0.25rem;
+  display: none;
+  @media (min-width: 46rem) {
+    display: contents;
   }
 `;
 
-// const QuantitySelector = () => {
-//     return (
-//         <div>
-//             <a><input class=""/></a>
-//         </div>
-//     )
-// }
+const ProductQuantity = styled.p`
+  font-size: 1rem;
+  margin: 0.25rem;
+`;
+
+const SetQuantity = styled.div`
+  font-size: 1rem;
+`;
 
 const CartProductTile = ({ product, onChange }) => {
   const context = useContext(UserContext);
@@ -72,17 +70,17 @@ const CartProductTile = ({ product, onChange }) => {
         <ProductPrice>{product.product.price}g</ProductPrice>
         <ProductDescription>{product.product.description}</ProductDescription>
         <ProductQuantity>Quantity: {product.quantity}</ProductQuantity>
-        <>
-          <label htmlFor="quantityInput">Quantity</label>
-          <input
-            id="quantityInput"
-            name="quantity"
-            type="number"
-            value={product.quantity}
-            onChange={handleChange}
-          />
-        </>
       </ProductInfo>
+      <SetQuantity>
+        <label htmlFor="quantityInput">Quantity</label>
+        <input
+          id="quantityInput"
+          name="quantity"
+          type="number"
+          value={product.quantity}
+          onChange={handleChange}
+        />
+      </SetQuantity>
     </Tile>
   );
 };

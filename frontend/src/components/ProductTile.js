@@ -5,8 +5,9 @@ import { UserContext } from "../util/userContext";
 
 const Tile = styled.div`
   background: papayawhip;
-  border: solid;
-  padding: 2em;
+  min-width: 8rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
 `;
 
 const ProductInfo = styled.div`
@@ -14,20 +15,20 @@ const ProductInfo = styled.div`
 `;
 
 const ProductName = styled.p`
-  font-size: 2em;
+  font-size: 1rem;
 `;
 
 const ProductPrice = styled.p`
-  font-size: 1em;
+  font-size: 0.875rem;
 `;
 
 const ProductDescription = styled.p`
-  font-size: 1em;
+  font-size: 0.75rem;
 `;
 
 const AddToCart = styled.button`
-  font-size: 1em;
-  border-radius: 8px;
+  font-size: 0.75rem;
+  border-radius: 10px;
   background-color: lightcoral;
   &:hover {
     background-color: lightcyan;
@@ -46,6 +47,7 @@ const ProductTile = ({ product }) => {
         <ProductDescription>{product.description}</ProductDescription>
 
         <AddToCart
+          type="button"
           onClick={() => {
             console.log(user.id, product.id);
             Client.addCartProduct(user.id, product.id);

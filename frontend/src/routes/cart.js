@@ -2,14 +2,17 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import CartProductFeed from "../components/CartProductFeed";
 import CartProductTile from "../components/CartProductTile";
+import MainContent from "../components/MainContent";
+import PageContent from "../components/PageContent";
 import Client from "../util/Client";
 
 const CartTotal = styled.p`
   background-color: lightblue;
   border: solid;
-  font-size: 1em;
-  padding: 1em;
-  margin: 1em;
+  font-size: 1rem;
+  padding: 1rem;
+  margin: 1rem;
+  width: 100%;
 `;
 
 const Cart = () => {
@@ -48,15 +51,18 @@ const Cart = () => {
   ));
 
   return (
-    <div>
-      {cartProductTiles ? (
-        <CartProductFeed>{cartProductTiles}</CartProductFeed>
-      ) : (
-        <h2> Loading </h2>
-      )}
+    <MainContent>
+      {" "}
+      <PageContent>
+        {cartProductTiles ? (
+          <CartProductFeed>{cartProductTiles}</CartProductFeed>
+        ) : (
+          <h2> Loading </h2>
+        )}
 
-      <CartTotal>Cart Total: {cartTotal}</CartTotal>
-    </div>
+        <CartTotal>Cart Total: {cartTotal}</CartTotal>
+      </PageContent>
+    </MainContent>
   );
 };
 
