@@ -11,8 +11,8 @@ const CartTotal = styled.p`
   border: solid;
   font-size: 1rem;
   padding: 1rem;
-  margin: 1rem;
   width: 100%;
+  box-sizing: border-box;
 `;
 
 const Cart = () => {

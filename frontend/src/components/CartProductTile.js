@@ -11,15 +11,14 @@ const Tile = styled.div`
   display: grid;
   margin-bottom: 1rem;
   width: 100%;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1.2fr 0.8fr 1fr;
   @media (min-width: 46rem) {
     grid-template-columns: 0.75fr 1.25fr 1fr;
   }
 `;
 
 const ProductInfo = styled.div`
-  justify-content: left;
-  align-items: center;
+  display: grid;
 `;
 
 const ProductName = styled.p`
@@ -29,24 +28,34 @@ const ProductName = styled.p`
 const ProductPrice = styled.p`
   font-size: 0.75rem;
   margin: 0.25rem;
+  display: flex;
+  align-items: center;
 `;
 
 const ProductDescription = styled.p`
-  font-size: 1rem;
-  margin: 0.25rem;
   display: none;
   @media (min-width: 46rem) {
+    font-size: 1rem;
+    margin: 0.25rem;
     display: contents;
   }
 `;
 
 const ProductQuantity = styled.p`
-  font-size: 1rem;
-  margin: 0.25rem;
+  display: none;
+  @media (min-width: 46rem) {
+    display: contents;
+    font-size: 1rem;
+    margin: 0.25rem;
+  }
 `;
 
 const SetQuantity = styled.div`
-  font-size: 1rem;
+  font-size: 0.8rem;
+`;
+
+const QuantityInput = styled.input`
+  width: 100%;
 `;
 
 const CartProductTile = ({ product, onChange }) => {
@@ -68,12 +77,12 @@ const CartProductTile = ({ product, onChange }) => {
       <ProductName>{product.product.name}</ProductName>
       <ProductInfo>
         <ProductPrice>{product.product.price}g</ProductPrice>
-        <ProductDescription>{product.product.description}</ProductDescription>
+        <ProductDescription>{product.product.description} </ProductDescription>
         <ProductQuantity>Quantity: {product.quantity}</ProductQuantity>
       </ProductInfo>
       <SetQuantity>
         <label htmlFor="quantityInput">Quantity</label>
-        <input
+        <QuantityInput
           id="quantityInput"
           name="quantity"
           type="number"
