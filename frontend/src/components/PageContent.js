@@ -7,7 +7,6 @@ const PageContent = styled.div`
   @media (min-width: 46rem) {
     max-width: 75rem;
   }
-  background-color: lightslategray;
 `;
 
 export default PageContent;

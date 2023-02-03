@@ -4,10 +4,12 @@ import Client from "../util/Client";
 import { UserContext } from "../util/userContext";
 
 const Tile = styled.div`
-  background: papayawhip;
+  background: var(--bg-color-1);
   min-width: 8rem;
   padding-bottom: 1rem;
   margin-bottom: 1rem;
+  box-shadow: 0.5rem 0.5rem 0.7rem var(--accent-light-1);
+  border-radius: 0.25rem;
 `;
 
 const ProductInfo = styled.div`
@@ -29,9 +31,9 @@ const ProductDescription = styled.p`
 const AddToCart = styled.button`
   font-size: 0.75rem;
   border-radius: 10px;
-  background-color: lightcoral;
+  background-color: var(--accent-light-2);
   &:hover {
-    background-color: lightcyan;
+    background-color: var(--accent-bold-2);
   }
 `;
 
