@@ -42,7 +42,7 @@ const MobileNavList = styled.ul`
   font-weight: bold;
 `;
 
-const MobileNav = () => {
+const MobileNavDropdown = () => {
   return (
     <MobileNavWrapper>
       <MobileDropdown>
@@ -59,7 +59,7 @@ const MobileNav = () => {
   );
 };
 
-export const MobileNavExt = () => {
+export const MobileNav = () => {
   let [showMenu, setShowMenu] = useState(false);
 
   const handleMobileMenu = (showMenu) => {
@@ -78,7 +78,7 @@ export const MobileNavExt = () => {
         <NavButton onClick={() => setShowMenu(false)}>
           <FontAwesomeIcon icon={faX} />
         </NavButton>
-        <MobileNav />
+        <MobileNavDropdown />
       </>
     );
   }

@@ -10,7 +10,7 @@ import {
   faBars,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
-import { MobileNavExt } from "./MobileNav";
+import { MobileNav } from "./MobileNav";
 
 const Nav = styled.nav`
   height: 5rem;
@@ -40,7 +40,6 @@ const NavDiv = styled.div`
   display: flex;
   align-items: center;
   width: min-content;
-
   box-sizing: border-box;
 `;
 
@@ -48,8 +47,7 @@ const MobileNavDiv = styled(NavDiv)`
   display: grid;
   justify-content: left;
   @media (min-width: 46rem) {
-    display: flex;
-    align-items: center;
+    display: none;
   }
 `;
 
@@ -95,6 +93,23 @@ const NavLogo = styled(NavSelect)`
   }
 `;
 
+const DesktopNavDiv = styled.div`
+  display: none;
+  @media (min-width: 46rem) {
+    display: flex;
+    align-items: center;
+  }
+`;
+
+const DesktopNav = () => {
+  return (
+    <DesktopNavDiv>
+      <NavSelect to="/">Home</NavSelect>
+      <NavSelect to="/products">Shop</NavSelect>
+    </DesktopNavDiv>
+  );
+};
+
 const UserOptions = () => {
   const context = useContext(UserContext);
   const user = context.user;
@@ -137,8 +152,9 @@ export const Navbar = () => {
       <NavBackground>
         <NavMenu>
           <MobileNavDiv>
-            <MobileNavExt></MobileNavExt>
+            <MobileNav></MobileNav>
           </MobileNavDiv>
+          <DesktopNav />
           <NavLogo to="/">The Store</NavLogo>
           <UserOptions></UserOptions>
         </NavMenu>
