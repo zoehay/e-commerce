@@ -6,11 +6,14 @@ import { NavButton, NavSelect } from "./Navbar";
 
 const MobileNavWrapper = styled.div`
   position: absolute;
+  z-index: 0;
   top: 5rem;
   display: flex;
   align-items: flex-start;
   width: 100%;
   height: 100%;
+  left: ${(props) => (props.displayMenu ? "0" : "-100%")};
+  transition: left 0.5s ease;
 `;
 
 const MobileDropdown = styled.div`
@@ -21,8 +24,8 @@ const MobileDropdown = styled.div`
   flex-direction: column;
   width: 50%;
   height: 100%;
-  left: ${(props) => (props.displayMenu ? "0" : "-100%")};
   box-shadow: 0.5rem 0.5rem 0.7rem var(--accent-bold-1);
+  left: ${(props) => (props.displayMenu ? "0" : "-100%")};
   transition: left 0.5s ease;
 `;
 
@@ -37,9 +40,9 @@ const MobileNavList = styled.ul`
   font-weight: bold;
 `;
 
-const MobileNavDropdown = ({ displayMenu }) => {
+const MobileNavDropdown = ({ displayMenu, handleClose }) => {
   return (
-    <MobileNavWrapper>
+    <MobileNavWrapper displayMenu={displayMenu} onClick={handleClose}>
       <MobileDropdown displayMenu={displayMenu}>
         <MobileNavList>
           <li>
@@ -64,12 +67,18 @@ export const MobileNav = () => {
     icon = faX;
   }
 
+  const handleClose = () => {
+    if (showMenu) {
+      setShowMenu(false);
+    }
+  };
+
   return (
     <>
       <NavButton onClick={() => setShowMenu(!showMenu)}>
         <FontAwesomeIcon icon={icon} />
       </NavButton>
-      <MobileNavDropdown displayMenu={showMenu} />
+      <MobileNavDropdown displayMenu={showMenu} handleClose={handleClose} />
     </>
   );
 };
