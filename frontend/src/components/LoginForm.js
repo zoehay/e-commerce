@@ -5,6 +5,7 @@ import { UserContext } from "../util/userContext";
 
 const Form = styled.form`
   width: 100%;
+  margin: 1rem;
 `;
 
 const LoginForm = () => {
@@ -37,24 +38,28 @@ const LoginForm = () => {
       <Form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email">Email</label>
-          <input
-            type="text"
-            name="email"
-            id="email"
-            value={formState.email}
-            onChange={handleChange}
-          />
+          <div>
+            <input
+              type="text"
+              name="email"
+              id="email"
+              value={formState.email}
+              onChange={handleChange}
+            />
+          </div>
         </div>
 
         <div>
           <label htmlFor="password">Password</label>
-          <input
-            type="text"
-            name="password"
-            id="password"
-            value={formState.password}
-            onChange={handleChange}
-          />
+          <div>
+            <input
+              type="text"
+              name="password"
+              id="password"
+              value={formState.password}
+              onChange={handleChange}
+            />
+          </div>
         </div>
         <div>
           <input type="submit" value="Submit" />

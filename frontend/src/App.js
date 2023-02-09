@@ -9,6 +9,8 @@ import WelcomePage from "./components/WelcomePage";
 import Root from "./routes/root";
 import { UserContext, UserProvider } from "./util/userContext";
 import Cart from "./routes/cart";
+import Login from "./routes/login";
+import Register from "./routes/register";
 
 const router = createBrowserRouter([
   {
@@ -26,11 +28,11 @@ const router = createBrowserRouter([
       },
       {
         path: "auth/login",
-        element: <LoginForm />,
+        element: <Login />,
       },
       {
         path: "auth/register",
-        element: <RegisterForm />,
+        element: <Register />,
       },
       {
         path: "/cart",

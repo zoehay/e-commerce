@@ -32,43 +32,51 @@ const RegisterForm = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="email">Email</label>
-        <input
-          type="text"
-          name="email"
-          id="email"
-          value={formState.email}
-          onChange={handleChange}
-        />
-      </div>
+    <div>
+      <Form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="email">Email</label>
+          <div>
+            <input
+              type="text"
+              name="email"
+              id="email"
+              value={formState.email}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
 
-      <div>
-        <label htmlFor="name">Name</label>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          value={formState.name}
-          onChange={handleChange}
-        />
-      </div>
+        <div>
+          <label htmlFor="name">Name</label>
+          <div>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              value={formState.name}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
 
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          type="text"
-          name="password"
-          id="password"
-          value={formState.password}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <input type="submit" value="Submit" />
-      </div>
-    </Form>
+        <div>
+          <label htmlFor="password">Password</label>
+          <div>
+            <input
+              type="text"
+              name="password"
+              id="password"
+              value={formState.password}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div>
+          <input type="submit" value="Submit" />
+        </div>
+      </Form>
+    </div>
   );
 };
 

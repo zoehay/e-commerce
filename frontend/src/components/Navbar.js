@@ -9,6 +9,7 @@ import {
   faRightFromBracket,
   faBars,
   faX,
+  faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { MobileNav } from "./MobileNav";
 
@@ -52,7 +53,7 @@ const MobileNavDiv = styled(NavDiv)`
 `;
 
 export const NavSelect = styled(NavLink)`
-  color: #f4f1bb;
+  color: var(--accent-light-2);
   display: flex;
   align-items: center;
   margin: 0 0.25rem;
@@ -121,7 +122,6 @@ const UserOptions = () => {
         <NavSelect to="/auth/login">
           <FontAwesomeIcon icon={faUser} />
         </NavSelect>
-        <NavSelect to="/auth/register">Register</NavSelect>
       </NavDiv>
     );
   } else {
