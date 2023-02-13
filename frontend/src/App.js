@@ -11,6 +11,7 @@ import { UserContext, UserProvider } from "./util/userContext";
 import Cart from "./routes/cart";
 import Login from "./routes/login";
 import Register from "./routes/register";
+import FormPage from "./routes/form-page";
 
 const router = createBrowserRouter([
   {
@@ -28,11 +29,11 @@ const router = createBrowserRouter([
       },
       {
         path: "auth/login",
-        element: <Login />,
+        element: <FormPage type="login" />,
       },
       {
         path: "auth/register",
-        element: <Register />,
+        element: <FormPage type="register" />,
       },
       {
         path: "/cart",

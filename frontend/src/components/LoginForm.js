@@ -2,11 +2,7 @@ import React, { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "../util/userContext";
-
-const Form = styled.form`
-  width: 100%;
-  margin: 1rem;
-`;
+import { FormDiv } from "./Form";
 
 const LoginForm = () => {
   const context = useContext(UserContext);
@@ -34,8 +30,8 @@ const LoginForm = () => {
   };
 
   return (
-    <div>
-      <Form onSubmit={handleSubmit}>
+    <FormDiv>
+      <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email">Email</label>
           <div>
@@ -64,8 +60,8 @@ const LoginForm = () => {
         <div>
           <input type="submit" value="Submit" />
         </div>
-      </Form>
-    </div>
+      </form>
+    </FormDiv>
   );
 };
 

@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Client from "../util/Client";
-
-const Form = styled.form`
-  width: 100%;
-`;
+import { FormDiv } from "./Form";
 
 const RegisterForm = () => {
   const [formState, setFormState] = useState({
@@ -32,8 +29,8 @@ const RegisterForm = () => {
   };
 
   return (
-    <div>
-      <Form onSubmit={handleSubmit}>
+    <FormDiv>
+      <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email">Email</label>
           <div>
@@ -75,8 +72,8 @@ const RegisterForm = () => {
         <div>
           <input type="submit" value="Submit" />
         </div>
-      </Form>
-    </div>
+      </form>
+    </FormDiv>
   );
 };
 

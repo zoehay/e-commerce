@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import Client from "../util/Client";
 import { UserContext } from "../util/userContext";
@@ -37,6 +38,23 @@ const AddToCart = styled.button`
   }
 `;
 
+const LoginLink = styled(NavLink)`
+  color: var(--accent-bold-1);
+  display: flex;
+  text-decoration: none;
+  font-size: 0.65rem;
+  justify-content: center;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background-color: var(--accent-light-2);
+  width: 60%;
+  max-width: 10rem;
+  margin: 0rem auto;
+  &:hover {
+    color: var(--accent-bold-2);
+  }
+`;
+
 const ProductTile = ({ product }) => {
   const context = useContext(UserContext);
   const user = context.user;
@@ -47,16 +65,23 @@ const ProductTile = ({ product }) => {
         <ProductName>{product.name}</ProductName>
         <ProductPrice>{product.price}</ProductPrice>
         <ProductDescription>{product.description}</ProductDescription>
-
-        <AddToCart
-          type="button"
-          onClick={() => {
-            console.log(user.id, product.id);
-            Client.addCartProduct(user.id, product.id);
-          }}
-        >
-          Add to Cart
-        </AddToCart>
+        {user != undefined ? (
+          <AddToCart
+            type="button"
+            onClick={() => {
+              if (user) {
+                console.log(user.id, product.id);
+                Client.addCartProduct(user.id, product.id);
+              } else {
+                alert("no user");
+              }
+            }}
+          >
+            Add to Cart
+          </AddToCart>
+        ) : (
+          <LoginLink to="/auth/login">Login to Add</LoginLink>
+        )}
       </ProductInfo>
     </Tile>
   );
