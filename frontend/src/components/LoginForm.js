@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "../util/userContext";
-import { FormDiv } from "./Form";
+import { FormDiv, FormField } from "./Form";
 
 const LoginForm = () => {
   const context = useContext(UserContext);
@@ -32,7 +32,7 @@ const LoginForm = () => {
   return (
     <FormDiv>
       <form onSubmit={handleSubmit}>
-        <div>
+        <FormField>
           <label htmlFor="email">Email</label>
           <div>
             <input
@@ -43,9 +43,9 @@ const LoginForm = () => {
               onChange={handleChange}
             />
           </div>
-        </div>
+        </FormField>
 
-        <div>
+        <FormField>
           <label htmlFor="password">Password</label>
           <div>
             <input
@@ -56,10 +56,10 @@ const LoginForm = () => {
               onChange={handleChange}
             />
           </div>
-        </div>
-        <div>
+        </FormField>
+        <FormField>
           <input type="submit" value="Submit" />
-        </div>
+        </FormField>
       </form>
     </FormDiv>
   );
