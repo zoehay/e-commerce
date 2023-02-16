@@ -85,6 +85,27 @@ const Client = {
     }
   },
 
+  async updateUserName(userName) {
+    console.log("username");
+    console.log("update", this.baseEndpoint);
+    const endpoint = "http://localhost:8000" + "/user";
+    try {
+      const response = await fetch(endpoint, {
+        credentials: "include",
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userName: userName,
+        }),
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   //// PRODUCT
   async getProducts() {
     const endpoint = this.baseEndpoint + "/products";

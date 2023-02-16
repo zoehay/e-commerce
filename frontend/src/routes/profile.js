@@ -1,4 +1,6 @@
 import { useContext, useState, useEffect } from "react";
+import UserForm from "../components/UserForm";
+import Client from "../util/Client";
 import { UserContext } from "../util/userContext";
 
 const Profile = () => {
@@ -15,6 +17,10 @@ const Profile = () => {
         <>
           <h2>{user.email}</h2>
           <h2>{user.name}</h2>
+          <UserForm
+            fieldName={"Name"}
+            action={Client.updateUserName}
+          ></UserForm>
         </>
       ) : (
         <h2>Loading</h2>
