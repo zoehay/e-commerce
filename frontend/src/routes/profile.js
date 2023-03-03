@@ -25,7 +25,6 @@ const Profile = () => {
       ) : (
         <h2>Loading</h2>
       )}
-      <h2>a button to edit</h2>
     </div>
   );
 };

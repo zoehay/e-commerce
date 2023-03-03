@@ -42,11 +42,8 @@ const Cart = () => {
   }, [cartProducts]);
 
   const handleUpdateQuantity = async (productId, newQuantity) => {
-    console.log("handlechange");
-    console.log(productId);
-    // await fetchData();\
     const newCartProducts = cartProducts.map((product) => {
-      if (product.productId == productId) {
+      if (product.productId === productId) {
         return {
           ...product,
           quantity: newQuantity,

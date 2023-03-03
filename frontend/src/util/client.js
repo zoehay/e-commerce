@@ -1,9 +1,9 @@
-const Client = {
-  baseEndpoint: "http://localhost:8000",
+class Client {
+  static baseEndpoint = "http://localhost:8000";
 
   //// USER
-  async getUser() {
-    const endpoint = this.baseEndpoint + "/user";
+  static async getUser() {
+    const endpoint = Client.baseEndpoint + "/user";
     let setCookie = document.cookie;
     console.log(setCookie);
 
@@ -21,10 +21,10 @@ const Client = {
     } catch (error) {
       console.log(error);
     }
-  },
+  }
 
-  async registerUser(userEmail, userName, userPassword) {
-    const endpoint = this.baseEndpoint + "/auth/register";
+  static async registerUser(userEmail, userName, userPassword) {
+    const endpoint = Client.baseEndpoint + "/auth/register";
     try {
       const response = await fetch(endpoint, {
         method: "POST",
@@ -41,10 +41,11 @@ const Client = {
     } catch (error) {
       console.log(error);
     }
-  },
+  }
 
-  async loginUser(userEmail, userPassword) {
-    const endpoint = this.baseEndpoint + "/auth/login";
+  static async loginUser(userEmail, userPassword) {
+    const endpoint = Client.baseEndpoint + "/auth/login";
+    console.log(endpoint);
     try {
       const response = await fetch(endpoint, {
         method: "POST",
@@ -67,10 +68,10 @@ const Client = {
     } catch (error) {
       console.log(error);
     }
-  },
+  }
 
-  async logoutUser() {
-    const endpoint = this.baseEndpoint + "/auth/logout";
+  static async logoutUser() {
+    const endpoint = Client.baseEndpoint + "/auth/logout";
     try {
       const response = await fetch(endpoint, {
         credentials: "include",
@@ -83,12 +84,10 @@ const Client = {
     } catch (error) {
       console.log(error);
     }
-  },
+  }
 
-  async updateUserName(userName) {
-    console.log("username");
-    console.log("update", this.baseEndpoint);
-    const endpoint = "http://localhost:8000" + "/user";
+  static async updateUserName(userName) {
+    const endpoint = Client.baseEndpoint + "/user";
     try {
       const response = await fetch(endpoint, {
         credentials: "include",
@@ -100,15 +99,16 @@ const Client = {
           userName: userName,
         }),
       });
-      console.log(response);
+      const responseJSON = await response.json();
+      return responseJSON;
     } catch (error) {
       console.log(error);
     }
-  },
+  }
 
   //// PRODUCT
-  async getProducts() {
-    const endpoint = this.baseEndpoint + "/products";
+  static async getProducts() {
+    const endpoint = Client.baseEndpoint + "/products";
     try {
       const response = await fetch(endpoint);
       if (response.ok) {
@@ -119,10 +119,10 @@ const Client = {
     } catch (error) {
       console.log(error);
     }
-  },
+  }
 
-  async getProductById(id) {
-    const endpoint = this.baseEndpoint + `/products/${id}`;
+  static async getProductById(id) {
+    const endpoint = Client.baseEndpoint + `/products/${id}`;
     try {
       const response = await fetch(endpoint);
       if (response.ok) {
@@ -134,12 +134,13 @@ const Client = {
     } catch (error) {
       console.log(error);
     }
-  },
+  }
 
   //// CART
-  async updateCartProductQuantity(userId, productId, quantity) {
+  static async updateCartProductQuantity(userId, productId, quantity) {
+    console.log("CLIENT");
     console.log(userId, productId, quantity);
-    const endpoint = this.baseEndpoint + "/cart";
+    const endpoint = Client.baseEndpoint + "/cart";
     try {
       const response = await fetch(endpoint, {
         method: "POST",
@@ -154,14 +155,14 @@ const Client = {
         credentials: "include",
       });
       const responseJSON = await response.json();
-      console.log(responseJSON);
+      console.log("update", responseJSON);
     } catch (error) {
       console.log(error);
     }
-  },
+  }
 
-  async addCartProduct(userId, productId) {
-    const endpoint = this.baseEndpoint + "/cart";
+  static async addCartProduct(userId, productId) {
+    const endpoint = Client.baseEndpoint + "/cart";
     try {
       const response = await fetch(endpoint, {
         method: "POST",
@@ -179,10 +180,10 @@ const Client = {
     } catch (error) {
       console.log(error);
     }
-  },
+  }
 
-  async getCartProducts() {
-    const endpoint = this.baseEndpoint + "/cart";
+  static async getCartProducts() {
+    const endpoint = Client.baseEndpoint + "/cart";
     try {
       const response = await fetch(endpoint, {
         credentials: "include",
@@ -195,10 +196,10 @@ const Client = {
     } catch (error) {
       console.log(error);
     }
-  },
+  }
 
-  async getCartDetails() {
-    const endpoint = this.baseEndpoint + "/cart/details";
+  static async getCartDetails() {
+    const endpoint = Client.baseEndpoint + "/cart/details";
     try {
       const response = await fetch(endpoint, {
         credentials: "include",
@@ -213,7 +214,7 @@ const Client = {
     } catch (error) {
       console.log(error);
     }
-  },
-};
+  }
+}
 
 export default Client;

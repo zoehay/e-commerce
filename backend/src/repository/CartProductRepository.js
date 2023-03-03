@@ -4,7 +4,6 @@ class CartProductRepository {
   }
 
   getCartProductById(userId, productId) {
-    console.log(userId, productId);
     return this.prisma.cartProduct.findUnique({
       where: {
         userId_productId: {
@@ -45,7 +44,6 @@ class CartProductRepository {
   }
 
   getUserCart(userId) {
-    console.log("getting user cart", userId);
     return this.prisma.cartProduct.findMany({
       where: {
         userId: userId,
@@ -54,7 +52,6 @@ class CartProductRepository {
   }
 
   getUserCartDetails(userId) {
-    console.log("usercart details", userId);
     return this.prisma.cartProduct.findMany({
       where: {
         userId: userId,

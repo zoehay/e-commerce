@@ -1,16 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import Client from "../util/Client";
-import { FormDiv, FormField } from "./Form";
+import { FormDiv, FormField, FormContent } from "./Form";
+
+const ToastDiv = styled.div`
+  font-size: 1rem;
+`;
+
+const ProfileFormDiv = styled(FormDiv)`
+  height: auto;
+`;
+
+const Toast = ({ fieldName }) => {
+  return <ToastDiv>{`${fieldName} has been updated`}</ToastDiv>;
+};
 
 const UserForm = ({ fieldName, action }) => {
   const [formState, setFormState] = useState("");
+  const [displayToast, setDisplayToast] = useState(false);
+  const fieldString = String(fieldName).toLowerCase();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const input = formState;
-    console.log(input);
-    await action(input);
+    const response = await action(input);
+    if (response.user[fieldString] === formState) {
+      setDisplayToast(true);
+      setTimeout(() => {
+        setDisplayToast(false);
+        setFormState("");
+      }, 3000);
+    }
   };
 
   const handleChange = ({ target }) => {
@@ -19,26 +40,29 @@ const UserForm = ({ fieldName, action }) => {
   };
 
   return (
-    <FormDiv>
-      <form onSubmit={handleSubmit}>
-        <FormField>
-          <label htmlFor="input">{`Update ${fieldName}`}</label>
-          <div>
-            <input
-              type="text"
-              name="input"
-              id="input"
-              value={formState}
-              onChange={handleChange}
-            />
-          </div>
-        </FormField>
+    <FormContent>
+      <ProfileFormDiv>
+        {displayToast && <Toast fieldName={fieldName}></Toast>}
+        <form onSubmit={handleSubmit}>
+          <FormField>
+            <label htmlFor="input">{`Update ${fieldName}`}</label>
+            <div>
+              <input
+                type="text"
+                name="input"
+                id="input"
+                value={formState}
+                onChange={handleChange}
+              />
+            </div>
+          </FormField>
 
-        <FormField>
-          <input type="submit" value="Submit" />
-        </FormField>
-      </form>
-    </FormDiv>
+          <FormField>
+            <input type="submit" value="Submit" />
+          </FormField>
+        </form>
+      </ProfileFormDiv>
+    </FormContent>
   );
 };
 
