@@ -9,22 +9,42 @@ const ToastDiv = styled.div`
 `;
 
 const ProfileFormDiv = styled(FormDiv)`
-  height: auto;
+  height: 5rem;
+  margin: 0rem;
 `;
 
 const Toast = ({ fieldName }) => {
   return <ToastDiv>{`${fieldName} has been updated`}</ToastDiv>;
 };
-
+//#TODO: break out into 3 different user forms, hard coded no switch
 const UserForm = ({ fieldName, action }) => {
   const [formState, setFormState] = useState("");
   const [displayToast, setDisplayToast] = useState(false);
   const fieldString = String(fieldName).toLowerCase();
 
+  let email = undefined;
+  let userName = undefined;
+  let password = undefined;
+
+  switch (fieldName) {
+    case "Email":
+      email = formState;
+      break;
+    case "Name":
+      userName = formState;
+      break;
+    case "Password":
+      password = formState;
+      break;
+    default:
+      throw new Error("Invalid UserForm type");
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const input = formState;
-    const response = await action(input);
+    console.log(email, userName, password);
+    const response = await action(email, userName, password);
     if (response.user[fieldString] === formState) {
       setDisplayToast(true);
       setTimeout(() => {

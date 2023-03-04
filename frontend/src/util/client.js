@@ -106,6 +106,28 @@ class Client {
     }
   }
 
+  static async updateUserProfile(email, userName, password) {
+    const endpoint = Client.baseEndpoint + "/user";
+    try {
+      const response = await fetch(endpoint, {
+        credentials: "include",
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          userName: userName,
+          password: password,
+        }),
+      });
+      const responseJSON = await response.json();
+      return responseJSON;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   //// PRODUCT
   static async getProducts() {
     const endpoint = Client.baseEndpoint + "/products";
