@@ -10,93 +10,143 @@ const PageName = styled.div`
   font-size: 1.5rem;
   font-weight: bold;
   color: var(--accent-bold-1);
+  margin-bottom: 0pc;
+`;
+
+const ProfileContainer = styled.div`
+  display: flex;
+  margin: 0 0 auto 10%;
+  flex-direction: column;
+  width: 100%;
+  @media (min-width: 46rem) {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: 0 auto;
+  }
+`;
+
+const FieldContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
 `;
 
 const FieldTitle = styled.div`
   font-size: 1rem;
   font-weight: bold;
   color: var(--accent-bold-2);
-  margin: 1rem;
+  margin: 0.5rem 0rem;
+`;
+
+const EditContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
 `;
 
 const FieldValue = styled.div`
   font-size: 1rem;
   font-weight: normal;
+  margin-right: 1rem;
   color: var(--accent-bold-2);
-  margin: 1rem;
 `;
 
-const ProfileField = styled.div`
-  font-size: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const ProfileContent = styled(PageContent)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 0rem;
-  @media (min-width: 46rem) {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+const EditButton = styled.button`
+  color: var(--accent-bold-2);
+  font-size: 0.8rem;
+  margin: 0rem;
+  padding: 0rem;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: underline;
+  &:hover {
+    color: var(--accent-bold-1);
   }
 `;
 
-const DetailsContainer = styled.div`
-  display: flex;
-  margin: 0 auto;
-  flex-direction: column;
-  width: 100%;
-`;
 //#TODO: Edit button to display input field
-const CurrentDetails = ({ user }) => {
+
+const ProfileContent = ({ user }) => {
+  let [emailForm, setEmailForm] = useState(false);
+  let [nameForm, setNameForm] = useState(false);
+  let [passwordForm, setPasswordForm] = useState(false);
+
+  const handleEmailClick = (event) => {
+    event.preventDefault();
+    setEmailForm(!emailForm);
+  };
+
+  const handleNameClick = (event) => {
+    event.preventDefault();
+    setNameForm(!nameForm);
+  };
+
+  const handlePasswordClick = (event) => {
+    event.preventDefault();
+    setPasswordForm(!passwordForm);
+  };
+
   return (
-    <DetailsContainer>
-      <div>
+    <ProfileContainer>
+      <FieldContainer>
         <FieldTitle>EMAIL</FieldTitle>
-        <FieldValue>{user.email}</FieldValue>
-      </div>
-      <div>
+        <EditContainer>
+          <FieldValue>{user.email}</FieldValue>
+          <EditButton onClick={handleEmailClick}>
+            {emailForm ? "Close" : "Edit"}
+          </EditButton>
+        </EditContainer>
+        <UserForm
+          display={emailForm}
+          fieldName={"Email"}
+          action={Client.updateUserProfile}
+        ></UserForm>
+      </FieldContainer>
+
+      <FieldContainer>
         <FieldTitle>USER NAME</FieldTitle>
-        <FieldValue>{user.name || "Not Provided"}</FieldValue>
-      </div>
-    </DetailsContainer>
+        <EditContainer>
+          <FieldValue>{user.name || "Not Provided"}</FieldValue>
+          <EditButton onClick={handleNameClick}>
+            {nameForm ? "Close" : "Edit"}
+          </EditButton>
+        </EditContainer>
+        <UserForm
+          display={nameForm}
+          fieldName={"Name"}
+          action={Client.updateUserProfile}
+        ></UserForm>
+      </FieldContainer>
+
+      <FieldContainer>
+        <FieldTitle>PASSWORD</FieldTitle>
+        <EditContainer>
+          <EditButton onClick={handlePasswordClick}>
+            {passwordForm ? "Close" : "Edit"}
+          </EditButton>
+        </EditContainer>
+        <UserForm
+          display={passwordForm}
+          fieldName={"Password"}
+          action={Client.updateUserProfile}
+        ></UserForm>
+      </FieldContainer>
+    </ProfileContainer>
   );
 };
 
 const Profile = () => {
   let [userDetails, setUserDetails] = useState(null);
-
   const context = useContext(UserContext);
-
   const user = context.user;
 
   return (
     <MainContent>
       <PageContent>
-        <PageName>Account Details</PageName>
+        <PageName>Profile Details</PageName>
         {user ? (
-          <>
-            <CurrentDetails user={user}></CurrentDetails>
-            <ProfileContent>
-              <ProfileField>
-                <UserForm
-                  fieldName={"Email"}
-                  action={Client.updateUserProfile}
-                ></UserForm>
-              </ProfileField>
-              <UserForm
-                fieldName={"Name"}
-                action={Client.updateUserProfile}
-              ></UserForm>
-              <UserForm
-                fieldName={"Password"}
-                action={Client.updateUserProfile}
-              ></UserForm>
-            </ProfileContent>
-          </>
+          <ProfileContent user={user}></ProfileContent>
         ) : (
           <h2>Loading</h2>
         )}

@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import styled from "styled-components";
-import Client from "../util/Client";
-import { FormDiv, FormField, FormContent } from "./Form";
+import { FormContent, FormField } from "./Form";
 
 const ToastDiv = styled.div`
   font-size: 1rem;
 `;
 
-const ProfileFormDiv = styled(FormDiv)`
-  height: 5rem;
+const ProfileFormDiv = styled(FormContent)`
   margin: 0rem;
+  padding: 0rem;
+  align-items: flex-start;
 `;
 
 const Toast = ({ fieldName }) => {
   return <ToastDiv>{`${fieldName} has been updated`}</ToastDiv>;
 };
 //#TODO: break out into 3 different user forms, hard coded no switch
-const UserForm = ({ fieldName, action }) => {
+const UserForm = ({ display, fieldName, action }) => {
   const [formState, setFormState] = useState("");
   const [displayToast, setDisplayToast] = useState(false);
   const fieldString = String(fieldName).toLowerCase();
@@ -60,7 +59,7 @@ const UserForm = ({ fieldName, action }) => {
   };
 
   return (
-    <FormContent>
+    display && (
       <ProfileFormDiv>
         {displayToast && <Toast fieldName={fieldName}></Toast>}
         <form onSubmit={handleSubmit}>
@@ -82,7 +81,7 @@ const UserForm = ({ fieldName, action }) => {
           </FormField>
         </form>
       </ProfileFormDiv>
-    </FormContent>
+    )
   );
 };
 
