@@ -86,6 +86,26 @@ class Client {
     }
   }
 
+  static async updateUserEmail(userEmail) {
+    const endpoint = Client.baseEndpoint + "/user";
+    try {
+      const response = await fetch(endpoint, {
+        credentials: "include",
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: userEmail,
+        }),
+      });
+      const responseJSON = await response.json();
+      return responseJSON;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   static async updateUserName(userName) {
     const endpoint = Client.baseEndpoint + "/user";
     try {
@@ -106,6 +126,25 @@ class Client {
     }
   }
 
+  static async updateUserPassword(userPassword) {
+    const endpoint = Client.baseEndpoint + "/user";
+    try {
+      const response = await fetch(endpoint, {
+        credentials: "include",
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          password: userPassword,
+        }),
+      });
+      const responseJSON = await response.json();
+      return responseJSON;
+    } catch (error) {
+      console.log(error);
+    }
+  }
   static async updateUserProfile(email, userName, password) {
     const endpoint = Client.baseEndpoint + "/user";
     try {

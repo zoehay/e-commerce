@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import Client from "../util/Client";
 import { FormContent, FormField } from "./Form";
 
 const ToastDiv = styled.div`
@@ -12,39 +13,73 @@ const ProfileFormDiv = styled(FormContent)`
   align-items: flex-start;
 `;
 
+//#TODO: different toast messages for status
 const Toast = ({ fieldName }) => {
   return <ToastDiv>{`${fieldName} has been updated`}</ToastDiv>;
 };
-//#TODO: break out into 3 different user forms, hard coded no switch
-const UserForm = ({ display, fieldName, action }) => {
+
+export const PasswordForm = ({ display }) => {
+  const fieldName = "Password";
   const [formState, setFormState] = useState("");
   const [displayToast, setDisplayToast] = useState(false);
-  const fieldString = String(fieldName).toLowerCase();
-
-  let email = undefined;
-  let userName = undefined;
-  let password = undefined;
-
-  switch (fieldName) {
-    case "Email":
-      email = formState;
-      break;
-    case "Name":
-      userName = formState;
-      break;
-    case "Password":
-      password = formState;
-      break;
-    default:
-      throw new Error("Invalid UserForm type");
-  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const input = formState;
-    console.log(email, userName, password);
-    const response = await action(email, userName, password);
-    if (response.user[fieldString] === formState) {
+    const response = await Client.updateUserPassword(formState);
+    if (!response.user) {
+      console.log("Could not update password");
+    } else {
+      setDisplayToast(true);
+      setTimeout(() => {
+        setDisplayToast(false);
+        setFormState("");
+      }, 3000);
+    }
+  };
+
+  const handleChange = ({ target }) => {
+    const input = target.value;
+    setFormState(input);
+  };
+
+  return (
+    display && (
+      <ProfileFormDiv>
+        {displayToast && <Toast fieldName={fieldName}></Toast>}
+        <form onSubmit={handleSubmit}>
+          <FormField>
+            <label htmlFor="input">{`Update ${fieldName}`}</label>
+            <div>
+              <input
+                type="password"
+                name="input"
+                id="input"
+                value={formState}
+                onChange={handleChange}
+              />
+            </div>
+          </FormField>
+
+          <FormField>
+            <input type="submit" value="Submit" />
+          </FormField>
+        </form>
+      </ProfileFormDiv>
+    )
+  );
+};
+
+export const EmailForm = ({ display }) => {
+  const fieldName = "Email";
+  const [formState, setFormState] = useState("");
+  const [displayToast, setDisplayToast] = useState(false);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const response = await Client.updateUserEmail(formState);
+    if (!response.user.email) {
+      console.log("Could not update user name");
+    } else if (response.user.email === formState) {
       setDisplayToast(true);
       setTimeout(() => {
         setDisplayToast(false);
@@ -75,7 +110,6 @@ const UserForm = ({ display, fieldName, action }) => {
               />
             </div>
           </FormField>
-
           <FormField>
             <input type="submit" value="Submit" />
           </FormField>
@@ -85,4 +119,52 @@ const UserForm = ({ display, fieldName, action }) => {
   );
 };
 
-export default UserForm;
+export const NameForm = ({ display }) => {
+  const fieldName = "Name";
+  const [formState, setFormState] = useState("");
+  const [displayToast, setDisplayToast] = useState(false);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const response = await Client.updateUserName(formState);
+    if (!response.user.name) {
+      console.log("Could not update user name");
+    } else if (response.user.name === formState) {
+      setDisplayToast(true);
+      setTimeout(() => {
+        setDisplayToast(false);
+        setFormState("");
+      }, 3000);
+    }
+  };
+
+  const handleChange = ({ target }) => {
+    const input = target.value;
+    setFormState(input);
+  };
+
+  return (
+    display && (
+      <ProfileFormDiv>
+        {displayToast && <Toast fieldName={fieldName}></Toast>}
+        <form onSubmit={handleSubmit}>
+          <FormField>
+            <label htmlFor="input">{`Update ${fieldName}`}</label>
+            <div>
+              <input
+                type="text"
+                name="input"
+                id="input"
+                value={formState}
+                onChange={handleChange}
+              />
+            </div>
+          </FormField>
+          <FormField>
+            <input type="submit" value="Submit" />
+          </FormField>
+        </form>
+      </ProfileFormDiv>
+    )
+  );
+};

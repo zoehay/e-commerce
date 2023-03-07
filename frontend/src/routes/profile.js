@@ -2,7 +2,12 @@ import { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
 import MainContent from "../components/MainContent";
 import PageContent from "../components/PageContent";
-import UserForm from "../components/UserForm";
+import {
+  EmailForm,
+  UserForm,
+  PasswordForm,
+  NameForm,
+} from "../components/UserForm";
 import Client from "../util/Client";
 import { UserContext } from "../util/userContext";
 
@@ -97,11 +102,7 @@ const ProfileContent = ({ user }) => {
             {emailForm ? "Close" : "Edit"}
           </EditButton>
         </EditContainer>
-        <UserForm
-          display={emailForm}
-          fieldName={"Email"}
-          action={Client.updateUserProfile}
-        ></UserForm>
+        <EmailForm display={emailForm}></EmailForm>
       </FieldContainer>
 
       <FieldContainer>
@@ -112,11 +113,7 @@ const ProfileContent = ({ user }) => {
             {nameForm ? "Close" : "Edit"}
           </EditButton>
         </EditContainer>
-        <UserForm
-          display={nameForm}
-          fieldName={"Name"}
-          action={Client.updateUserProfile}
-        ></UserForm>
+        <NameForm display={nameForm}></NameForm>
       </FieldContainer>
 
       <FieldContainer>
@@ -126,11 +123,7 @@ const ProfileContent = ({ user }) => {
             {passwordForm ? "Close" : "Edit"}
           </EditButton>
         </EditContainer>
-        <UserForm
-          display={passwordForm}
-          fieldName={"Password"}
-          action={Client.updateUserProfile}
-        ></UserForm>
+        <PasswordForm display={passwordForm}></PasswordForm>
       </FieldContainer>
     </ProfileContainer>
   );
