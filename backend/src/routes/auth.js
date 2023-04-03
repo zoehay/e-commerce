@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const authRouter = express.Router();
 const { userRepository } = require("../repository/repository");
 
+// #TODO: error messages for auth
 const checkAuthorization = (req, res, next) => {
   if (!req.user?.id) {
     console.log("no user");
@@ -33,7 +34,6 @@ passport.use(
     password,
     done
   ) {
-    console.log("password strategy");
     let user;
     try {
       user = await userRepository.getUserByEmail(email);
@@ -84,7 +84,6 @@ authRouter.post(
   }),
   async (req, res) => {
     if (req.user) {
-      console.log(req.user);
       const user = await userRepository.getUserById(req.user.id);
       res.status(200).json({ user });
     } else {
@@ -95,8 +94,6 @@ authRouter.post(
 
 authRouter.post("/register", async (req, res) => {
   const { email, userName, password } = req.body || undefined;
-  console.log(req.body);
-  console.log(email, userName, password);
   if (!email || !password) {
     console.log("Email and password required");
     return res.sendStatus(302);

@@ -26,14 +26,6 @@ app.use(
     allowedHeaders: ["content-type", "cookie", "credentials"],
   })
 );
-// app.use((req, res, next) => {
-//   res.setHeader("Access-Control-ALlow-Origin", "https://localhost:3000");
-//   res.header(
-//     "Acces-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept"
-//   );
-//   next();
-// });
 
 app.use(
   session({
@@ -57,10 +49,6 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-// app.use((req, res, next) => {
-//   console.log(req);
-//   next();
-// });
 
 app.use("/auth", authRouter);
 app.use("/products", productRouter);

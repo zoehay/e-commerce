@@ -5,16 +5,12 @@ class Client {
   static async getUser() {
     const endpoint = Client.baseEndpoint + "/user";
     let setCookie = document.cookie;
-    console.log(setCookie);
-
     try {
       const response = await fetch(endpoint, {
         credentials: "include",
       });
-      console.log(response);
       if (response.ok) {
         const responseJSON = await response.json();
-        console.log(responseJSON);
         const user = responseJSON.user;
         return user;
       }
@@ -37,7 +33,6 @@ class Client {
           password: userPassword,
         }),
       });
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -45,7 +40,6 @@ class Client {
 
   static async loginUser(userEmail, userPassword) {
     const endpoint = Client.baseEndpoint + "/auth/login";
-    console.log(endpoint);
     try {
       const response = await fetch(endpoint, {
         method: "POST",
@@ -58,11 +52,9 @@ class Client {
         }),
         credentials: "include",
       });
-      console.log(response);
       if (response.status === 200) {
         const responseJSON = await response.json();
         const user = responseJSON.user;
-        console.log(user);
         return user;
       }
     } catch (error) {
@@ -80,7 +72,6 @@ class Client {
           "Content-Type": "application/json",
         },
       });
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -189,7 +180,6 @@ class Client {
       if (response.ok) {
         const responseJSON = await response.json();
         const product = responseJSON.product;
-        console.log("client get", product);
         return product;
       }
     } catch (error) {
@@ -199,8 +189,6 @@ class Client {
 
   //// CART
   static async updateCartProductQuantity(userId, productId, quantity) {
-    console.log("CLIENT");
-    console.log(userId, productId, quantity);
     const endpoint = Client.baseEndpoint + "/cart";
     try {
       const response = await fetch(endpoint, {
@@ -216,7 +204,6 @@ class Client {
         credentials: "include",
       });
       const responseJSON = await response.json();
-      console.log("update", responseJSON);
     } catch (error) {
       console.log(error);
     }
@@ -237,7 +224,6 @@ class Client {
         credentials: "include",
       });
       const responseJSON = await response.json();
-      console.log(responseJSON);
     } catch (error) {
       console.log(error);
     }
@@ -267,9 +253,7 @@ class Client {
       });
       if (response.ok) {
         const responseJSON = await response.json();
-        console.log("client", responseJSON);
         const cartDetails = responseJSON.cart;
-        console.log("client", cartDetails);
         return cartDetails;
       }
     } catch (error) {

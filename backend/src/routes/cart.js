@@ -11,7 +11,6 @@ cartRouter.use(checkAuthorization);
 cartRouter.post("/", async (req, res, next) => {
   const userId = req.user.id;
   const productId = Number(req.body.productId);
-  console.log("quantity", req.body);
   // if the req has a quantity, set the cartProduct quantity
   if (req.body.quantity != null) {
     const quantity = Number(req.body.quantity);
@@ -54,7 +53,6 @@ cartRouter.post("/", async (req, res, next) => {
 
 // increment cartProduct by one
 cartRouter.post("/", async (req, res) => {
-  console.log(req.user);
   const userId = req.user.id;
   const productId = Number(req.body.productId);
   // check if the user has a cartProduct entry for this product

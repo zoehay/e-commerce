@@ -1,14 +1,8 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import MainContent from "../components/MainContent";
 import PageContent from "../components/PageContent";
-import {
-  EmailForm,
-  UserForm,
-  PasswordForm,
-  NameForm,
-} from "../components/UserForm";
-import Client from "../util/Client";
+import { EmailForm, NameForm, PasswordForm } from "../components/UserForm";
 import { UserContext } from "../util/userContext";
 
 const PageName = styled.div`
@@ -70,8 +64,6 @@ const EditButton = styled.button`
   }
 `;
 
-//#TODO: Edit button to display input field
-
 const ProfileContent = ({ user }) => {
   let [emailForm, setEmailForm] = useState(false);
   let [nameForm, setNameForm] = useState(false);
@@ -130,7 +122,6 @@ const ProfileContent = ({ user }) => {
 };
 
 const Profile = () => {
-  let [userDetails, setUserDetails] = useState(null);
   const context = useContext(UserContext);
   const user = context.user;
 

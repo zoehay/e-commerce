@@ -17,12 +17,10 @@ userRouter.get("/", async (req, res) => {
 });
 
 userRouter.put("/", async (req, res) => {
-  console.log("put route");
   let id = req.user.id;
   let email = req.body.email || undefined;
   let userName = req.body.userName || undefined;
   let password = req.body.password || undefined;
-  console.log(id, email, userName, password);
   try {
     if (password != undefined) {
       const salt = await bcrypt.genSalt(10);
@@ -38,7 +36,6 @@ userRouter.put("/", async (req, res) => {
 
 userRouter.delete("/", async (req, res) => {
   const id = req.user.id;
-  console.log(id);
   try {
     const user = await userRepository.deleteUser(id);
     return res.status(204).json({ user });

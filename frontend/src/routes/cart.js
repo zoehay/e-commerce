@@ -22,7 +22,6 @@ const Cart = () => {
   async function fetchData() {
     let cart = await Client.getCartDetails();
     setCartProducts(cart);
-    console.log("set cart", cart);
   }
   useEffect(() => {
     fetchData();
@@ -30,11 +29,9 @@ const Cart = () => {
 
   useEffect(() => {
     let cartTotal = 0;
-    console.log("calculate total");
     for (const item of cartProducts) {
       const quantity = item.quantity;
       const price = item.product.price;
-      console.log(price, quantity);
       const itemTotal = quantity * price;
       cartTotal += itemTotal;
     }
@@ -54,8 +51,6 @@ const Cart = () => {
     });
     setCartProducts(newCartProducts);
   };
-
-  console.log(cartProducts);
 
   let cartProductTiles = cartProducts.map((product, index) => (
     <CartProductTile

@@ -1,13 +1,11 @@
 import React, { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { UserContext } from "../util/userContext";
 import { FormDiv, FormField } from "./Form";
 
 const LoginForm = () => {
   const context = useContext(UserContext);
   const navigate = useNavigate();
-  const location = useLocation();
 
   const [formState, setFormState] = useState({
     email: "",

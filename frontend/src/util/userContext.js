@@ -8,7 +8,6 @@ export const UserProvider = ({ children }) => {
 
   async function fetchUser() {
     let currentUser = await Client.getUser();
-    console.log("provider useeffect get user", currentUser);
     setUser(currentUser);
   }
 

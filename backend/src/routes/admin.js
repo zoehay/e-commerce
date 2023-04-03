@@ -13,7 +13,6 @@ adminRouter.use(checkAuthorization, checkAdmin);
 // User Routes //
 
 adminRouter.post("/users", async (req, res) => {
-  console.log("admin user create", req.body);
   const { email, userName, password } = req.body || undefined;
   if (!email || !password) {
     return res.status(400).json({
@@ -139,9 +138,7 @@ adminRouter.put("/products/:id", async (req, res) => {
 });
 
 adminRouter.delete("/products/:id", async (req, res) => {
-  console.log("delete");
   const id = Number(req.params.id);
-  console.log(id);
   try {
     const product = await productRepository.deleteProduct(id);
     return res.status(204).json({ product });
