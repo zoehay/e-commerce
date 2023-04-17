@@ -1,9 +1,14 @@
+import MainContent from "./MainContent";
+import PageContent from "./PageContent";
+
 const WelcomePage = () => {
   return (
-    <div>
-      <h2>welcome to the store</h2>
-      <h3>promos and stuff</h3>
-    </div>
+    <MainContent>
+      <PageContent>
+        <h2>Welcome to the store!</h2>
+        <p>You can make up a user to add products to your cart</p>
+      </PageContent>
+    </MainContent>
   );
 };
 

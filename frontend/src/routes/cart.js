@@ -7,8 +7,7 @@ import PageContent from "../components/PageContent";
 import Client from "../util/Client";
 
 const CartTotal = styled.p`
-  background-color: lightblue;
-  border: solid;
+  background-color: var(--accent-bold-1);
   font-size: 1rem;
   padding: 1rem;
   width: 100%;

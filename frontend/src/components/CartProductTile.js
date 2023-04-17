@@ -5,8 +5,7 @@ import { UserContext } from "../util/userContext";
 
 const Tile = styled.div`
   box-sizing: border-box;
-  background: papayawhip;
-  border: solid;
+  background: var(--accent-light-1);
   padding: 1rem;
   display: grid;
   margin-bottom: 1rem;
