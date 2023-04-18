@@ -31,10 +31,10 @@ const Cart = () => {
     for (const item of cartProducts) {
       const quantity = item.quantity;
       const price = item.product.price;
-      const itemTotal = quantity * price;
+      let itemTotal = quantity * price;
       cartTotal += itemTotal;
     }
-    setCartTotal(cartTotal);
+    setCartTotal(cartTotal.toFixed(2));
   }, [cartProducts]);
 
   const handleUpdateQuantity = async (productId, newQuantity) => {

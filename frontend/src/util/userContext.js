@@ -28,7 +28,7 @@ export const UserProvider = ({ children }) => {
   };
 
   let logout = async () => {
-    await Client.logoutUser();
+    let response = await Client.logoutUser();
     setUser(null);
     console.log("logout");
   };
