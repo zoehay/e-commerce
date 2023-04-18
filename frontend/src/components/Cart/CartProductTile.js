@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import Client from "../util/Client";
-import { UserContext } from "../util/userContext";
+import Client from "../../util/Client";
+import { UserContext } from "../../util/userContext";
 
 const Tile = styled.div`
   box-sizing: border-box;

@@ -2,8 +2,7 @@ import { faBars, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { NavButton, NavSelect } from "./Navbar";
-
+import { NavSelect, NavButton } from "./Navbar";
 const MobileNavWrapper = styled.div`
   position: absolute;
   z-index: 0;

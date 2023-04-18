@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import CartProductFeed from "../components/CartProductFeed";
-import CartProductTile from "../components/CartProductTile";
-import MainContent from "../components/MainContent";
-import PageContent from "../components/PageContent";
-import Client from "../util/Client";
+import CartProductFeed from "./CartProductFeed";
+import CartProductTile from "./CartProductTile";
+import MainContent from "../MainContent";
+import PageContent from "../PageContent";
+import Client from "../../util/Client";
 
 const CartTotal = styled.p`
   background-color: var(--accent-bold-1);

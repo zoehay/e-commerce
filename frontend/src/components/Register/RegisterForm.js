@@ -1,21 +1,20 @@
-import React, { useContext, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { UserContext } from "../util/userContext";
-import { FormDiv, FormField } from "./Form";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Client from "../../util/Client";
+import { FormDiv, FormField } from "../Form";
 
-const LoginForm = () => {
-  const context = useContext(UserContext);
-  const navigate = useNavigate();
-
+const RegisterForm = () => {
   const [formState, setFormState] = useState({
     email: "",
+    name: "",
     password: "",
   });
+  const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const { email, password } = formState;
-    context.login(email, password);
+    const { email, name, password } = formState;
+    const response = await Client.registerUser(email, name, password);
     navigate("/");
   };
 
@@ -44,6 +43,19 @@ const LoginForm = () => {
         </FormField>
 
         <FormField>
+          <label htmlFor="name">Name</label>
+          <div>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              value={formState.name}
+              onChange={handleChange}
+            />
+          </div>
+        </FormField>
+
+        <FormField>
           <label htmlFor="password">Password</label>
           <div>
             <input
@@ -63,4 +75,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

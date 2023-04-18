@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import MainContent from "../components/MainContent";
-import PageContent from "../components/PageContent";
-import ProductFeed from "../components/ProductFeed";
-import ProductTile from "../components/ProductTile";
-import Client from "../util/Client";
+import MainContent from "../MainContent";
+import PageContent from "../PageContent";
+import ProductFeed from "./ProductFeed";
+import ProductTile from "./ProductTile";
+import Client from "../../util/Client";
 
 const Products = () => {
   let [products, setProducts] = useState([]);

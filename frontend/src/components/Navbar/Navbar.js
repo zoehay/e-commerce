@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { UserContext } from "../util/userContext";
+import { UserContext } from "../../util/userContext";
 import { MobileNav } from "./MobileNav";
 
 const Nav = styled.nav`
