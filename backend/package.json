@@ -10,7 +10,8 @@
     "test": "jest --runInBand",
     "test-reset": "prisma migrate reset --schema=./prisma/test.schema.prisma",
     "create-admin": "node scripts/create-admin.js",
-    "seed": "node prisma/seed.js"
+    "seed": "node prisma/seed.js",
+    "scp-ec2": "scp -r /Users/zoehay/Projects/e-commerce/backend/src /Users/zoehay/Projects/e-commerce/backend/package.json /Users/zoehay/Projects/e-commerce/backend/package-lock.json /Users/zoehay/Projects/e-commerce/backend/prisma ec2-user@44.239.28.78:/home/ec2-user/dev/personal-site/e-commerce-server"
   },
   "repository": {
     "type": "git",

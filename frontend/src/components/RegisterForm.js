@@ -14,7 +14,6 @@ const RegisterForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const { email, name, password } = formState;
-    console.log(email, name, password);
     const response = await Client.registerUser(email, name, password);
     navigate("/");
   };

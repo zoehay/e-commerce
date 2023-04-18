@@ -1,4 +1,5 @@
 class Client {
+  // static baseEndpoint = "//e-commerce.zoemhay.com/api";
   static baseEndpoint = "http://localhost:8000";
 
   //// USER
