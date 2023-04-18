@@ -1,5 +1,5 @@
-import MainContent from "./MainContent";
-import PageContent from "./PageContent";
+import MainContent from "../Content/MainContent";
+import PageContent from "../Content/PageContent";
 
 const WelcomePage = () => {
   return (

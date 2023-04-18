@@ -4,7 +4,7 @@ import { UserProvider } from "./util/userContext";
 
 import Root from "./components/Root/Root";
 import ErrorPage from "./components/Error-Page/Error-Page";
-import WelcomePage from "./components/WelcomePage";
+import WelcomePage from "./components/WelcomePage/WelcomePage";
 import Products from "./components/Products/Products";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";

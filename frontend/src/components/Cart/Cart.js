@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import CartProductFeed from "./CartProductFeed";
 import CartProductTile from "./CartProductTile";
-import MainContent from "../MainContent";
-import PageContent from "../PageContent";
+import MainContent from "../Content/MainContent";
+import PageContent from "../Content/PageContent";
 import Client from "../../util/Client";
 
 const CartTotal = styled.p`

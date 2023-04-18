@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import styled from "styled-components";
-import MainContent from "../MainContent";
-import PageContent from "../PageContent";
+import MainContent from "../Content/MainContent";
+import PageContent from "../Content/PageContent";
 import { EmailForm, NameForm, PasswordForm } from "./UserForm";
 import { UserContext } from "../../util/userContext";
 

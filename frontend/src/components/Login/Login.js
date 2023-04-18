@@ -1,6 +1,6 @@
-import { FormContent, FormLink } from "../Form";
+import { FormContent, FormLink } from "../Form/Form";
 import LoginForm from "./LoginForm.js";
-import MainContent from "../MainContent";
+import MainContent from "../Content/MainContent";
 
 const Login = () => {
   return (

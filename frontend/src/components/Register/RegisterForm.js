@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Client from "../../util/Client";
-import { FormDiv, FormField } from "../Form";
+import { FormDiv, FormField } from "../Form/Form";
 
 const RegisterForm = () => {
   const [formState, setFormState] = useState({

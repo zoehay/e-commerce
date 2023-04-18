@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../../util/userContext";
-import { FormDiv, FormField } from "../Form";
+import { FormDiv, FormField } from "../Form/Form";
 
 const LoginForm = () => {
   const context = useContext(UserContext);

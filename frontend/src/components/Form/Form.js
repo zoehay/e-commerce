@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import PageContent from "./PageContent";
+import PageContent from "../Content/PageContent";
 
 // the link to other page on a form page
 export const FormLink = styled(NavLink)`
