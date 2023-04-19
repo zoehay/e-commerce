@@ -28,6 +28,11 @@ class CartProductRepository {
           productId: productId,
         },
       },
+      select: {
+        userId: true,
+        productId: true,
+        quantity: true,
+      },
     });
   }
 

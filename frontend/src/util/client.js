@@ -166,7 +166,7 @@ class Client {
       productId: productId,
       quantity: quantity,
     });
-    const response = await Client.clientPostBody(endpoint, body);
+    const response = await Client.clientPut(endpoint, body);
     return response;
   }
 
