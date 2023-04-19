@@ -166,11 +166,11 @@ class Client {
       productId: productId,
       quantity: quantity,
     });
-    const response = await Client.clientPut(endpoint, body);
+    const response = await Client.clientPostBody(endpoint, body);
     return response;
   }
 
-  static async addCartProduct(userId, productId) {
+  static async incrementCartProductQuantity(userId, productId) {
     const endpoint = Client.baseEndpoint + "/cart";
     const body = JSON.stringify({
       userId: userId,

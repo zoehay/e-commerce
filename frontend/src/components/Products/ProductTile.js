@@ -70,7 +70,7 @@ const ProductTile = ({ product }) => {
             type="button"
             onClick={() => {
               if (user) {
-                Client.addCartProduct(user.id, product.id);
+                Client.incrementCartProductQuantity(user.id, product.id);
               } else {
                 alert("no user");
               }

@@ -72,7 +72,7 @@ const CartProductTile = ({ product, onChange }) => {
         newQuantity
       );
       await onChange(product.productId, newQuantity);
-    }, 300);
+    }, 350);
   };
 
   return (

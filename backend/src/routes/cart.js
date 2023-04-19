@@ -7,10 +7,19 @@ const cartRouter = express.Router();
 cartRouter.use(checkAuthorization);
 
 // update a cartProduct quantity
-cartRouter.put("/", async (req, res) => {
+cartRouter.post("/", async (req, res, next) => {
   const userId = req.user.id;
   const productId = Number(req.body.productId);
+
+  if (!req.body.hasOwnProperty("quantity")) {
+    return next();
+  }
+
   const quantity = Number(req.body.quantity);
+  if (quantity === 1) {
+    return next();
+  }
+
   try {
     if (quantity === 0) {
       const deletedCartProduct = await cartProductRepository.deleteCartProduct(
@@ -50,6 +59,7 @@ const incrementQuantity = async (existingCartProduct) => {
 cartRouter.post("/", async (req, res) => {
   const userId = req.user.id;
   const productId = Number(req.body.productId);
+
   try {
     const existingCartProduct = await cartProductRepository.getCartProductById(
       userId,
