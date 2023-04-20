@@ -1,6 +1,5 @@
 class Client {
-  // static baseEndpoint = "//e-commerce.zoemhay.com/api";
-  static baseEndpoint = "http://localhost:8000";
+  static baseEndpoint = process.env.REACT_APP_API_URL;
 
   static async clientGet(endpoint) {
     try {

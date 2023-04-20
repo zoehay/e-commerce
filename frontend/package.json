@@ -22,7 +22,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "scp-ec2": "scp -r /Users/zoehay/Projects/e-commerce/frontend/build ec2-user@44.239.28.78:/home/ec2-user/dev/personal-site/www/e-commerce-app/"
   },
   "eslintConfig": {
     "extends": [
