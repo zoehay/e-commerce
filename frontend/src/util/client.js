@@ -88,6 +88,9 @@ class Client {
       password: userPassword,
     });
     const response = await Client.clientPostBody(endpoint, body);
+    if (response?.user) {
+      return response.user;
+    }
   }
 
   static async loginUser(userEmail, userPassword) {
@@ -97,7 +100,7 @@ class Client {
       password: userPassword,
     });
     const response = await Client.clientPostBody(endpoint, body);
-    if (response.user) {
+    if (response?.user) {
       return response.user;
     }
   }

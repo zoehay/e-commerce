@@ -21,10 +21,9 @@ export const UserProvider = ({ children }) => {
     let newUser = await Client.loginUser(userEmail, userLogin);
     if (newUser != null) {
       setUser(newUser);
-      console.log("success");
-    } else {
-      console.log("login fail");
+      return newUser;
     }
+    // TODO: error toast
   };
 
   let logout = async () => {
