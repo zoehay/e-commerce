@@ -8,18 +8,15 @@ const { userRepository } = require("../repository/repository");
 // #TODO: error messages for auth
 const checkAuthorization = (req, res, next) => {
   if (!req.user?.id) {
-    console.log("no user");
-    return res.sendStatus(401);
+    return res.status(401).json({ message: "No user" });
   } else {
     next();
   }
 };
 
 const checkAdmin = (req, res, next) => {
-  console.log("check admin");
   if (req.user.isAdmin == false) {
-    console.log("unauthorized");
-    return res.sendStatus(401);
+    return res.status(401).json({ message: "Not authorized" });
   } else {
     console.log("authorized");
     next();
@@ -87,7 +84,7 @@ authRouter.post(
       const user = await userRepository.getUserById(req.user.id);
       res.status(200).json({ user });
     } else {
-      console.log("no user");
+      res.status(400).json({ message: "No user" });
     }
   }
 );
@@ -95,15 +92,15 @@ authRouter.post(
 authRouter.post("/register", async (req, res) => {
   const { email, userName, password } = req.body || undefined;
   if (!email || !password) {
-    console.log("Email and password required");
-    return res.sendStatus(302);
+    return res.status(400).json({ message: "Email and password required" });
   }
   try {
     // check if already registered
     const existingUser = await userRepository.getUserByEmail(email);
     if (existingUser) {
-      console.log("User with email already exists");
-      return res.sendStatus(302);
+      return res
+        .status(400)
+        .json({ message: "User with email already exists" });
     }
     // create user
     const salt = await bcrypt.genSalt(10);
@@ -113,8 +110,7 @@ authRouter.post("/register", async (req, res) => {
       userName,
       hashedPassword
     );
-    // TODO: fix redirect
-    res.send(user);
+    res.status(200).json({ user });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -125,7 +121,7 @@ authRouter.post("/logout", (req, res, next) => {
     if (err) {
       return next(err);
     }
-    res.sendStatus(200);
+    res.status(200).json({ message: "User logged out" });
   });
 });
 

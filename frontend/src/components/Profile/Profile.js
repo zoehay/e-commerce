@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
 import styled from "styled-components";
-import MainContent from "../components/MainContent";
-import PageContent from "../components/PageContent";
-import { EmailForm, NameForm, PasswordForm } from "../components/UserForm";
-import { UserContext } from "../util/userContext";
+import MainContent from "../Content/MainContent";
+import PageContent from "../Content/PageContent";
+import { EmailForm, NameForm, PasswordForm } from "./UserForm";
+import { UserContext } from "../../util/userContext";
 
 const PageName = styled.div`
   font-size: 1.5rem;

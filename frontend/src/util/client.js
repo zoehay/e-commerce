@@ -1,264 +1,200 @@
 class Client {
-  // static baseEndpoint = "//e-commerce.zoemhay.com/api";
-  static baseEndpoint = "http://localhost:8000";
+  static baseEndpoint = process.env.REACT_APP_API_URL;
 
-  //// USER
-  static async getUser() {
-    const endpoint = Client.baseEndpoint + "/user";
-    let setCookie = document.cookie;
+  static async clientGet(endpoint) {
     try {
       const response = await fetch(endpoint, {
         credentials: "include",
       });
       if (response.ok) {
         const responseJSON = await response.json();
-        const user = responseJSON.user;
-        return user;
+        return responseJSON;
       }
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  static async clientPostNoBody(endpoint) {
+    try {
+      const response = await fetch(endpoint, {
+        credentials: "include",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.ok) {
+        const responseJSON = await response.json();
+        return responseJSON;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async clientPostBody(endpoint, body) {
+    try {
+      const response = await fetch(endpoint, {
+        credentials: "include",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: body,
+      });
+      if (response.ok) {
+        const responseJSON = await response.json();
+        return responseJSON;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async clientPut(endpoint, body) {
+    try {
+      const response = await fetch(endpoint, {
+        credentials: "include",
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: body,
+      });
+      if (response.ok) {
+        const responseJSON = await response.json();
+        return responseJSON;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  //// USER
+  static async getUser() {
+    const endpoint = Client.baseEndpoint + "/user";
+    const response = await Client.clientGet(endpoint);
+    if (response?.user) {
+      return response.user;
     }
   }
 
   static async registerUser(userEmail, userName, userPassword) {
     const endpoint = Client.baseEndpoint + "/auth/register";
-    try {
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: userEmail,
-          userName: userName,
-          password: userPassword,
-        }),
-      });
-    } catch (error) {
-      console.log(error);
+    const body = JSON.stringify({
+      email: userEmail,
+      userName: userName,
+      password: userPassword,
+    });
+    const response = await Client.clientPostBody(endpoint, body);
+    if (response?.user) {
+      return response.user;
     }
   }
 
   static async loginUser(userEmail, userPassword) {
     const endpoint = Client.baseEndpoint + "/auth/login";
-    try {
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: userEmail,
-          password: userPassword,
-        }),
-        credentials: "include",
-      });
-      if (response.status === 200) {
-        const responseJSON = await response.json();
-        const user = responseJSON.user;
-        return user;
-      }
-    } catch (error) {
-      console.log(error);
+    const body = JSON.stringify({
+      email: userEmail,
+      password: userPassword,
+    });
+    const response = await Client.clientPostBody(endpoint, body);
+    if (response?.user) {
+      return response.user;
     }
   }
 
   static async logoutUser() {
     const endpoint = Client.baseEndpoint + "/auth/logout";
-    try {
-      const response = await fetch(endpoint, {
-        credentials: "include",
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    const response = await Client.clientPostNoBody(endpoint);
+    return response;
   }
 
   static async updateUserEmail(userEmail) {
     const endpoint = Client.baseEndpoint + "/user";
-    try {
-      const response = await fetch(endpoint, {
-        credentials: "include",
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: userEmail,
-        }),
-      });
-      const responseJSON = await response.json();
-      return responseJSON;
-    } catch (error) {
-      console.log(error);
-    }
+    const body = JSON.stringify({
+      email: userEmail,
+    });
+    const response = await Client.clientPut(endpoint, body);
+    return response;
   }
 
   static async updateUserName(userName) {
     const endpoint = Client.baseEndpoint + "/user";
-    try {
-      const response = await fetch(endpoint, {
-        credentials: "include",
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userName: userName,
-        }),
-      });
-      const responseJSON = await response.json();
-      return responseJSON;
-    } catch (error) {
-      console.log(error);
-    }
+    const body = JSON.stringify({
+      userName: userName,
+    });
+    const response = await Client.clientPut(endpoint, body);
+    return response;
   }
 
   static async updateUserPassword(userPassword) {
     const endpoint = Client.baseEndpoint + "/user";
-    try {
-      const response = await fetch(endpoint, {
-        credentials: "include",
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          password: userPassword,
-        }),
-      });
-      const responseJSON = await response.json();
-      return responseJSON;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  static async updateUserProfile(email, userName, password) {
-    const endpoint = Client.baseEndpoint + "/user";
-    try {
-      const response = await fetch(endpoint, {
-        credentials: "include",
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          userName: userName,
-          password: password,
-        }),
-      });
-      const responseJSON = await response.json();
-      return responseJSON;
-    } catch (error) {
-      console.log(error);
-    }
+    const body = JSON.stringify({
+      password: userPassword,
+    });
+    const response = await Client.clientPut(endpoint, body);
+    return response;
   }
 
   //// PRODUCT
+
   static async getProducts() {
     const endpoint = Client.baseEndpoint + "/products";
-    try {
-      const response = await fetch(endpoint);
-      if (response.ok) {
-        const responseJSON = await response.json();
-        const products = responseJSON.products;
-        return products;
-      }
-    } catch (error) {
-      console.log(error);
+    const response = await Client.clientGet(endpoint);
+    if (response.products) {
+      return response.products;
+    } else {
+      return [];
     }
   }
 
   static async getProductById(id) {
     const endpoint = Client.baseEndpoint + `/products/${id}`;
-    try {
-      const response = await fetch(endpoint);
-      if (response.ok) {
-        const responseJSON = await response.json();
-        const product = responseJSON.product;
-        return product;
-      }
-    } catch (error) {
-      console.log(error);
+    const response = await Client.clientGet(endpoint);
+    if (response.product) {
+      return response.product;
+    } else {
+      return null;
     }
   }
 
   //// CART
   static async updateCartProductQuantity(userId, productId, quantity) {
     const endpoint = Client.baseEndpoint + "/cart";
-    try {
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: userId,
-          productId: productId,
-          quantity: quantity,
-        }),
-        credentials: "include",
-      });
-      const responseJSON = await response.json();
-    } catch (error) {
-      console.log(error);
-    }
+    const body = JSON.stringify({
+      userId: userId,
+      productId: productId,
+      quantity: quantity,
+    });
+    const response = await Client.clientPostBody(endpoint, body);
+    return response;
   }
 
-  static async addCartProduct(userId, productId) {
+  static async incrementCartProductQuantity(userId, productId) {
     const endpoint = Client.baseEndpoint + "/cart";
-    try {
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: userId,
-          productId: productId,
-        }),
-        credentials: "include",
-      });
-      const responseJSON = await response.json();
-    } catch (error) {
-      console.log(error);
-    }
+    const body = JSON.stringify({
+      userId: userId,
+      productId: productId,
+    });
+    const response = await Client.clientPostBody(endpoint, body);
+    return response;
   }
 
   static async getCartProducts() {
     const endpoint = Client.baseEndpoint + "/cart";
-    try {
-      const response = await fetch(endpoint, {
-        credentials: "include",
-      });
-      if (response.ok) {
-        const responseJSON = await response.json();
-        const cart = responseJSON.cart;
-        return cart;
-      }
-    } catch (error) {
-      console.log(error);
+    const response = await Client.clientGet(endpoint);
+    if (response.cart) {
+      return response.cart;
     }
   }
 
   static async getCartDetails() {
     const endpoint = Client.baseEndpoint + "/cart/details";
-    try {
-      const response = await fetch(endpoint, {
-        credentials: "include",
-      });
-      if (response.ok) {
-        const responseJSON = await response.json();
-        const cartDetails = responseJSON.cart;
-        return cartDetails;
-      }
-    } catch (error) {
-      console.log(error);
+    const response = await Client.clientGet(endpoint);
+    if (response.cart) {
+      return response.cart;
     }
   }
 }

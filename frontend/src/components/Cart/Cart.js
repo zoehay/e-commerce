@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import CartProductFeed from "../components/CartProductFeed";
-import CartProductTile from "../components/CartProductTile";
-import MainContent from "../components/MainContent";
-import PageContent from "../components/PageContent";
-import Client from "../util/Client";
+import CartProductFeed from "./CartProductFeed";
+import CartProductTile from "./CartProductTile";
+import MainContent from "../Content/MainContent";
+import PageContent from "../Content/PageContent";
+import Client from "../../util/Client";
 
 const CartTotal = styled.p`
   background-color: var(--accent-bold-1);
@@ -31,10 +31,10 @@ const Cart = () => {
     for (const item of cartProducts) {
       const quantity = item.quantity;
       const price = item.product.price;
-      const itemTotal = quantity * price;
+      let itemTotal = quantity * price;
       cartTotal += itemTotal;
     }
-    setCartTotal(cartTotal);
+    setCartTotal(cartTotal.toFixed(2));
   }, [cartProducts]);
 
   const handleUpdateQuantity = async (productId, newQuantity) => {

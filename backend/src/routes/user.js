@@ -9,7 +9,12 @@ userRouter.use(checkAuthorization);
 userRouter.get("/", async (req, res) => {
   const id = req.user.id;
   try {
-    const user = await userRepository.getUserById(id);
+    const repoUser = await userRepository.getUserById(id);
+    const user = {
+      id: repoUser.id,
+      email: repoUser.email,
+      name: repoUser.name,
+    };
     return res.status(200).json({ user });
   } catch (error) {
     return res.status(400).json({ error });
@@ -27,7 +32,17 @@ userRouter.put("/", async (req, res) => {
       const hashedPassword = await bcrypt.hash(password, salt);
       password = hashedPassword;
     }
-    const user = await userRepository.updateUser(id, email, userName, password);
+    const repoUser = await userRepository.updateUser(
+      id,
+      email,
+      userName,
+      password
+    );
+    const user = {
+      id: repoUser.id,
+      email: repoUser.email,
+      name: repoUser.name,
+    };
     return res.status(200).json({ user });
   } catch (error) {
     return res.status(400).json({ error });
@@ -38,7 +53,7 @@ userRouter.delete("/", async (req, res) => {
   const id = req.user.id;
   try {
     const user = await userRepository.deleteUser(id);
-    return res.status(204).json({ user });
+    return res.status(204).json({ message: "Successfully deleted" });
   } catch (error) {
     return res.status(400).json({ error });
   }

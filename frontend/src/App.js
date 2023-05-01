@@ -1,13 +1,15 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ErrorPage from "./routes/error-page";
-import Products from "./routes/products";
-import Profile from "./routes/profile";
-import WelcomePage from "./components/WelcomePage";
-import Root from "./routes/root";
 import { UserProvider } from "./util/userContext";
-import Cart from "./routes/cart";
-import FormPage from "./routes/form-page";
+
+import Root from "./components/Root/Root";
+import ErrorPage from "./components/Error-Page/Error-Page";
+import WelcomePage from "./components/WelcomePage/WelcomePage";
+import Products from "./components/Products/Products";
+import Login from "./components/Login/Login";
+import Register from "./components/Register/Register";
+import Cart from "./components/Cart/Cart";
+import Profile from "./components/Profile/Profile";
 
 const router = createBrowserRouter([
   {
@@ -25,11 +27,11 @@ const router = createBrowserRouter([
       },
       {
         path: "auth/login",
-        element: <FormPage type="login" />,
+        element: <Login />,
       },
       {
         path: "auth/register",
-        element: <FormPage type="register" />,
+        element: <Register />,
       },
       {
         path: "/cart",

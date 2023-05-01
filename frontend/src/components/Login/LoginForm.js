@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { UserContext } from "../util/userContext";
-import { FormDiv, FormField } from "./Form";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../util/userContext";
+import { FormDiv, FormField } from "../Form/Form";
 
 const LoginForm = () => {
   const context = useContext(UserContext);
@@ -47,7 +47,7 @@ const LoginForm = () => {
           <label htmlFor="password">Password</label>
           <div>
             <input
-              type="text"
+              type="password"
               name="password"
               id="password"
               value={formState.password}

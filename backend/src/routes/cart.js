@@ -1,5 +1,4 @@
 const express = require("express");
-const { nextTick } = require("process");
 const { prisma, cartProductRepository } = require("../repository/repository");
 const { checkAuthorization } = require("./auth");
 
@@ -7,77 +6,80 @@ const cartRouter = express.Router();
 
 cartRouter.use(checkAuthorization);
 
-// set cartProduct Quantity to req number
+// update a cartProduct quantity
 cartRouter.post("/", async (req, res, next) => {
   const userId = req.user.id;
   const productId = Number(req.body.productId);
-  // if the req has a quantity, set the cartProduct quantity
-  if (req.body.quantity != null) {
-    const quantity = Number(req.body.quantity);
-    // check if the user has a cartProduct entry for this product
-    const foundCartProduct = await cartProductRepository.getCartProductById(
-      userId,
-      productId
-    );
-    // if cartProduct is found update the quantity
-    if (foundCartProduct != null) {
-      if (quantity == 0) {
-        // if new quantity is zero, delete the cartProduct
-        const deletedCartProduct =
-          await cartProductRepository.deleteCartProduct(userId, productId);
-        return res.status(204).json({ deletedCartProduct });
-      }
-      // else just update the quantity
-      else {
-        const updatedCartProduct =
-          await cartProductRepository.updateCartProduct(
-            userId,
-            productId,
-            quantity
-          );
-        return res.status(200).json({ updatedCartProduct });
-      }
+
+  if (!req.body.hasOwnProperty("quantity")) {
+    return next();
+  }
+
+  const quantity = Number(req.body.quantity);
+  if (quantity === 1) {
+    return next();
+  }
+
+  try {
+    if (quantity === 0) {
+      const deletedCartProduct = await cartProductRepository.deleteCartProduct(
+        userId,
+        productId
+      );
+      return res.status(200).json({ deletedCartProduct });
+    } else {
+      const updatedCartProduct = await cartProductRepository.updateCartProduct(
+        userId,
+        productId,
+        quantity
+      );
+      return res.status(200).json({ updatedCartProduct });
     }
-    // create a new cartProduct entry for the item if new for user
-    const cartProduct = await cartProductRepository.addCartProduct(
-      userId,
-      productId,
-      quantity
-    );
-    return res.status(201).json({ cartProduct });
-  } else {
-    // if req has no quantity, use the increment route
-    next();
+  } catch (error) {
+    return res.status(400).json({ error });
   }
 });
 
-// increment cartProduct by one
+const incrementQuantity = async (existingCartProduct) => {
+  const prevQuantity = existingCartProduct.quantity;
+  const newQuantity = prevQuantity + 1;
+  try {
+    const updatedCartProduct = await cartProductRepository.updateCartProduct(
+      existingCartProduct.userId,
+      existingCartProduct.productId,
+      newQuantity
+    );
+    return updatedCartProduct;
+  } catch (error) {
+    return error;
+  }
+};
+
+// add a new cartProduct or increment if existing
 cartRouter.post("/", async (req, res) => {
   const userId = req.user.id;
   const productId = Number(req.body.productId);
-  // check if the user has a cartProduct entry for this product
-  const foundCartProduct = await cartProductRepository.getCartProductById(
-    userId,
-    productId
-  );
-  // if cartProduct is found update the quantity
-  if (foundCartProduct != null) {
-    const prevQuantity = foundCartProduct.quantity;
-    const newQuantity = prevQuantity + 1;
-    const updatedCartProduct = await cartProductRepository.updateCartProduct(
+
+  try {
+    const existingCartProduct = await cartProductRepository.getCartProductById(
       userId,
-      productId,
-      newQuantity
+      productId
     );
-    return res.status(200).json({ updatedCartProduct });
+
+    if (existingCartProduct?.productId) {
+      const updatedCartProduct = await incrementQuantity(existingCartProduct);
+      return res.status(200).json({ updatedCartProduct });
+    } else {
+      const newCartProduct = await cartProductRepository.addCartProduct(
+        userId,
+        productId,
+        1
+      );
+      return res.status(201).json({ newCartProduct });
+    }
+  } catch (error) {
+    return res.status(400).json({ error });
   }
-  // create a new cartProduct entry for the item if new for user
-  const cartProduct = await cartProductRepository.addCartProduct(
-    userId,
-    productId,
-    1
-  );
-  return res.status(201).json({ cartProduct });
 });
 
 // get cartProducts by user id

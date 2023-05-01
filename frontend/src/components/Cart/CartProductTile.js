@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import Client from "../util/Client";
-import { UserContext } from "../util/userContext";
+import Client from "../../util/Client";
+import { UserContext } from "../../util/userContext";
 
 const Tile = styled.div`
   box-sizing: border-box;
@@ -72,7 +72,7 @@ const CartProductTile = ({ product, onChange }) => {
         newQuantity
       );
       await onChange(product.productId, newQuantity);
-    }, 250);
+    }, 350);
   };
 
   return (
