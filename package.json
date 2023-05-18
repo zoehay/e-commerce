@@ -4,6 +4,7 @@
   "description": "A simple e-commerce website built with an ExpressJS backend and React frontend.",
   "main": "index.js",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "fsevents": "^2.3.2",
     "playwright": "^1.33.0",
     "playwright-core": "^1.33.0"
