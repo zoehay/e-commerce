@@ -1,0 +1,26 @@
+{
+  "name": "e-commerce",
+  "version": "1.0.0",
+  "description": "A simple e-commerce website built with an ExpressJS backend and React frontend.",
+  "main": "index.js",
+  "dependencies": {
+    "fsevents": "^2.3.2",
+    "playwright": "^1.33.0",
+    "playwright-core": "^1.33.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.33.0"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zoehay/e-commerce.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zoehay/e-commerce/issues"
+  },
+  "homepage": "https://github.com/zoehay/e-commerce#readme"
+}
