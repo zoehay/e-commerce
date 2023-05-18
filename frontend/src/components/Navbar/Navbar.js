@@ -117,18 +117,18 @@ const UserOptions = () => {
     return (
       <NavDiv>
         <NavSelect to="/auth/login">
-          <FontAwesomeIcon icon={faUser} />
+          <FontAwesomeIcon icon={faUser} alt="user" />
         </NavSelect>
       </NavDiv>
     );
   } else {
     return (
       <NavDiv>
-        <NavSelect to="/cart">
+        <NavSelect to="/cart" alt="cart">
           <FontAwesomeIcon icon={faCartShopping} />
         </NavSelect>
         <NavSelect to="/user">
-          <FontAwesomeIcon icon={faUser} />
+          <FontAwesomeIcon icon={faUser} alt="user" />
         </NavSelect>
         <NavButton
           onClick={() => {
@@ -136,7 +136,7 @@ const UserOptions = () => {
             navigate("/");
           }}
         >
-          <FontAwesomeIcon icon={faRightFromBracket} />
+          <FontAwesomeIcon icon={faRightFromBracket} alt="logout" />
         </NavButton>
       </NavDiv>
     );

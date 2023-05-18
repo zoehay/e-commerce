@@ -6,9 +6,11 @@ const Register = () => {
   return (
     <MainContent>
       <FormContent>
-        <p>Create an Account</p>
+        <h2>Create an Account</h2>
         <RegisterForm />
-        <FormLink to="/auth/login">Already Have An Account? Sign In</FormLink>
+        <FormLink to="/auth/login" alt="login">
+          Already Have An Account? Sign In
+        </FormLink>
       </FormContent>
     </MainContent>
   );

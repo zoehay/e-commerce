@@ -59,11 +59,14 @@ const MobileNavDropdown = ({ displayMenu, handleClose }) => {
 export const MobileNav = () => {
   let [showMenu, setShowMenu] = useState(false);
   let icon;
+  let alt;
 
   if (!showMenu) {
     icon = faBars;
+    alt = "options";
   } else {
     icon = faX;
+    alt = "close";
   }
 
   const handleClose = () => {
@@ -75,7 +78,7 @@ export const MobileNav = () => {
   return (
     <>
       <NavButton onClick={() => setShowMenu(!showMenu)}>
-        <FontAwesomeIcon icon={icon} />
+        <FontAwesomeIcon icon={icon} alt={alt} />
       </NavButton>
       <MobileNavDropdown displayMenu={showMenu} handleClose={handleClose} />
     </>

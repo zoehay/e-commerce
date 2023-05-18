@@ -6,9 +6,11 @@ const Login = () => {
   return (
     <MainContent>
       <FormContent>
-        <p>Account Login</p>
+        <h2>Account Login</h2>
         <LoginForm />
-        <FormLink to="/auth/register">New here? Sign Up</FormLink>
+        <FormLink to="/auth/register" alt="register">
+          New here? Sign Up
+        </FormLink>
       </FormContent>
     </MainContent>
   );
