@@ -117,7 +117,7 @@ const UserOptions = () => {
     return (
       <NavDiv>
         <NavSelect to="/auth/login">
-          <FontAwesomeIcon icon={faUser} alt="user" />
+          <FontAwesomeIcon icon={faUser} alt="login" />
         </NavSelect>
       </NavDiv>
     );

@@ -48,11 +48,11 @@ export const PasswordForm = ({ display }) => {
         {displayToast && <Toast fieldName={fieldName}></Toast>}
         <form onSubmit={handleSubmit}>
           <FormField>
-            <label htmlFor="input">{`Update ${fieldName}`}</label>
+            <label htmlFor="password-input">{`Update ${fieldName}`}</label>
             <div>
               <input
                 type="password"
-                name="input"
+                name="password-input"
                 id="input"
                 value={formState}
                 onChange={handleChange}
@@ -99,11 +99,11 @@ export const EmailForm = ({ display }) => {
         {displayToast && <Toast fieldName={fieldName}></Toast>}
         <form onSubmit={handleSubmit}>
           <FormField>
-            <label htmlFor="input">{`Update ${fieldName}`}</label>
+            <label htmlFor="email-input">{`Update ${fieldName}`}</label>
             <div>
               <input
                 type="text"
-                name="input"
+                name="email-input"
                 id="input"
                 value={formState}
                 onChange={handleChange}
@@ -149,11 +149,11 @@ export const NameForm = ({ display }) => {
         {displayToast && <Toast fieldName={fieldName}></Toast>}
         <form onSubmit={handleSubmit}>
           <FormField>
-            <label htmlFor="input">{`Update ${fieldName}`}</label>
+            <label htmlFor="name-input">{`Update ${fieldName}`}</label>
             <div>
               <input
                 type="text"
-                name="input"
+                name="name-input"
                 id="input"
                 value={formState}
                 onChange={handleChange}

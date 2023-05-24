@@ -1,7 +1,7 @@
 const { expect } = require("@playwright/test");
 require("dotenv").config();
 
-class LoginPage {
+export class LoginPage {
   constructor(page) {
     this.page = page;
     this.header = this.page.getByRole("heading");
@@ -20,4 +20,3 @@ class LoginPage {
     await this.page.getByRole("button", { name: "Submit" }).click();
   }
 }
-export default LoginPage;

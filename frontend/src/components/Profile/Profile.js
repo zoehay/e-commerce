@@ -6,7 +6,6 @@ import { EmailForm, NameForm, PasswordForm } from "./UserForm";
 import { UserContext } from "../../util/userContext";
 
 const PageName = styled.div`
-  font-size: 1.5rem;
   font-weight: bold;
   color: var(--accent-bold-1);
   margin-bottom: 0pc;
@@ -90,7 +89,7 @@ const ProfileContent = ({ user }) => {
         <FieldTitle>EMAIL</FieldTitle>
         <EditContainer>
           <FieldValue>{user.email}</FieldValue>
-          <EditButton onClick={handleEmailClick}>
+          <EditButton onClick={handleEmailClick} alt="edit-email">
             {emailForm ? "Close" : "Edit"}
           </EditButton>
         </EditContainer>
@@ -101,7 +100,7 @@ const ProfileContent = ({ user }) => {
         <FieldTitle>USER NAME</FieldTitle>
         <EditContainer>
           <FieldValue>{user.name || "Not Provided"}</FieldValue>
-          <EditButton onClick={handleNameClick}>
+          <EditButton onClick={handleNameClick} alt="edit-name">
             {nameForm ? "Close" : "Edit"}
           </EditButton>
         </EditContainer>
@@ -111,7 +110,7 @@ const ProfileContent = ({ user }) => {
       <FieldContainer>
         <FieldTitle>PASSWORD</FieldTitle>
         <EditContainer>
-          <EditButton onClick={handlePasswordClick}>
+          <EditButton onClick={handlePasswordClick} alt="edit-password">
             {passwordForm ? "Close" : "Edit"}
           </EditButton>
         </EditContainer>
@@ -128,7 +127,9 @@ const Profile = () => {
   return (
     <MainContent>
       <PageContent>
-        <PageName>Profile Details</PageName>
+        <PageName>
+          <h2>Profile Details</h2>
+        </PageName>
         {user ? (
           <ProfileContent user={user}></ProfileContent>
         ) : (

@@ -12,17 +12,14 @@ test("Nav bar should have icons for cart and logout after signing in", async ({
 
   await page.waitForURL("http://localhost:3000");
 
-  const cart = await test.step("Check for cart icon", async () => {
-    const cart = page.getByAltText("cart");
-    await expect(cart).toBeFocused;
-    return cart;
-  });
+  const cart = page.getByAltText("cart");
+  await expect.soft(cart).toBeVisible();
 
-  const logout = await test.step("Check for cart icon", async () => {
-    const logout = page.getByAltText("logout");
-    await expect(logout).toBeFocused;
-    return logout;
-  });
+  const user = page.getByAltText("user");
+  await expect.soft(user).toBeVisible();
+
+  const logout = page.getByAltText("logout");
+  await expect(logout).toBeVisible;
 
   await logout.click();
   await page.waitForURL("http://localhost:3000");
