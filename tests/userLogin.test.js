@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import LoginPage from "./page-objects/login-page";
+import { LoginPage } from "./page-objects/login-page";
 
 test("Nav bar should have icons for cart and logout after signing in", async ({
   page,
@@ -10,8 +10,6 @@ test("Nav bar should have icons for cart and logout after signing in", async ({
   await loginPage.goto();
   await loginPage.login();
 
-  await page.waitForURL("http://localhost:3000");
-
   const cart = page.getByAltText("cart");
   await expect.soft(cart).toBeVisible();
 
@@ -19,8 +17,7 @@ test("Nav bar should have icons for cart and logout after signing in", async ({
   await expect.soft(user).toBeVisible();
 
   const logout = page.getByAltText("logout");
-  await expect(logout).toBeVisible;
+  await expect(logout).toBeVisible();
 
-  await logout.click();
-  await page.waitForURL("http://localhost:3000");
+  await loginPage.logout();
 });

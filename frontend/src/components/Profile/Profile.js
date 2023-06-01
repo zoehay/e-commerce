@@ -88,7 +88,7 @@ const ProfileContent = ({ user }) => {
       <FieldContainer>
         <FieldTitle>EMAIL</FieldTitle>
         <EditContainer>
-          <FieldValue>{user.email}</FieldValue>
+          <FieldValue data-testid="user-email">{user.email}</FieldValue>
           <EditButton onClick={handleEmailClick} alt="edit-email">
             {emailForm ? "Close" : "Edit"}
           </EditButton>
@@ -128,7 +128,7 @@ const Profile = () => {
     <MainContent>
       <PageContent>
         <PageName>
-          <h2>Profile Details</h2>
+          <h2 data-testid="page-name">Profile Details</h2>
         </PageName>
         {user ? (
           <ProfileContent user={user}></ProfileContent>

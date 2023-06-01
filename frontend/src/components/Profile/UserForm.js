@@ -96,7 +96,9 @@ export const EmailForm = ({ display }) => {
   return (
     display && (
       <ProfileFormDiv>
-        {displayToast && <Toast fieldName={fieldName}></Toast>}
+        {displayToast && (
+          <Toast fieldName={fieldName} alt="email-toast"></Toast>
+        )}
         <form onSubmit={handleSubmit}>
           <FormField>
             <label htmlFor="email-input">{`Update ${fieldName}`}</label>
@@ -111,7 +113,7 @@ export const EmailForm = ({ display }) => {
             </div>
           </FormField>
           <FormField>
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Submit" alt="email-submit" />
           </FormField>
         </form>
       </ProfileFormDiv>

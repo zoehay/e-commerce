@@ -18,5 +18,13 @@ export class LoginPage {
     await this.page.getByLabel("Password").click();
     await this.page.getByLabel("Password").fill(process.env.password);
     await this.page.getByRole("button", { name: "Submit" }).click();
+    await this.page.waitForURL("http://localhost:3000");
+    await expect(this.header).toHaveText("Welcome to the store!");
+  }
+
+  async logout() {
+    await this.page.getByAltText("logout").click();
+    await this.page.waitForURL("http://localhost:3000");
+    await expect(this.header).toHaveText("Welcome to the store!");
   }
 }

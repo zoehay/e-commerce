@@ -4,7 +4,9 @@ require("dotenv").config();
 export class UserPage {
   constructor(page) {
     this.page = page;
-    this.header = this.page.getByRole("heading");
+    this.header = page.getByTestId("page-name");
+    this.userEmail = "john@email";
+    this.newUserEmail = "notjohn@email";
   }
 
   async goto() {
@@ -12,23 +14,20 @@ export class UserPage {
     await expect(this.header).toHaveText("Profile Details");
   }
 
-  async updateEmail() {
-    await page.getByAltText("edit-email").click;
-    await page.getByLabel("Update Email").click();
-    await page.getByLabel("Update Email").fill("notjohn@email");
-    await page.getByRole("button", { name: "Submit" }).click();
-    const toastMessage = page.getByText("Email has been updated");
+  async updateEmail(newEmail) {
+    await this.page.getByAltText("edit-email").click();
+    await this.page.locator('input[name="email-input"]').click();
+    await this.page.locator('input[name="email-input"]').fill(newEmail);
+    await this.page.getByAltText("email-submit").click();
+    const toast = this.page.getByText("Email has been updated");
     expect(toast).toBeVisible;
-    await page.getByRole("button", { name: "Close" }).click();
+    await this.page.getByRole("button", { name: "Close" }).click();
   }
 
-  async revertEmail() {
-    await page.getByAltText("edit-email").click;
-    await page.getByLabel("Update Email").click();
-    await page.getByLabel("Update Email").fill("john@email");
-    await page.getByRole("button", { name: "Submit" }).click();
-    const toastMessage = page.getByText("Email has been updated");
-    expect(toast).toBeVisible;
-    await page.getByRole("button", { name: "Close" }).click();
+  async checkEmailChange(expectedValue) {
+    await this.page.reload();
+    await this.page.waitForURL("http://localhost:3000/user");
+    const emailValue = await this.page.getByTestId("user-email").innerText();
+    await expect(emailValue).toEqual(expectedValue);
   }
 }
