@@ -27,11 +27,8 @@ export class UserPage {
   async checkEmailChange(expectedValue) {
     await this.page.reload();
     await this.page.waitForURL("http://localhost:3000/user");
-    // #TODO: find build in method for awaiting information load and NOT use timeout
-    await this.page.waitForTimeout(200);
-    const email = await this.page.getByTestId("user-email");
-    await email.waitFor();
-    const emailValue = email.innerText();
+    await this.page.getByTestId("user-email").click();
+    const emailValue = await this.page.getByTestId("user-email").innerText();
     await expect(emailValue).toEqual(expectedValue);
   }
 }
