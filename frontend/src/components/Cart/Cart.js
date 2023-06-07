@@ -5,18 +5,21 @@ import CartProductTile from "./CartProductTile";
 import MainContent from "../Content/MainContent";
 import PageContent from "../Content/PageContent";
 import Client from "../../util/Client";
+import { StyledButton } from "../common/StyledButton";
 
-const CartTotal = styled.p`
+const CartTotal = styled.div`
   background-color: var(--accent-bold-1);
   font-size: 1rem;
   padding: 1rem;
   width: 100%;
+  margin-bottom: 1rem;
   box-sizing: border-box;
 `;
 
 const Cart = () => {
   let [cartProducts, setCartProducts] = useState([]);
   let [cartTotal, setCartTotal] = useState(0);
+  let [cartProductCount, setCartProductCount] = useState(0);
 
   async function fetchData() {
     let cart = await Client.getCartDetails();
@@ -28,13 +31,16 @@ const Cart = () => {
 
   useEffect(() => {
     let cartTotal = 0;
+    let countTotal = 0;
     for (const item of cartProducts) {
       const quantity = item.quantity;
       const price = item.product.price;
       let itemTotal = quantity * price;
       cartTotal += itemTotal;
+      countTotal++;
     }
     setCartTotal(cartTotal.toFixed(2));
+    setCartProductCount(countTotal);
   }, [cartProducts]);
 
   const handleUpdateQuantity = async (productId, newQuantity) => {
@@ -49,6 +55,13 @@ const Cart = () => {
       }
     });
     setCartProducts(newCartProducts);
+  };
+
+  const handleClearCart = async () => {
+    let deletedCount = await Client.clearCart();
+    if (Number(deletedCount) == cartProductCount) {
+      setCartProducts([]);
+    }
   };
 
   let cartProductTiles = cartProducts.map((product, index) => (
@@ -73,6 +86,7 @@ const Cart = () => {
         <CartTotal>
           Cart Total <div data-testid="cart-total">{cartTotal}</div>
         </CartTotal>
+        <StyledButton onClick={handleClearCart}>Clear Cart</StyledButton>
       </PageContent>
     </MainContent>
   );

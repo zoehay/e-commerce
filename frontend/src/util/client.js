@@ -71,6 +71,24 @@ class Client {
     }
   }
 
+  static async clientDelete(endpoint) {
+    try {
+      const response = await fetch(endpoint, {
+        credentials: "include",
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.ok) {
+        const responseJSON = await response.json();
+        return responseJSON;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   //// USER
   static async getUser() {
     const endpoint = Client.baseEndpoint + "/user";
@@ -195,6 +213,14 @@ class Client {
     const response = await Client.clientGet(endpoint);
     if (response.cart) {
       return response.cart;
+    }
+  }
+
+  static async clearCart() {
+    const endpoint = Client.baseEndpoint + "/cart";
+    const response = await Client.clientDelete(endpoint);
+    if (response.count) {
+      return response.count;
     }
   }
 }

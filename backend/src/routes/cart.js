@@ -108,10 +108,8 @@ cartRouter.get("/details", async (req, res) => {
 cartRouter.delete("/", async (req, res) => {
   const userId = req.user.id;
   try {
-    const deletedCartProducts = await cartProductRepository.clearUserCart(
-      userId
-    );
-    return res.status(204).json({ deletedCartProducts });
+    const count = await cartProductRepository.clearUserCart(userId);
+    return res.status(200).json(count);
   } catch (error) {
     return res.status(400).json({ error });
   }

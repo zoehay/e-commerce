@@ -5,4 +5,6 @@ userLoginTest("User adds a Shovel", async ({ loginPage }) => {
   const cartPage = new CartPage(loginPage.page);
   await cartPage.goto();
   await cartPage.page.goTo("http://localhost:3000/products");
+
+  await page.getByTestId("add-product-4").click();
 });
