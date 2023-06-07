@@ -63,13 +63,16 @@ const Cart = () => {
     <MainContent>
       {" "}
       <PageContent>
+        <h2 data-testid="page-name">My Shopping Cart</h2>
         {cartProductTiles ? (
           <CartProductFeed>{cartProductTiles}</CartProductFeed>
         ) : (
           <h2> Loading </h2>
         )}
 
-        <CartTotal>Cart Total: {cartTotal}</CartTotal>
+        <CartTotal>
+          Cart Total <div data-testid="cart-total">{cartTotal}</div>
+        </CartTotal>
       </PageContent>
     </MainContent>
   );

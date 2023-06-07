@@ -5,12 +5,6 @@ import PageContent from "../Content/PageContent";
 import { EmailForm, NameForm, PasswordForm } from "./UserForm";
 import { UserContext } from "../../util/userContext";
 
-const PageName = styled.div`
-  font-weight: bold;
-  color: var(--accent-bold-1);
-  margin-bottom: 0pc;
-`;
-
 const ProfileContainer = styled.div`
   display: flex;
   margin: 0 0 auto 10%;
@@ -133,9 +127,7 @@ const Profile = () => {
   return (
     <MainContent>
       <PageContent>
-        <PageName>
-          <h2 data-testid="page-name">Profile Details</h2>
-        </PageName>
+        <h2 data-testid="page-name">Profile Details</h2>
         {user ? <ProfileContent></ProfileContent> : <h2>Loading</h2>}
       </PageContent>
     </MainContent>

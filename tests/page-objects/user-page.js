@@ -5,8 +5,6 @@ export class UserPage {
   constructor(page) {
     this.page = page;
     this.header = this.page.getByTestId("page-name");
-    this.userEmail = "john@email";
-    this.newUserEmail = "notjohn@email";
   }
 
   async goto() {

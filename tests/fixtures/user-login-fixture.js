@@ -1,7 +1,7 @@
 const base = require("@playwright/test");
 import { LoginPage } from "../page-objects/login-page";
 
-export const loginTest = base.test.extend({
+export const userLoginTest = base.test.extend({
   loginPage: async ({ page }, use) => {
     const loginPage = new LoginPage(page);
     await loginPage.goto();

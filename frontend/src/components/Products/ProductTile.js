@@ -60,7 +60,7 @@ const ProductTile = ({ product }) => {
   const user = context.user;
 
   return (
-    <Tile>
+    <Tile data-testid={`tile-product-${product.id}`}>
       <ProductInfo>
         <ProductName>{product.name}</ProductName>
         <ProductPrice>{product.price}</ProductPrice>
@@ -68,6 +68,7 @@ const ProductTile = ({ product }) => {
         {user != undefined ? (
           <AddToCart
             type="button"
+            data-testid={`add-product-${product.id}`}
             onClick={() => {
               if (user) {
                 Client.incrementCartProductQuantity(user.id, product.id);
@@ -79,7 +80,9 @@ const ProductTile = ({ product }) => {
             Add to Cart
           </AddToCart>
         ) : (
-          <LoginLink to="/auth/login">Login to Add</LoginLink>
+          <LoginLink to="/auth/login" data-testid="login-from-tile">
+            Login to Add
+          </LoginLink>
         )}
       </ProductInfo>
     </Tile>
