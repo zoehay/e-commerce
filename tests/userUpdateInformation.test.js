@@ -1,19 +1,11 @@
-// import { test } from "./fixtures/login-fixture";
-import { test } from "@playwright/test";
-import { LoginPage } from "./page-objects/login-page";
 import { UserPage } from "./page-objects/user-page";
+import { loginTest } from "./fixtures/login-fixture";
 
-test("User updates email", async ({ page }) => {
-  const loginPage = new LoginPage(page);
-  await loginPage.goto();
-  await loginPage.login();
-
-  const userPage = new UserPage(page);
+loginTest("User updates email", async ({ loginPage }) => {
+  const userPage = new UserPage(loginPage.page);
   await userPage.goto();
-  await userPage.updateEmail("notjohn@email");
-  await userPage.checkEmailChange("notjohn@email");
-  await userPage.updateEmail("john@email");
-  await userPage.checkEmailChange("john@email");
-
-  await loginPage.logout();
+  await userPage.updateEmail(process.env.changeUsername);
+  await userPage.checkEmailChange(process.env.changeUsername);
+  await userPage.updateEmail(process.env.username);
+  await userPage.checkEmailChange(process.env.username);
 });

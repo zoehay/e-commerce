@@ -4,7 +4,7 @@ require("dotenv").config();
 export class UserPage {
   constructor(page) {
     this.page = page;
-    this.header = page.getByTestId("page-name");
+    this.header = this.page.getByTestId("page-name");
     this.userEmail = "john@email";
     this.newUserEmail = "notjohn@email";
   }
@@ -27,7 +27,11 @@ export class UserPage {
   async checkEmailChange(expectedValue) {
     await this.page.reload();
     await this.page.waitForURL("http://localhost:3000/user");
-    const emailValue = await this.page.getByTestId("user-email").innerText();
+    // #TODO: find build in method for awaiting information load and NOT use timeout
+    await this.page.waitForTimeout(200);
+    const email = await this.page.getByTestId("user-email");
+    await email.waitFor();
+    const emailValue = email.innerText();
     await expect(emailValue).toEqual(expectedValue);
   }
 }

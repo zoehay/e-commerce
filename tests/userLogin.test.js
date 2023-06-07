@@ -4,8 +4,6 @@ import { LoginPage } from "./page-objects/login-page";
 test("Nav bar should have icons for cart and logout after signing in", async ({
   page,
 }) => {
-  await page.goto("http://localhost:3000/");
-
   const loginPage = new LoginPage(page);
   await loginPage.goto();
   await loginPage.login();

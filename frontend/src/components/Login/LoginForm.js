@@ -56,7 +56,7 @@ const LoginForm = () => {
           </div>
         </FormField>
         <FormField>
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Submit" data-testid="login-submit" />
         </FormField>
       </form>
     </FormDiv>
