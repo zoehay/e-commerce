@@ -32,7 +32,7 @@ export const UserProvider = ({ children }) => {
     console.log("logout");
   };
 
-  let value = { user, login, logout };
+  let value = { user, fetchUser, login, logout };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

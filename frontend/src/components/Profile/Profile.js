@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import MainContent from "../Content/MainContent";
 import PageContent from "../Content/PageContent";
@@ -63,10 +63,16 @@ const EditButton = styled.button`
   }
 `;
 
-const ProfileContent = ({ user }) => {
+const ProfileContent = () => {
+  const context = useContext(UserContext);
+  const user = context.user;
   let [emailForm, setEmailForm] = useState(false);
   let [nameForm, setNameForm] = useState(false);
   let [passwordForm, setPasswordForm] = useState(false);
+
+  useEffect(() => {
+    context.fetchUser();
+  });
 
   const handleEmailClick = (event) => {
     event.preventDefault();
@@ -130,11 +136,7 @@ const Profile = () => {
         <PageName>
           <h2 data-testid="page-name">Profile Details</h2>
         </PageName>
-        {user ? (
-          <ProfileContent user={user}></ProfileContent>
-        ) : (
-          <h2>Loading</h2>
-        )}
+        {user ? <ProfileContent></ProfileContent> : <h2>Loading</h2>}
       </PageContent>
     </MainContent>
   );

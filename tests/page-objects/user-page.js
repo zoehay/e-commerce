@@ -25,10 +25,8 @@ export class UserPage {
   }
 
   async checkEmailChange(expectedValue) {
-    await this.page.reload();
-    await this.page.waitForURL("http://localhost:3000/user");
     await this.page.getByTestId("user-email").click();
     const emailValue = await this.page.getByTestId("user-email").innerText();
-    await expect(emailValue).toEqual(expectedValue);
+    expect(emailValue).toEqual(expectedValue);
   }
 }

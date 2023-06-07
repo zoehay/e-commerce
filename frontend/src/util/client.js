@@ -111,10 +111,10 @@ class Client {
     return response;
   }
 
-  static async updateUserEmail(userEmail) {
+  static async updateUserEmail(newEmail) {
     const endpoint = Client.baseEndpoint + "/user";
     const body = JSON.stringify({
-      email: userEmail,
+      email: newEmail,
     });
     const response = await Client.clientPut(endpoint, body);
     return response;

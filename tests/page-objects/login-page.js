@@ -18,6 +18,7 @@ export class LoginPage {
     await this.page.getByLabel("Password").click();
     await this.page.getByLabel("Password").fill(process.env.password);
     await this.page.getByRole("button", { name: "Submit" }).click();
+    // #TODO: find way to confirm logged in without waitForTimeout
     await this.page.waitForTimeout(100);
     await this.page.waitForURL("http://localhost:3000");
     await expect(this.header).toBeVisible();

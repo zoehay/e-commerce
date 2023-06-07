@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import Client from "../../util/Client";
 import { FormContent, FormField } from "../Form/Form";
+import { UserContext } from "../../util/userContext";
 
 const ToastDiv = styled.div`
   font-size: 1rem;
