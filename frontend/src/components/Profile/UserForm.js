@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import Client from "../../util/Client";
-import { FormContent, FormField } from "../Form/Form";
+import { FormContent, FormField } from "../common/Form";
 import { UserContext } from "../../util/userContext";
 
 const ToastDiv = styled.div`

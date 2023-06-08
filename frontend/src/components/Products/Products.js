@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import MainContent from "../Content/MainContent";
-import PageContent from "../Content/PageContent";
+import MainContent from "../common/MainContent";
+import PageContent from "../common/PageContent";
 import ProductFeed from "./ProductFeed";
 import ProductTile from "./ProductTile";
 import Client from "../../util/Client";

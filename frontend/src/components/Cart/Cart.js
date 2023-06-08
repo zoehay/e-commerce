@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import CartProductFeed from "./CartProductFeed";
 import CartProductTile from "./CartProductTile";
-import MainContent from "../Content/MainContent";
-import PageContent from "../Content/PageContent";
+import MainContent from "../common/MainContent";
+import PageContent from "../common/PageContent";
 import Client from "../../util/Client";
 import { StyledButton } from "../common/StyledButton";
 

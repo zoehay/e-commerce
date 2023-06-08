@@ -1,5 +1,5 @@
-import { FormContent, FormLink } from "../Form/Form";
-import MainContent from "../Content/MainContent";
+import { FormContent, FormLink } from "../common/Form";
+import MainContent from "../common/MainContent";
 import RegisterForm from "./RegisterForm";
 
 const Register = () => {
