@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "./page-objects/login-page";
 
-test("Nav bar should have icons for cart and logout after signing in", async ({
+test("Nav bar has icons for cart and logout after signing in", async ({
   page,
 }) => {
   const loginPage = new LoginPage(page);

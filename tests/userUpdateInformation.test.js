@@ -9,3 +9,6 @@ userLoginTest("User updates email", async ({ loginPage }) => {
   await userPage.updateEmail(process.env.username);
   await userPage.checkEmailChange(process.env.username);
 });
+
+// User updates name
+// User updates password
