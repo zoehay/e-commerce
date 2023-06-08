@@ -1,10 +1,10 @@
+import { userCartTest } from "./fixtures/user-cart-fixture";
 import { userLoginTest } from "./fixtures/user-login-fixture";
 import { CartPage } from "./page-objects/cart-page";
+import { expect } from "@playwright/test";
 
-userLoginTest("User adds a Shovel", async ({ loginPage }) => {
-  const cartPage = new CartPage(loginPage.page);
-  await cartPage.goto();
-  await cartPage.page.goTo("http://localhost:3000/products");
-
-  await page.getByTestId("add-product-4").click();
+userCartTest("User adds a shovel", async ({ cartPage }) => {
+  await cartPage.addProductFromShop();
+  const totalValue = await cartPage.cartTotal.innerText();
+  await expect(totalValue).toEqual("9.00");
 });

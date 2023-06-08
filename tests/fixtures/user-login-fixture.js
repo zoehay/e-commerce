@@ -7,6 +7,6 @@ export const userLoginTest = base.test.extend({
     await loginPage.goto();
     await loginPage.login();
     await use(loginPage);
-    await loginPage.logout();
+    // await loginPage.logout();
   },
 });
