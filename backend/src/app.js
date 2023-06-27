@@ -19,9 +19,10 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 app.use(
   cors({
-    origin: process.env.CORS_ALLOW_ORIGIN,
+    origin: process.env.CORS_ALLOW_ORIGIN.split(" "),
     methods: "GET,PUT,POST,DELETE",
     credentials: true,
     allowedHeaders: ["content-type", "cookie", "credentials"],
