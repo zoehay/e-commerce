@@ -63,7 +63,9 @@ const ProductTile = ({ product }) => {
     <Tile data-testid={`tile-product-${product.id}`}>
       <ProductInfo>
         <ProductName>{product.name}</ProductName>
-        <ProductPrice>{product.price}</ProductPrice>
+        <ProductPrice data-testid={`product-price-${product.id}`}>
+          {product.price}
+        </ProductPrice>
         <ProductDescription>{product.description}</ProductDescription>
         {user != undefined ? (
           <AddToCart

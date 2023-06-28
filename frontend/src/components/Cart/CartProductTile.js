@@ -92,6 +92,7 @@ const CartProductTile = ({ product, onChange }) => {
           value={product.quantity}
           onChange={handleChange}
           min="0"
+          data-testid={`quantity-input-${product.productId}`}
         />
       </SetQuantity>
     </Tile>
