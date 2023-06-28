@@ -28,8 +28,20 @@ export class CartPage {
       `product-price-${productId}`
     );
     const price = await priceElement.innerText();
-    const expectedPrice = Math.round((Number(price) * 100) / 100).toFixed(2);
+    const expectedPrice = this.roundToFixed(price);
     await this.goto();
     return expectedPrice;
+  }
+
+  async increaseQuantityFromCart(productId, quantity) {
+    const quantityString = quantity.toString();
+    await this.page.getByTestId(`quantity-input-${productId}`).click();
+    await this.page
+      .getByTestId(`quantity-input-${productId}`)
+      .fill(quantityString);
+  }
+
+  roundToFixed(num) {
+    return Math.round((Number(num) * 100) / 100).toFixed(2);
   }
 }
