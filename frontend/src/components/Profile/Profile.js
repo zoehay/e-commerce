@@ -59,7 +59,7 @@ const EditButton = styled.button`
 
 const ProfileContent = () => {
   const context = useContext(UserContext);
-  const user = context.user;
+  const { user, fetchUser } = context;
   let [emailForm, setEmailForm] = useState(false);
   let [nameForm, setNameForm] = useState(false);
   let [passwordForm, setPasswordForm] = useState(false);
@@ -89,7 +89,7 @@ const ProfileContent = () => {
             {emailForm ? "Close" : "Edit"}
           </EditButton>
         </EditContainer>
-        <EmailForm display={emailForm}></EmailForm>
+        <EmailForm display={emailForm} fetchUser={fetchUser}></EmailForm>
       </FieldContainer>
 
       <FieldContainer>
@@ -100,7 +100,7 @@ const ProfileContent = () => {
             {nameForm ? "Close" : "Edit"}
           </EditButton>
         </EditContainer>
-        <NameForm display={nameForm}></NameForm>
+        <NameForm display={nameForm} fetchUser={fetchUser}></NameForm>
       </FieldContainer>
 
       <FieldContainer>

@@ -70,7 +70,7 @@ export const PasswordForm = ({ display }) => {
   );
 };
 
-export const EmailForm = ({ display }) => {
+export const EmailForm = ({ display, fetchUser }) => {
   const fieldName = "Email";
   const [formState, setFormState] = useState("");
   const [displayToast, setDisplayToast] = useState(false);
@@ -82,6 +82,7 @@ export const EmailForm = ({ display }) => {
       console.log("Could not update user name");
     } else if (response.user.email === formState) {
       setDisplayToast(true);
+      fetchUser();
       setTimeout(() => {
         setDisplayToast(false);
         setFormState("");
@@ -122,7 +123,7 @@ export const EmailForm = ({ display }) => {
   );
 };
 
-export const NameForm = ({ display }) => {
+export const NameForm = ({ display, fetchUser }) => {
   const fieldName = "Name";
   const [formState, setFormState] = useState("");
   const [displayToast, setDisplayToast] = useState(false);
@@ -134,6 +135,7 @@ export const NameForm = ({ display }) => {
       console.log("Could not update user name");
     } else if (response.user.name === formState) {
       setDisplayToast(true);
+      fetchUser();
       setTimeout(() => {
         setDisplayToast(false);
         setFormState("");
