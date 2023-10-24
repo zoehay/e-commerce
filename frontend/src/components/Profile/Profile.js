@@ -64,10 +64,6 @@ const ProfileContent = () => {
   let [nameForm, setNameForm] = useState(false);
   let [passwordForm, setPasswordForm] = useState(false);
 
-  useEffect(() => {
-    context.fetchUser();
-  });
-
   const handleEmailClick = (event) => {
     event.preventDefault();
     setEmailForm(!emailForm);
