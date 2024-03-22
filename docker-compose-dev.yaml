@@ -1,0 +1,74 @@
+version: "3"
+
+services:
+  db:
+    container_name: db
+    image: postgres
+    restart: always
+    tty: true
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER_FILE: /run/secrets/db_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_DB_FILE: /run/secrets/db_name
+    secrets:
+      - db_user
+      - db_password
+      - db_name
+    healthcheck:
+      test: pg_isready -U postgres
+    networks:
+      - node-network
+
+  backend:
+    container_name: backend
+    build:
+      context: backend
+    working_dir: /usr/src/app
+    ports:
+      - 8000:8000
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      POSTGRES_USER_FILE: /run/secrets/db_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_DB_FILE: /run/secrets/db_name
+    secrets:
+      - db_user
+      - db_password
+      - db_name
+    networks:
+      - node-network
+
+  frontend:
+    build:
+      context: frontend
+    ports:
+      - 3000:3000
+    networks:
+      - node-network
+    depends_on:
+      - db
+      - backend
+    volumes:
+      - ./frontend/:/usr/src/app
+      - /usr/src/app/node_modules
+
+networks:
+  node-network:
+    driver: bridge
+
+secrets:
+  db_user:
+    file: ./secrets/db_user.txt
+  db_password:
+    file: ./secrets/db_password.txt
+  db_name:
+    file: ./secrets/db_name.txt

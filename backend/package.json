@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/zoehay/e-commerce#readme",
   "dependencies": {
-    "@prisma/client": "^4.5.0",
+    "@prisma/client": "^5.2.0",
     "@quixo3/prisma-session-store": "^3.1.10",
     "bcrypt": "^5.1.0",
     "connect-ensure-login": "^0.1.1",
@@ -47,7 +47,7 @@
     "jest-environment-node": "29.2.2",
     "nanoid": "4.0.0",
     "nodemon": "^2.0.20",
-    "prisma": "^4.5.0",
+    "prisma": "^5.5.2",
     "supertest": "^6.3.1",
     "supertest-session": "^4.1.0",
     "ts-jest": "29.0.3",
