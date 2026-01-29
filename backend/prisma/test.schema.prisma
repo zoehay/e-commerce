@@ -1,43 +1,43 @@
-generator client {
-  provider = "prisma-client-js"
-}
+// generator client {
+//   provider = "prisma-client-js"
+// }
 
-// #TODO: dynamically switch database endpoints instead of having two schema.prisma files
-// https://stackoverflow.com/questions/60360786/how-to-set-up-a-different-database-for-testing-in-prisma
-datasource db {
-  provider = "postgresql"
-  url      = env("TEST_DATABASE_URL")
-}
+// // #TODO: dynamically switch database endpoints instead of having two schema.prisma files
+// // https://stackoverflow.com/questions/60360786/how-to-set-up-a-different-database-for-testing-in-prisma
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("TEST_DATABASE_URL")
+// }
 
-model Product {
-  id Int @id @default(autoincrement())
-  name String
-  description String
-  price Decimal @db.Money
-  cartProducts CartProduct[]
-}
+// model Product {
+//   id Int @id @default(autoincrement())
+//   name String
+//   description String
+//   price Decimal @db.Money
+//   cartProducts CartProduct[]
+// }
 
-model User {
-  id Int @id @default(autoincrement())
-  email String @unique
-  password String 
-  name String?
-  isAdmin Boolean @default(false)
-  cartProducts CartProduct[]
-}
+// model User {
+//   id Int @id @default(autoincrement())
+//   email String @unique
+//   password String 
+//   name String?
+//   isAdmin Boolean @default(false)
+//   cartProducts CartProduct[]
+// }
 
-model Session {
-  id        String   @id
-  sid       String   @unique
-  data      String
-  expiresAt   DateTime
-}
+// model Session {
+//   id        String   @id
+//   sid       String   @unique
+//   data      String
+//   expiresAt   DateTime
+// }
 
-model CartProduct {
-  user   User @relation(fields: [userId], references: [id])
-  userId Int 
-  product Product @relation(fields: [productId], references: [id])
-  productId Int
-  quantity Int
-  @@id ([userId, productId])
-}
+// model CartProduct {
+//   user   User @relation(fields: [userId], references: [id])
+//   userId Int 
+//   product Product @relation(fields: [productId], references: [id])
+//   productId Int
+//   quantity Int
+//   @@id ([userId, productId])
+// }

@@ -26,7 +26,7 @@ app.use(
     methods: "GET,PUT,POST,DELETE",
     credentials: true,
     allowedHeaders: ["content-type", "cookie", "credentials"],
-  })
+  }),
 );
 
 app.use(
@@ -46,7 +46,7 @@ app.use(
       dbRecordIdIsSessionId: true,
       dbRecordIdFunction: undefined,
     }),
-  })
+  }),
 );
 
 app.use(passport.initialize());
