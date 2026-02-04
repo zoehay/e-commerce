@@ -1,10 +1,4 @@
-#!/bin/bash
-
-DB_HOST="db"
-DB_PORT="5432"
-DB_USER=$db_user
-DB_PASSWORD=$db_password
-DB_NAME=$db_name
+#!/bin/sh
 
 MAX_ATTEMPTS=30
 SLEEP_SECONDS=5
@@ -13,6 +7,13 @@ check_database() {
     pg_isready -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" 
 }
 
+# install checks
+location1=$(type openssl)
+echo "Location of program: $location1"
+location2=$(type postgresql-client)
+echo "Location of program: $location2"
+
+echo "waiting for database"
 attempts=0
 until check_database || [ "$attempts" -eq "$MAX_ATTEMPTS" ]; do
     echo "Database is not ready, retrying in $SLEEP_SECONDS seconds..."
@@ -24,10 +25,16 @@ if [ "$attempts" -eq "$MAX_ATTEMPTS" ]; then
     echo "Error: Database not ready after $((attempts * SLEEP_SECONDS)) seconds."
     exit 1
 else
-    echo "Database is ready!"
+    echo "Database is ready"
+    echo "$DATABASE_URL"
+    echo "url"
 
+    echo "Running Prisma migrations"
     npx prisma migrate deploy
     npx prisma generate
     npx prisma db seed
-    exit 0
+
+    echo "Starting application"
+
+    exec node src/index.js
 fi
