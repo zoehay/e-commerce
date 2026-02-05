@@ -59,7 +59,7 @@ const Cart = () => {
 
   const handleClearCart = async () => {
     let deletedCount = await Client.clearCart();
-    if (Number(deletedCount) == cartProductCount) {
+    if (Number(deletedCount) === cartProductCount) {
       setCartProducts([]);
     }
   };

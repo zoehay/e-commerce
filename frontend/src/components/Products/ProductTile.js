@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import Client from "../../util/Client";
@@ -67,7 +67,7 @@ const ProductTile = ({ product }) => {
           {product.price}
         </ProductPrice>
         <ProductDescription>{product.description}</ProductDescription>
-        {user != undefined ? (
+        {user !== undefined ? (
           <AddToCart
             type="button"
             data-testid={`add-product-${product.id}`}
