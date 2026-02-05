@@ -8,11 +8,7 @@ COPY . .
 RUN npm install 
 RUN chmod +x ./db-setup.sh ./db-url.sh
 # RUN mkdir -p /run/secrets
-# RUN chmod +x ./db-url.sh
 EXPOSE 8000
-
-# ENTRYPOINT ["sh", "db-url.sh"]
-# CMD ["sh", "start.sh"]
 
 ENTRYPOINT ["./db-url.sh"]
 CMD ["./db-setup.sh"]

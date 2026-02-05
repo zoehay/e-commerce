@@ -15,12 +15,12 @@ docker container create \
     -e POSTGRES_PASSWORD_FILE=/run/secrets/db_password \
     --network e-commerce-network \
     -v ecomm:/var/lib/postgresql/data \
-    -v $(pwd)/secrets/db_password.txt:/run/secrets/db_password:ro \
+    -v $(pwd)/secrets/db_password.txt:/run/secrets/db_password.txt:ro \
     postgres:16
 
 
 docker container create \
-    --name e-commerce-server \
+    --name backend \
     --restart unless-stopped \
     -e POSTGRES_PASSWORD_FILE=/run/secrets/e_commerce_db_password \
     -e DB_USER=postgres \
@@ -28,8 +28,10 @@ docker container create \
     -e DB_PORT=5432 \
     -e DB_NAME=prisma_e_commerce \
     -e DB_SCHEMA=public \
+    -e CORS_ALLOW_ORIGIN='http://localhost:3000 https://localhost:3000' \
     --network e-commerce-network \
     -v $(pwd)/secrets/db_password.txt:/run/secrets/db_password.txt:ro \
+    -p 8000:8000 \
     backend:e-commerce
 
 
@@ -37,5 +39,7 @@ docker container create \
     --name frontend \
     --restart unless-stopped \
     --network e-commerce-network \
-    -v pgdata:/var/lib/postgresql/data \
+    -e REACT_APP_API_URL=http://localhost:8000 \
+    -v /usr/src/app/node_modules \
+    -p 3000:3000 \
     frontend:e-commerce
