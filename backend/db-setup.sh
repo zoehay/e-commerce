@@ -26,8 +26,6 @@ if [ "$attempts" -eq "$MAX_ATTEMPTS" ]; then
     exit 1
 else
     echo "Database is ready"
-    echo "$DATABASE_URL"
-    echo "url"
 
     echo "Running Prisma migrations"
     npx prisma migrate deploy

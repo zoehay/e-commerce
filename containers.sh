@@ -18,7 +18,6 @@ docker container create \
     -v $(pwd)/secrets/db_password.txt:/run/secrets/db_password.txt:ro \
     postgres:16
 
-
 docker container create \
     --name backend \
     --restart unless-stopped \
@@ -28,13 +27,21 @@ docker container create \
     -e DB_PORT=5432 \
     -e DB_NAME=prisma_e_commerce \
     -e DB_SCHEMA=public \
-    -e CORS_ALLOW_ORIGIN='http://localhost:3000 https://localhost:3000' \
+    -e CORS_ALLOW_ORIGIN='http://localhost https://localhost' \
     --network e-commerce-network \
     -v $(pwd)/secrets/db_password.txt:/run/secrets/db_password.txt:ro \
-    -p 8000:8000 \
     backend:e-commerce
 
+docker container create \
+    --name nginx \
+    --restart unless-stopped \
+    --network e-commerce-network \
+    -v $(pwd)/nginx/local-certs/certs:/etc/nginx/certs:ro \
+    -p 80:80 \
+    -p 443:443 \
+    nginx:e-commerce
 
+# testing without nginx
 docker container create \
     --name frontend \
     --restart unless-stopped \

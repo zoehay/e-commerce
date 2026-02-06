@@ -5,7 +5,7 @@ const app = require("../src/app");
 const prisma = new PrismaClient({ log: ["query"] });
 
 async function main() {
-  console.log("Seed");
+  console.log("Running Prisma seed");
 
   let checkForProducts = await prisma.product.findMany();
   console.log(`${checkForProducts.length} product entries found`);
@@ -72,7 +72,7 @@ async function main() {
       await prisma.product.create({
         data: product,
       });
-    })
+    }),
   );
 
   let users = [
@@ -94,7 +94,7 @@ async function main() {
   await Promise.all(
     users.map(async (user) => {
       const response = await request(app).post("/auth/register").send(user);
-    })
+    }),
   );
 }
 
