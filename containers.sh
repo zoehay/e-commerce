@@ -27,7 +27,7 @@ docker container create \
     -e DB_PORT=5432 \
     -e DB_NAME=prisma_e_commerce \
     -e DB_SCHEMA=public \
-    -e CORS_ALLOW_ORIGIN='http://localhost https://localhost' \
+    -e CORS_ALLOW_ORIGIN='https://localhost http://localhost' \
     --network e-commerce-network \
     -v $(pwd)/secrets/db_password.txt:/run/secrets/db_password.txt:ro \
     backend:e-commerce
