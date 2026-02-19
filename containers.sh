@@ -12,7 +12,7 @@ docker container create \
     --restart unless-stopped \
     -e POSTGRES_USER=postgres \
     -e POSTGRES_DB=prisma_e_commerce \
-    -e POSTGRES_PASSWORD_FILE=/run/secrets/db_password \
+    -e POSTGRES_PASSWORD_FILE=/run/secrets/db_password.txt \
     --network e-commerce-network \
     -v ecomm:/var/lib/postgresql/data \
     -v $(pwd)/secrets/db_password.txt:/run/secrets/db_password.txt:ro \
@@ -21,22 +21,34 @@ docker container create \
 docker container create \
     --name backend \
     --restart unless-stopped \
-    -e POSTGRES_PASSWORD_FILE=/run/secrets/e_commerce_db_password \
+    -e POSTGRES_PASSWORD_FILE=/run/secrets/db_password.txt \
     -e DB_USER=postgres \
     -e DB_HOST=db \
     -e DB_PORT=5432 \
     -e DB_NAME=prisma_e_commerce \
     -e DB_SCHEMA=public \
-    -e CORS_ALLOW_ORIGIN='https://localhost http://localhost' \
+    -e CORS_ALLOW_ORIGIN='http://localhost https://localhost' \
     --network e-commerce-network \
     -v $(pwd)/secrets/db_password.txt:/run/secrets/db_password.txt:ro \
     backend:e-commerce
 
+# nginx with baked in conf file, uncomment Dockerfile COPY ./${CONFIG_FILE}.conf /etc/nginx/nginx.conf
 docker container create \
     --name nginx \
     --restart unless-stopped \
     --network e-commerce-network \
     -v $(pwd)/nginx/local-certs/certs:/etc/nginx/certs:ro \
+    -p 80:80 \
+    -p 443:443 \
+    nginx:e-commerce
+
+# nginx with mounted conf file for dev
+docker container create \
+    --name nginx \
+    --restart unless-stopped \
+    --network e-commerce-network \
+    -v $(pwd)/nginx/local-certs/certs:/etc/nginx/certs:ro \
+    -v $(pwd)/nginx/nginx.conf:/etc/nginx/nginx.conf:ro \
     -p 80:80 \
     -p 443:443 \
     nginx:e-commerce
