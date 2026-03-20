@@ -20,9 +20,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+const allowedOrigins = process.env.CORS_ALLOW_ORIGIN;
+
 app.use(
   cors({
-    origin: process.env.CORS_ALLOW_ORIGIN.split(" "),
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg = "specified origin not allowed";
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
     methods: "GET,PUT,POST,DELETE",
     credentials: true,
     allowedHeaders: ["content-type", "cookie", "credentials"],
