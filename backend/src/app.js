@@ -20,7 +20,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-const allowedOrigins = process.env.CORS_ALLOW_ORIGIN;
+const allowedOrigins = (process.env.CORS_ALLOW_ORIGIN || "")
+  .split(/\s+/)
+  .filter(Boolean);
 
 app.use(
   cors({

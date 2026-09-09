@@ -1,14 +1,14 @@
 FROM node:alpine
 
-RUN apk update && apk add --no-cache postgresql-client openssl
+RUN apk update && apk add --no-cache postgresql-client openssl tini
 
 WORKDIR /usr/src/app
 
 COPY . .
 RUN npm install 
 RUN chmod +x ./db-setup.sh ./db-url.sh
-# RUN mkdir -p /run/secrets
+
 EXPOSE 8000
 
-ENTRYPOINT ["./db-url.sh"]
+ENTRYPOINT ["/sbin/tini", "--", "./db-url.sh"]
 CMD ["./db-setup.sh"]
