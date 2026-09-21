@@ -5,12 +5,19 @@ import { UserContext } from "../../util/userContext";
 
 const Tile = styled.div`
   box-sizing: border-box;
-  background: var(--accent-light-1);
-  padding: 1rem;
+  background: var(--bg-color-1);
+  padding: 1rem 1.25rem;
   display: grid;
+  align-items: center;
   margin-bottom: 1rem;
   width: 100%;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-fast);
   grid-template-columns: 1.2fr 0.8fr 1fr;
+  &:hover {
+    box-shadow: var(--shadow-md);
+  }
   @media (min-width: 46rem) {
     grid-template-columns: 0.75fr 1.25fr 1fr;
   }
@@ -18,6 +25,7 @@ const Tile = styled.div`
 
 const ProductName = styled.p`
   font-size: 1rem;
+  font-weight: 600;
 `;
 
 const ProductInfo = styled.div`

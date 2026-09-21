@@ -7,13 +7,14 @@ import { UserContext } from "../../util/userContext";
 
 const ProfileContainer = styled.div`
   display: flex;
-  margin: 0 0 auto 10%;
+  margin: 1.5rem 0 auto 10%;
   flex-direction: column;
   width: 100%;
+  gap: 1rem;
   @media (min-width: 46rem) {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    margin: 0 auto;
+    margin: 1.5rem auto 0;
   }
 `;
 
@@ -21,6 +22,10 @@ const FieldContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 0.5rem;
+  padding: 1.25rem;
+  background-color: #fff;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
 `;
 
 const FieldTitle = styled.div`

@@ -7,51 +7,76 @@ import { UserContext } from "../../util/userContext";
 const Tile = styled.div`
   background: var(--bg-color-1);
   min-width: 8rem;
-  padding-bottom: 1rem;
-  margin-bottom: 1rem;
-  box-shadow: 0.5rem 0.5rem 0.7rem var(--accent-light-1);
-  border-radius: 0.25rem;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: transform var(--transition-med), box-shadow var(--transition-med);
+  &:hover {
+    transform: translateY(-0.25rem);
+    box-shadow: var(--shadow-lift);
+  }
 `;
 
 const ProductInfo = styled.div`
   text-align: center;
+  padding: 1.25rem 1rem 0;
 `;
 
 const ProductName = styled.p`
   font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.35rem;
 `;
 
 const ProductPrice = styled.p`
-  font-size: 0.875rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent-bold-1);
+  margin: 0 0 0.5rem;
 `;
 
 const ProductDescription = styled.p`
   font-size: 0.75rem;
+  color: var(--text-muted);
+  margin: 0 0 1rem;
 `;
 
 const AddToCart = styled.button`
-  font-size: 0.75rem;
-  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 999px;
+  padding: 0.55rem 1.25rem;
   background-color: var(--accent-light-2);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
   &:hover {
     background-color: var(--accent-bold-2);
+    transform: translateY(-0.05rem);
   }
 `;
 
 const LoginLink = styled(NavLink)`
   color: var(--accent-bold-1);
   display: flex;
+  align-items: center;
   text-decoration: none;
-  font-size: 0.65rem;
+  font-size: 0.7rem;
+  font-weight: 600;
   justify-content: center;
   box-sizing: border-box;
-  border-radius: 10px;
+  border-radius: 999px;
   background-color: var(--accent-light-2);
+  padding: 0.55rem 1rem;
   width: 60%;
   max-width: 10rem;
   margin: 0rem auto;
+  transition: color var(--transition-fast), background-color var(--transition-fast);
   &:hover {
-    color: var(--accent-bold-2);
+    color: #fff;
+    background-color: var(--accent-bold-2);
   }
 `;
 
