@@ -7,7 +7,7 @@ import { UserContext } from "../../util/userContext";
 
 const ProfileContainer = styled.div`
   display: flex;
-  margin: 1.5rem 0 auto 10%;
+  margin: 1.5rem 0 0;
   flex-direction: column;
   width: 100%;
   gap: 1rem;
