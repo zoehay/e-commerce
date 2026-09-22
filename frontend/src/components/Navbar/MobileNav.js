@@ -4,25 +4,25 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { NavSelect, NavButton } from "./Navbar";
 const MobileNavWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   z-index: 0;
   top: 5rem;
   display: flex;
   align-items: flex-start;
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 5rem);
   left: ${(props) => (props.displayMenu ? "0" : "-100%")};
   transition: left 0.5s ease;
 `;
 
 const MobileDropdown = styled.div`
-  position: absolute;
+  position: fixed;
   background-color: var(--accent-light-1);
   z-index: 2;
   display: flex;
   flex-direction: column;
   width: 50%;
-  height: 100%;
+  height: calc(100vh - 5rem);
   box-shadow: 0.5rem 0.5rem 0.7rem var(--accent-bold-1);
   left: ${(props) => (props.displayMenu ? "0" : "-100%")};
   transition: left 0.5s ease;
