@@ -13,11 +13,15 @@ import { MobileNav } from "./MobileNav";
 const Nav = styled.nav`
   height: 5rem;
   display: flex;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 `;
 
 const NavBackground = styled.div`
   background-color: var(--accent-bold-1);
+  box-shadow: var(--shadow-md);
   display: flex;
   justify-content: center;
   width: 100%;
@@ -56,14 +60,18 @@ export const NavSelect = styled(NavLink)`
   margin: 0 0.25rem;
   text-decoration: none;
   font-size: 1rem;
+  font-weight: 500;
   width: 2rem;
   justify-content: center;
   box-sizing: border-box;
+  transition: color var(--transition-fast), transform var(--transition-fast);
   &:hover {
     color: #ed6a5a;
+    transform: translateY(-0.05rem);
   }
   @media (min-width: 46rem) {
     margin: 0 1rem;
+    width: auto;
   }
 `;
 
@@ -73,6 +81,8 @@ export const NavButton = styled.button`
   border: none;
   width: 2rem;
   margin: 0 0.25rem;
+  cursor: pointer;
+  transition: color var(--transition-fast);
   &:hover {
     color: var(--accent-bold-2);
   }
@@ -82,9 +92,16 @@ export const NavButton = styled.button`
 `;
 
 const NavLogo = styled(NavSelect)`
-  font-size: 2rem;
+  font-family: "Poppins", "Inter", sans-serif;
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   padding: 0;
   width: fit-content;
+  &:hover {
+    color: var(--accent-light-2);
+    transform: none;
+  }
   @media (min-width: 46rem) {
     display: flex;
     align-items: center;

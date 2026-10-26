@@ -1,5 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap");
+
 :root {
-  --main-bg-color: #f5f5f5;
+  --main-bg-color: #f7f7f5;
   --bg-color-1: #ebefe7;
   --bg-color-1-shadow: #f5f7f3;
   --accent-bold-1: #5ca4a9;
@@ -7,16 +9,34 @@
   --accent-light-1: #9bc1bc;
   --accent-light-2: #f4f1bb;
   --accent-light-3: #f39b91;
+  --text-color: #2f3b3a;
+  --text-muted: #6b7a78;
+  --border-color: rgba(47, 59, 58, 0.12);
+  --radius-sm: 0.5rem;
+  --radius-md: 0.85rem;
+  --shadow-sm: 0 0.15rem 0.5rem rgba(47, 59, 58, 0.08);
+  --shadow-md: 0 0.6rem 1.5rem rgba(47, 59, 58, 0.1);
+  --shadow-lift: 0 1rem 2rem rgba(47, 59, 58, 0.16);
+  --transition-fast: 0.15s ease;
+  --transition-med: 0.25s ease;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--main-bg-color);
+  color: var(--text-color);
+  line-height: 1.5;
 }
 
 code {
@@ -24,7 +44,76 @@ code {
     monospace;
 }
 
+h1,
+h2,
+h3 {
+  font-family: "Poppins", "Inter", sans-serif;
+  letter-spacing: -0.01em;
+}
+
 h2 {
-  font-weight: bold;
+  font-weight: 600;
   color: var(--accent-bold-1);
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--text-color);
+  background-color: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.75rem;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  outline: none;
+  width: 100%;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--accent-bold-1);
+  box-shadow: 0 0 0 0.2rem rgba(92, 164, 169, 0.2);
+}
+
+input[type="submit"] {
+  width: auto;
+  cursor: pointer;
+  font-weight: 600;
+  color: #fff;
+  background-color: var(--accent-bold-1);
+  border: none;
+  padding: 0.65rem 1.5rem;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+input[type="submit"]:hover {
+  background-color: var(--accent-bold-2);
+  transform: translateY(-0.1rem);
+}
+
+input[type="number"] {
+  width: 100%;
+}
+
+label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+::selection {
+  background-color: var(--accent-light-2);
 }

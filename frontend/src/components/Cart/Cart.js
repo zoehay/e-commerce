@@ -9,11 +9,18 @@ import { StyledButton } from "../common/StyledButton";
 
 const CartTotal = styled.div`
   background-color: var(--accent-bold-1);
-  font-size: 1rem;
-  padding: 1rem;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 1.25rem;
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   box-sizing: border-box;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const Cart = () => {

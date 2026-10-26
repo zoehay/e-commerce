@@ -6,9 +6,10 @@ const Feed = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   box-sizing: border-box;
-  column-gap: 1rem;
+  gap: 1.25rem;
   @media (min-width: 46rem) {
     grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.5rem;
   }
 `;
 
